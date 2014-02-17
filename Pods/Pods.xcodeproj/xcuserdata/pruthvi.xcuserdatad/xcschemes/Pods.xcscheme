@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "0500"
+   version = "1.3">
+   <BuildAction
+      buildImplicitDependencies = "YES"
+      parallelizeBuildables = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForProfiling = "YES"
+            buildForRunning = "YES"
+            buildForTesting = "YES"
+            buildForAnalyzing = "YES"
+            buildForArchiving = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintName = "Pods"
+               BuildableName = "libPods.a"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BlueprintIdentifier = "56D89835EECE49FAA58088EB">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      buildConfiguration = "Debug">
+      <Testables>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      debugDocumentVersioning = "YES"
+      useCustomWorkingDirectory = "NO"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      allowLocationSimulation = "YES"
+      ignoresPersistentStateOnLaunch = "NO"
+      launchStyle = "0"
+      buildConfiguration = "Debug">
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </LaunchAction>
+   <ProfileAction
+      debugDocumentVersioning = "YES"
+      useCustomWorkingDirectory = "NO"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      buildConfiguration = "Release">
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      revealArchiveInOrganizer = "YES"
+      buildConfiguration = "Release">
+   </ArchiveAction>
+</Scheme>

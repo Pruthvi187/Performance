@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Filter</key>
+	<array>
+		<string>Forwards</string>
+		<string>Backs</string>
+		<string>Inside backs</string>
+		<string>Outside backs</string>
+		<string>Back Row</string>
+		<string>Tight</string>
+		<string>Starting</string>
+		<string>16-23</string>
+	</array>
+	<key>Sort</key>
+	<array>
+		<string>Highest injury risk</string>
+		<string>Lowest injury risk</string>
+		<string>Fittest</string>
+		<string>Best wellbeing</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,13 @@
+PODS:
+  - CorePlot (1.4)
+  - iOS-blur (0.0.4)
+
+DEPENDENCIES:
+  - CorePlot (~> 1.4)
+  - iOS-blur
+
+SPEC CHECKSUMS:
+  CorePlot: 0c6cfe42f4cc458062dfd765d5b8f59a0d0fdddf
+  iOS-blur: 88a6776951beba2aa47be68ee037dc757781a8af
+
+COCOAPODS: 0.29.0

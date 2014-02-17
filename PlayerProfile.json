@@ -1,0 +1,77 @@
+[
+  {
+    "Name": "Benn Robinson",
+    "Position": "Loosehead Prop",
+    "ID": 1
+  },
+  {
+    "Name": "Damien Fitzpatric",
+    "Position": "Hooker",
+    "ID": 2
+  },
+  {
+    "Name": "Al Baxter",
+    "Position": "Tighthead Prop",
+    "ID": 3
+  },
+  {
+    "Name": "Dan Vickerman",
+    "Position": "Lock",
+    "ID": 4
+  },
+  {
+    "Name": "Rocky Elson",
+    "Position": "Lock",
+    "ID": 5
+  },
+  {
+    "Name": "Dean Mumm",
+    "Position": "Inside Flanker",
+    "ID": 6
+  },
+  {
+    "Name": "Phil Waugh",
+    "Position": "Outside Flanker",
+    "ID": 7
+  },
+  {
+    "Name": "David Lyons",
+    "Position": "Number 8",
+    "ID": 8
+  },
+  {
+    "Name": "Chris Whitaker",
+    "Position": "Scrum Half",
+    "ID": 9
+  },
+  {
+    "Name": "Daniel Halangahu",
+    "Position": "Fly Half",
+    "ID": 10
+  },
+  {
+    "Name": "Mat Rogers",
+    "Position": "Winger",
+    "ID": 11
+  },
+  {
+    "Name": "Tom Cater",
+    "Position": "Inside Centre",
+    "ID": 12
+  },
+  {
+    "Name": "Ben Jacobs",
+    "Position": "Outside Centre",
+    "ID": 13
+  },
+  {
+    "Name": "Drew Mitchell",
+    "Position": "Winger",
+    "ID": 14
+  },
+  {
+    "Name": "Berrick Barnes",
+    "Position": "Fullback",
+    "ID": 15
+  }
+]
