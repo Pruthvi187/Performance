@@ -9,6 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "RFQuiltLayout.h"
 
+typedef enum PlayerPositions {
+    Forwards = 1,
+    Backs = 2,
+    Back_Row = 3,
+    Front_Row  = 4,
+    Half_Backs = 5,
+    Three_Quarters = 6,
+    Fullback = 7
+} PlayerPositions;
+
+@class Utilities, DataModel;
+
 @interface PlayerProfileViewController : UIViewController <RFQuiltLayoutDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     UIPopoverController * filterController;
@@ -20,6 +32,10 @@
     NSMutableArray * filterOptions;
     
     NSMutableArray * sortOptions;
+    
+    Utilities * utilities;
+    
+    DataModel * dataModel;
 }
 
 @property(nonatomic, retain) IBOutlet UIButton * filterButton;

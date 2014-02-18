@@ -20,6 +20,30 @@
 		02E25B20168B74B0009CA089 /* PlayerProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E25B1F168B74B0009CA089 /* PlayerProfileViewController.m */; };
 		02E25B23168B74B0009CA089 /* PlayerProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E25B21168B74B0009CA089 /* PlayerProfileViewController.xib */; };
 		4986E711275F49DEBC435215 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C3D7354E4481C9CAFC53E /* libPods.a */; };
+		AC17201918B1AD3400A0274F /* PlayerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17201718B1AD3400A0274F /* PlayerDetailViewController.m */; };
+		AC17201A18B1AD3400A0274F /* PlayerDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC17201818B1AD3400A0274F /* PlayerDetailViewController.xib */; };
+		AC17202C18B2D84B00A0274F /* Al_Baxter.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17201C18B2D84B00A0274F /* Al_Baxter.png */; };
+		AC17202D18B2D84B00A0274F /* Ben_Jacobs.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17201D18B2D84B00A0274F /* Ben_Jacobs.png */; };
+		AC17202E18B2D84B00A0274F /* Benn_Robinson.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17201E18B2D84B00A0274F /* Benn_Robinson.png */; };
+		AC17202F18B2D84B00A0274F /* Berrick_Barnes.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17201F18B2D84B00A0274F /* Berrick_Barnes.png */; };
+		AC17203018B2D84B00A0274F /* Chris_Whitaker.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202018B2D84B00A0274F /* Chris_Whitaker.png */; };
+		AC17203118B2D84B00A0274F /* Damien_Fitzpatrick.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202118B2D84B00A0274F /* Damien_Fitzpatrick.png */; };
+		AC17203218B2D84B00A0274F /* Daniel_Halangahu.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202218B2D84B00A0274F /* Daniel_Halangahu.png */; };
+		AC17203318B2D84B00A0274F /* Daniel_Vickerman.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202318B2D84B00A0274F /* Daniel_Vickerman.png */; };
+		AC17203418B2D84B00A0274F /* David_Lyons.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202418B2D84B00A0274F /* David_Lyons.png */; };
+		AC17203518B2D84B00A0274F /* Dean_Mumm.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202518B2D84B00A0274F /* Dean_Mumm.png */; };
+		AC17203618B2D84B00A0274F /* Drew_Mitchell.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202618B2D84B00A0274F /* Drew_Mitchell.png */; };
+		AC17203718B2D84B00A0274F /* Mat_Rogers.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202718B2D84B00A0274F /* Mat_Rogers.png */; };
+		AC17203818B2D84B00A0274F /* Polota_Nau.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202818B2D84B00A0274F /* Polota_Nau.png */; };
+		AC17203918B2D84B00A0274F /* Phil_Waugh.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202918B2D84B00A0274F /* Phil_Waugh.png */; };
+		AC17203A18B2D84B00A0274F /* Rocky_Elsom.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202A18B2D84B00A0274F /* Rocky_Elsom.png */; };
+		AC17203B18B2D84B00A0274F /* Tom_Carter.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17202B18B2D84B00A0274F /* Tom_Carter.png */; };
+		AC17204018B2DE0D00A0274F /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17203D18B2DE0D00A0274F /* Model.m */; };
+		AC17204118B2DE0D00A0274F /* ModelItems.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17203F18B2DE0D00A0274F /* ModelItems.m */; };
+		AC17204418B2DE1500A0274F /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204318B2DE1500A0274F /* DataModel.m */; };
+		AC17204918B2DF6900A0274F /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204818B2DF6900A0274F /* Player.m */; };
+		AC17204C18B2DFFC00A0274F /* PlayerItems.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204B18B2DFFC00A0274F /* PlayerItems.m */; };
+		AC17204F18B2E6AA00A0274F /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204E18B2E6AA00A0274F /* Utilities.m */; };
 		AC76770218AC6F1A00664E8C /* PlayerProfileCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */; };
 		AC76770618AC6F9400664E8C /* PlayerProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */; };
 		AC76770818AC702900664E8C /* cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AC76770718AC702900664E8C /* cafe.jpg */; };
@@ -55,6 +79,37 @@
 		02E25B22168B74B0009CA089 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PlayerProfileViewController.xib; sourceTree = "<group>"; };
 		6417E354C36240EFBF0B4129 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		802C3D7354E4481C9CAFC53E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC17201618B1AD3400A0274F /* PlayerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDetailViewController.h; sourceTree = "<group>"; };
+		AC17201718B1AD3400A0274F /* PlayerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDetailViewController.m; sourceTree = "<group>"; };
+		AC17201818B1AD3400A0274F /* PlayerDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerDetailViewController.xib; sourceTree = "<group>"; };
+		AC17201C18B2D84B00A0274F /* Al_Baxter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Al_Baxter.png; sourceTree = "<group>"; };
+		AC17201D18B2D84B00A0274F /* Ben_Jacobs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ben_Jacobs.png; sourceTree = "<group>"; };
+		AC17201E18B2D84B00A0274F /* Benn_Robinson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Benn_Robinson.png; sourceTree = "<group>"; };
+		AC17201F18B2D84B00A0274F /* Berrick_Barnes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Berrick_Barnes.png; sourceTree = "<group>"; };
+		AC17202018B2D84B00A0274F /* Chris_Whitaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chris_Whitaker.png; sourceTree = "<group>"; };
+		AC17202118B2D84B00A0274F /* Damien_Fitzpatrick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Damien_Fitzpatrick.png; sourceTree = "<group>"; };
+		AC17202218B2D84B00A0274F /* Daniel_Halangahu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Daniel_Halangahu.png; sourceTree = "<group>"; };
+		AC17202318B2D84B00A0274F /* Daniel_Vickerman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Daniel_Vickerman.png; sourceTree = "<group>"; };
+		AC17202418B2D84B00A0274F /* David_Lyons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = David_Lyons.png; sourceTree = "<group>"; };
+		AC17202518B2D84B00A0274F /* Dean_Mumm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dean_Mumm.png; sourceTree = "<group>"; };
+		AC17202618B2D84B00A0274F /* Drew_Mitchell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Drew_Mitchell.png; sourceTree = "<group>"; };
+		AC17202718B2D84B00A0274F /* Mat_Rogers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Mat_Rogers.png; sourceTree = "<group>"; };
+		AC17202818B2D84B00A0274F /* Polota_Nau.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Polota_Nau.png; sourceTree = "<group>"; };
+		AC17202918B2D84B00A0274F /* Phil_Waugh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Phil_Waugh.png; sourceTree = "<group>"; };
+		AC17202A18B2D84B00A0274F /* Rocky_Elsom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rocky_Elsom.png; sourceTree = "<group>"; };
+		AC17202B18B2D84B00A0274F /* Tom_Carter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tom_Carter.png; sourceTree = "<group>"; };
+		AC17203C18B2DE0D00A0274F /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		AC17203D18B2DE0D00A0274F /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		AC17203E18B2DE0D00A0274F /* ModelItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelItems.h; sourceTree = "<group>"; };
+		AC17203F18B2DE0D00A0274F /* ModelItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelItems.m; sourceTree = "<group>"; };
+		AC17204218B2DE1500A0274F /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		AC17204318B2DE1500A0274F /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
+		AC17204718B2DF6900A0274F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		AC17204818B2DF6900A0274F /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		AC17204A18B2DFFC00A0274F /* PlayerItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerItems.h; sourceTree = "<group>"; };
+		AC17204B18B2DFFC00A0274F /* PlayerItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerItems.m; sourceTree = "<group>"; };
+		AC17204D18B2E6AA00A0274F /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		AC17204E18B2E6AA00A0274F /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		AC76770018AC6F1A00664E8C /* PlayerProfileCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerProfileCollectionCell.h; sourceTree = "<group>"; };
 		AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerProfileCollectionCell.m; sourceTree = "<group>"; };
 		AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerProfileCollectionCell.xib; sourceTree = "<group>"; };
@@ -119,6 +174,8 @@
 		02E25B0C168B74B0009CA089 /* Waratahs */ = {
 			isa = PBXGroup;
 			children = (
+				AC17204618B2DE7B00A0274F /* Utilities */,
+				AC17204518B2DE6F00A0274F /* Models */,
 				AC76771D18ADC0B900664E8C /* View Controllers */,
 				02E25B29168B74C9009CA089 /* Custom Views */,
 				02E25B15168B74B0009CA089 /* WaratahsAppDelegate.h */,
@@ -155,9 +212,60 @@
 			name = "Custom Views";
 			sourceTree = "<group>";
 		};
+		AC17201B18B2D84B00A0274F /* players */ = {
+			isa = PBXGroup;
+			children = (
+				AC17201C18B2D84B00A0274F /* Al_Baxter.png */,
+				AC17201D18B2D84B00A0274F /* Ben_Jacobs.png */,
+				AC17201E18B2D84B00A0274F /* Benn_Robinson.png */,
+				AC17201F18B2D84B00A0274F /* Berrick_Barnes.png */,
+				AC17202018B2D84B00A0274F /* Chris_Whitaker.png */,
+				AC17202118B2D84B00A0274F /* Damien_Fitzpatrick.png */,
+				AC17202218B2D84B00A0274F /* Daniel_Halangahu.png */,
+				AC17202318B2D84B00A0274F /* Daniel_Vickerman.png */,
+				AC17202418B2D84B00A0274F /* David_Lyons.png */,
+				AC17202518B2D84B00A0274F /* Dean_Mumm.png */,
+				AC17202618B2D84B00A0274F /* Drew_Mitchell.png */,
+				AC17202718B2D84B00A0274F /* Mat_Rogers.png */,
+				AC17202818B2D84B00A0274F /* Polota_Nau.png */,
+				AC17202918B2D84B00A0274F /* Phil_Waugh.png */,
+				AC17202A18B2D84B00A0274F /* Rocky_Elsom.png */,
+				AC17202B18B2D84B00A0274F /* Tom_Carter.png */,
+			);
+			name = players;
+			path = "players 2";
+			sourceTree = "<group>";
+		};
+		AC17204518B2DE6F00A0274F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AC17203C18B2DE0D00A0274F /* Model.h */,
+				AC17203D18B2DE0D00A0274F /* Model.m */,
+				AC17203E18B2DE0D00A0274F /* ModelItems.h */,
+				AC17203F18B2DE0D00A0274F /* ModelItems.m */,
+				AC17204718B2DF6900A0274F /* Player.h */,
+				AC17204818B2DF6900A0274F /* Player.m */,
+				AC17204A18B2DFFC00A0274F /* PlayerItems.h */,
+				AC17204B18B2DFFC00A0274F /* PlayerItems.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		AC17204618B2DE7B00A0274F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AC17204218B2DE1500A0274F /* DataModel.h */,
+				AC17204318B2DE1500A0274F /* DataModel.m */,
+				AC17204D18B2E6AA00A0274F /* Utilities.h */,
+				AC17204E18B2E6AA00A0274F /* Utilities.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		AC76771718ADB62B00664E8C /* Artifacts */ = {
 			isa = PBXGroup;
 			children = (
+				AC17201B18B2D84B00A0274F /* players */,
 				AC76771518AD974000664E8C /* Options.plist */,
 				AC76770B18AC807B00664E8C /* SortButton.png */,
 				AC76771118AC85B600664E8C /* PlayerProfile.csv */,
@@ -179,6 +287,9 @@
 				AC76771818ADC0AB00664E8C /* TeamStatsViewController.h */,
 				AC76771918ADC0AB00664E8C /* TeamStatsViewController.m */,
 				AC76771A18ADC0AB00664E8C /* TeamStatsViewController.xib */,
+				AC17201618B1AD3400A0274F /* PlayerDetailViewController.h */,
+				AC17201718B1AD3400A0274F /* PlayerDetailViewController.m */,
+				AC17201818B1AD3400A0274F /* PlayerDetailViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -238,19 +349,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC76770618AC6F9400664E8C /* PlayerProfileCollectionCell.xib in Resources */,
+				AC17203718B2D84B00A0274F /* Mat_Rogers.png in Resources */,
 				AC76770818AC702900664E8C /* cafe.jpg in Resources */,
+				AC17203018B2D84B00A0274F /* Chris_Whitaker.png in Resources */,
+				AC17203818B2D84B00A0274F /* Polota_Nau.png in Resources */,
+				AC17203A18B2D84B00A0274F /* Rocky_Elsom.png in Resources */,
+				AC17203618B2D84B00A0274F /* Drew_Mitchell.png in Resources */,
 				AC76770A18AC71FA00664E8C /* Player.png in Resources */,
 				02E25B11168B74B0009CA089 /* InfoPlist.strings in Resources */,
 				AC76771C18ADC0AB00664E8C /* TeamStatsViewController.xib in Resources */,
 				02E25B19168B74B0009CA089 /* Default.png in Resources */,
+				AC17203918B2D84B00A0274F /* Phil_Waugh.png in Resources */,
+				AC17202C18B2D84B00A0274F /* Al_Baxter.png in Resources */,
 				02E25B1B168B74B0009CA089 /* Default@2x.png in Resources */,
+				AC17203218B2D84B00A0274F /* Daniel_Halangahu.png in Resources */,
 				AC76771018AC856800664E8C /* PlayerData.json in Resources */,
 				02E25B1D168B74B0009CA089 /* Default-568h@2x.png in Resources */,
+				AC17203318B2D84B00A0274F /* Daniel_Vickerman.png in Resources */,
+				AC17203B18B2D84B00A0274F /* Tom_Carter.png in Resources */,
 				AC76770E18AC808900664E8C /* FilterButton.png in Resources */,
+				AC17203518B2D84B00A0274F /* Dean_Mumm.png in Resources */,
 				AC76771218AC85B600664E8C /* PlayerProfile.csv in Resources */,
+				AC17202E18B2D84B00A0274F /* Benn_Robinson.png in Resources */,
+				AC17203118B2D84B00A0274F /* Damien_Fitzpatrick.png in Resources */,
 				02E25B23168B74B0009CA089 /* PlayerProfileViewController.xib in Resources */,
+				AC17203418B2D84B00A0274F /* David_Lyons.png in Resources */,
 				AC76771618AD974000664E8C /* Options.plist in Resources */,
 				AC76771418AC891E00664E8C /* PlayerProfile.json in Resources */,
+				AC17201A18B1AD3400A0274F /* PlayerDetailViewController.xib in Resources */,
+				AC17202D18B2D84B00A0274F /* Ben_Jacobs.png in Resources */,
+				AC17202F18B2D84B00A0274F /* Berrick_Barnes.png in Resources */,
 				AC76770C18AC807B00664E8C /* SortButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,10 +424,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				02E25B13168B74B0009CA089 /* main.m in Sources */,
+				AC17204418B2DE1500A0274F /* DataModel.m in Sources */,
 				02E25B17168B74B0009CA089 /* WaratahsAppDelegate.m in Sources */,
+				AC17204C18B2DFFC00A0274F /* PlayerItems.m in Sources */,
 				AC76770218AC6F1A00664E8C /* PlayerProfileCollectionCell.m in Sources */,
+				AC17204018B2DE0D00A0274F /* Model.m in Sources */,
+				AC17201918B1AD3400A0274F /* PlayerDetailViewController.m in Sources */,
+				AC17204918B2DF6900A0274F /* Player.m in Sources */,
 				02E25B20168B74B0009CA089 /* PlayerProfileViewController.m in Sources */,
+				AC17204118B2DE0D00A0274F /* ModelItems.m in Sources */,
 				0239B55C168BB0F4008B8AD6 /* RFQuiltLayout.m in Sources */,
+				AC17204F18B2E6AA00A0274F /* Utilities.m in Sources */,
 				AC76771B18ADC0AB00664E8C /* TeamStatsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

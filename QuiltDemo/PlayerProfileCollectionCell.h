@@ -10,4 +10,6 @@
 
 @interface PlayerProfileCollectionCell : UICollectionViewCell
 
+@property(nonatomic, retain) IBOutlet UIImageView * playerImage;
+
 @end

@@ -2,76 +2,107 @@
   {
     "Name": "Benn Robinson",
     "Position": "Loosehead Prop",
-    "ID": 1
+    "ID": 1,
+    "Image": "Benn_Robinson",
+    "FilterPosition" : "Front row"
   },
   {
     "Name": "Damien Fitzpatric",
     "Position": "Hooker",
-    "ID": 2
+    "ID": 2,
+    "Image": "Damien_Fitzpatrick",
+    "FilterPosition" : "Front Row"
+ 
   },
   {
     "Name": "Al Baxter",
     "Position": "Tighthead Prop",
-    "ID": 3
+    "ID": 3,
+    "Image": "Al_Baxter",
+    "FilterPosition" : "Front Row"
   },
   {
     "Name": "Dan Vickerman",
     "Position": "Lock",
-    "ID": 4
+    "ID": 4,
+    "Image": "Daniel_Vickerman",
+    "FilterPosition" : "Back Row"
   },
   {
-    "Name": "Rocky Elson",
+    "Name": "Rocky Elsom",
     "Position": "Lock",
-    "ID": 5
+    "ID": 5,
+    "Image": "Rocky_Elsom",
+    "FilterPosition" : "Back Row"
   },
   {
     "Name": "Dean Mumm",
     "Position": "Inside Flanker",
-    "ID": 6
+    "ID": 6,
+    "Image": "Dean_Mumm",
+    "FilterPosition" : "Back Row"
   },
   {
     "Name": "Phil Waugh",
     "Position": "Outside Flanker",
-    "ID": 7
+    "ID": 7,
+    "Image" : "Phil_Waugh",
+    "FilterPosition" : "Back Row"
   },
   {
     "Name": "David Lyons",
     "Position": "Number 8",
-    "ID": 8
+    "ID": 8,
+    "Image" : "David_Lyons",
+    "FilterPosition" : "Back Row"
   },
   {
     "Name": "Chris Whitaker",
     "Position": "Scrum Half",
-    "ID": 9
+    "ID": 9,
+    "Image": "Chris_Whitaker",
+    "FilterPosition" : "Half Backs"
   },
   {
     "Name": "Daniel Halangahu",
     "Position": "Fly Half",
-    "ID": 10
+    "ID": 10,
+    "Image": "Daniel_Halangahu",
+    "FilterPosition" : "Half Backs"
   },
   {
     "Name": "Mat Rogers",
     "Position": "Winger",
-    "ID": 11
+    "ID": 11,
+    "Image":"Mat_Rogers",
+    "FilterPosition" : "Three quarters"
   },
   {
     "Name": "Tom Cater",
     "Position": "Inside Centre",
-    "ID": 12
+    "ID": 12,
+    "Image" : "Tom_Carter",
+    "FilterPosition" : "Three quarters"
   },
   {
     "Name": "Ben Jacobs",
     "Position": "Outside Centre",
-    "ID": 13
+    "ID": 13,
+    "Image": "Ben_Jacobs",
+    "FilterPosition" : "Three quarters"
   },
   {
     "Name": "Drew Mitchell",
     "Position": "Winger",
-    "ID": 14
+    "ID": 14,
+    "Image": "Drew_Mitchell",
+    "FilterPosition" : "Three quarters"
   },
   {
     "Name": "Berrick Barnes",
     "Position": "Fullback",
-    "ID": 15
+    "ID": 15,
+    "Image": "Berrick_Barnes",
+    "FilterPosition" : "Fullback"
   }
 ]

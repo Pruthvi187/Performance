@@ -9,6 +9,12 @@
 #import "PlayerProfileViewController.h"
 #import "PlayerProfileCollectionCell.h"
 #import "TeamStatsViewController.h"
+#import "PlayerDetailViewController.h"
+#import "DataModel.h"
+#import "ModelItems.h"
+#import "PlayerItems.h"
+#import "Utilities.h"
+#import "Player.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -22,7 +28,8 @@
     BOOL isAnimating;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic) NSMutableArray* numbers;
+@property (nonatomic) NSMutableArray* models;
+@property (nonatomic) NSMutableArray * players;
 @end
 
 int num = 0;
@@ -37,24 +44,37 @@ int num = 0;
     UINib *industryNib = [UINib nibWithNibName:@"PlayerProfileCollectionCell" bundle:nil];
     [self.collectionView registerNib:industryNib forCellWithReuseIdentifier:@"PlayerProfileCollectionCell"];
     
-    self.numbers = [@[] mutableCopy];
-    for(; num<20; num++) { [self.numbers addObject:@(num)]; }
+    dataModel = [DataModel sharedClient];
+    
+    //ModelItems * modelItems = [dataModel getModelItems];
+    
+    PlayerItems * playerItems = nil;
+    playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    
+    
+    //self.models = [@[] mutableCopy];
+    //[self.models setArray:modelItems.models];
+    
+    self.players = [@[] mutableCopy];
+    [self.players setArray:playerItems.players];
     
    // [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     RFQuiltLayout* layout = (id)[self.collectionView collectionViewLayout];
     layout.direction = UICollectionViewScrollDirectionVertical;
-    layout.blockPixels = CGSizeMake(117, 167);
+    layout.blockPixels = CGSizeMake(155, 215);
     
     [self.collectionView reloadData];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    [self.collectionView reloadData];
+   // [self.collectionView reloadData];
 }
 
 -(void) initialiseOptions
 {
+    utilities = [Utilities sharedClient];
+    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Options" ofType:@"plist"];
     NSDictionary *  dictionary = [[NSMutableDictionary alloc]initWithContentsOfFile:path];
     filterOptions = [[NSMutableArray alloc] initWithArray:[dictionary objectForKey:FILTER_KEY]];
@@ -100,30 +120,36 @@ int num = 0;
 #pragma mark - UICollectionView Datasource
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
-    return self.numbers.count;
+    return self.players.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      PlayerProfileCollectionCell * cell= (PlayerProfileCollectionCell *)[cv dequeueReusableCellWithReuseIdentifier:@"PlayerProfileCollectionCell" forIndexPath:indexPath];
+    PlayerProfileCollectionCell * cell= (PlayerProfileCollectionCell *)[cv dequeueReusableCellWithReuseIdentifier:@"PlayerProfileCollectionCell" forIndexPath:indexPath];
     
+    Player * player = [self.players objectAtIndex:indexPath.row];
+    
+    cell.playerImage.image = [UIImage imageNamed:player.Image];
     
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
+    /*TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
     teamStatsViewController.view.backgroundColor = [UIColor blueColor];
     //teamStatsViewController.view.alpha = 0.5f;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     [self presentViewController:teamStatsViewController animated:NO completion:nil];
     
     teamStatsViewController.view.alpha = 0;
-    [UIView animateWithDuration:0.5 animations:^{
-        teamStatsViewController.view.alpha = 0.5;
-    }];
-    
+    [UIView animateWithDuration:0.5 delay:0.4 options:UIModalTransitionStyleFlipHorizontal animations:^{
+         teamStatsViewController.view.alpha = 0.5;
+    } completion:nil];*/
+
+    PlayerDetailViewController * playerDetailViewController = [[PlayerDetailViewController alloc] initWithNibName:@"PlayerDetailViewController" bundle:nil];
+    playerDetailViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:playerDetailViewController animated:YES completion:nil];
     
     
     
@@ -148,10 +174,10 @@ int num = 0;
 
 - (CGSize) blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.row >= self.numbers.count)
-        NSLog(@"Asking for index paths of non-existant cells!! %d from %d cells", indexPath.row, self.numbers.count);
+    if(indexPath.row >= self.players.count)
+        NSLog(@"Asking for index paths of non-existant cells!! %d from %d cells", indexPath.row, self.players.count);
     
-    if (indexPath.row % 11 == 0)
+    if (indexPath.row % 13 == 0)
         return CGSizeMake(2, 2);
     
     
@@ -192,5 +218,42 @@ int num = 0;
     return cell;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([menuTableView tag] == FILTER_TAG)
+    {
+        if(indexPath.row == 0)
+        {
+            [self updatePlayers:nil forMainPosition:nil];
+        }
+        else if(indexPath.row == 1)
+        {
+            [self updatePlayers:nil forMainPosition:@"Forwards"];
+        }
+        else if(indexPath.row == 2)
+        {
+            [self updatePlayers:nil forMainPosition:@"Backs"];
+        }
+        else
+        {
+        NSLog(@"Player is %@", [filterOptions objectAtIndex:indexPath.row]);
+            [self updatePlayers:[filterOptions objectAtIndex:indexPath.row] forMainPosition:nil];
+        }
+        [filterController dismissPopoverAnimated:YES];
+    }
+}
+
+-(void) updatePlayers:(NSString *) position forMainPosition:(NSString*)mainPosition
+{
+    self.players = nil;
+    self.players = [@[] mutableCopy];
+    PlayerItems * playerItems = nil;
+    playerItems = [dataModel getPlayerItems:position forMainPosition:mainPosition];
+    [self.players setArray:playerItems.players];
+    
+    [self.collectionView reloadData];
+    
+}
 
 @end

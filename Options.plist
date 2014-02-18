@@ -4,14 +4,14 @@
 <dict>
 	<key>Filter</key>
 	<array>
+		<string>All</string>
 		<string>Forwards</string>
 		<string>Backs</string>
-		<string>Inside backs</string>
-		<string>Outside backs</string>
 		<string>Back Row</string>
-		<string>Tight</string>
-		<string>Starting</string>
-		<string>16-23</string>
+		<string>Front Row</string>
+		<string>Half Backs</string>
+		<string>Three quarters</string>
+		<string>Fullback</string>
 	</array>
 	<key>Sort</key>
 	<array>
