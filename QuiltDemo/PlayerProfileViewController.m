@@ -41,6 +41,13 @@ int num = 0;
     
     [self initialiseOptions];
     
+    UIImage *backGroundImage = [UIImage imageNamed:@"background.png"];
+    UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
+    backImageView.frame = self.view.frame;
+    [self.view addSubview:backImageView];
+    [self.view sendSubviewToBack:backImageView];
+ 
+    
     UINib *industryNib = [UINib nibWithNibName:@"PlayerProfileCollectionCell" bundle:nil];
     [self.collectionView registerNib:industryNib forCellWithReuseIdentifier:@"PlayerProfileCollectionCell"];
     
@@ -149,6 +156,7 @@ int num = 0;
 
     PlayerDetailViewController * playerDetailViewController = [[PlayerDetailViewController alloc] initWithNibName:@"PlayerDetailViewController" bundle:nil];
     playerDetailViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    playerDetailViewController.player = [self.players objectAtIndex:indexPath.row];
     [self presentViewController:playerDetailViewController animated:YES completion:nil];
     
     

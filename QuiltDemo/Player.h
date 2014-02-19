@@ -20,4 +20,6 @@
 
 @property NSString * FilterPosition;
 
+@property NSString * ProfileImage;
+
 @end

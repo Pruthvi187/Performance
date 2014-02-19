@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <CorePlot/CorePlot-CocoaTouch.h>
 
-@interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate>
+@class Player;
+
+@interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 {
     CPTXYGraph * graph;
     NSMutableArray *dataForPlot;
@@ -17,6 +19,19 @@
 
 @property(nonatomic, retain) IBOutlet CPTGraphHostingView* hostView;
 
+@property(nonatomic, retain) IBOutlet UITableView * playerTableView;
+
+@property(nonatomic, retain) IBOutlet UISearchBar * playerSearchBar;
+
 @property (nonatomic, readwrite, strong) NSMutableArray *dataForPlot;
+
+@property (nonatomic, retain) IBOutlet UIView * playerSearchView;
+
+@property (nonatomic, retain) IBOutlet UIImageView * backButton;
+
+@property (nonatomic, retain) IBOutlet UIImageView * profileImage;
+
+@property(strong, nonatomic) Player * player;
+
 
 @end

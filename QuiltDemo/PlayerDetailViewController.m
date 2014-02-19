@@ -7,11 +7,20 @@
 //
 
 #import "PlayerDetailViewController.h"
+#import "PlayerSearchCell.h"
+#import "PlayerItems.h"
+#import "DataModel.h"
+#import "Player.h"
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
 
 @interface PlayerDetailViewController ()
+{
+    DataModel * dataModel;
+}
+@property (nonatomic) NSMutableArray * players;
+@property (strong,nonatomic) NSMutableArray *filteredPlayersArray;
 
 @end
 
@@ -26,9 +35,59 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.profileImage setImage:[UIImage imageNamed:self.player.ProfileImage]];
+    
+    //self.playerTableView.tableHeaderView = self.playerSearchBar;
+    
+    for (UIView *subView in self.playerSearchBar.subviews)
+    {
+        for (UIView *secondLevelSubview in subView.subviews){
+            if ([secondLevelSubview isKindOfClass:[UITextField class]])
+            {
+                UITextField *searchBarTextField = (UITextField *)secondLevelSubview;
+                
+                //set font color here
+                searchBarTextField.textColor = [UIColor whiteColor];
+                
+                break;
+            }
+        }
+    }
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backButtonPressed)];
+    singleTap.numberOfTapsRequired = 1;
+    self.backButton.userInteractionEnabled = YES;
+    [self.backButton addGestureRecognizer:singleTap];
+    
+    
+    
+    UITextField *searchField = [self.playerSearchBar valueForKey:@"_searchField"];
+    searchField.textColor = [UIColor whiteColor];
+    
+    self.playerSearchBar.layer.borderWidth = 1;
+    self.playerSearchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.playerSearchBar.layer.cornerRadius = 15.0f;
+    
+    UIImage *backGroundImage = [UIImage imageNamed:@"background.png"];
+    UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
+    backImageView.frame = self.playerSearchView.frame;
+    [self.playerSearchView addSubview:backImageView];
+    [self.playerSearchView sendSubviewToBack:backImageView];
+    
+   
+    
+    UINib *playerCellNib = [UINib nibWithNibName:@"PlayerSearchCell" bundle:nil];
+    [self.playerTableView registerNib:playerCellNib forCellReuseIdentifier:@"PlayerCell"];
+    
+    self.players = [@[] mutableCopy];
+    dataModel = [DataModel sharedClient];
+    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    self.players = playerItems.players;
     
     [self initializeData];
    
@@ -63,12 +122,12 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     // Grid line styles
     CPTMutableLineStyle *majorGridLineStyle = [CPTMutableLineStyle lineStyle];
     majorGridLineStyle.lineWidth = 0.75;
-    majorGridLineStyle.lineColor = [[CPTColor colorWithGenericGray:0.2] colorWithAlphaComponent:0.75];
+    majorGridLineStyle.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:1.0];
     
     CPTMutableLineStyle *minorGridLineStyle = [CPTMutableLineStyle lineStyle];
     minorGridLineStyle.lineWidth = 0.25;
     minorGridLineStyle.dashPattern = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:1],nil];
-    minorGridLineStyle.lineColor = [[CPTColor blackColor] colorWithAlphaComponent:1.0];
+    minorGridLineStyle.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:1.0];
     
     // Label y with an automatic label policy.
     // Axes
@@ -197,6 +256,84 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     
     return symbol;
 }
+
+#pragma TableView Delegate methods
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.players.count;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString * cellIdentifier = @"PlayerCell";
+    PlayerSearchCell *cell = [self.playerTableView dequeueReusableCellWithIdentifier:cellIdentifier
+                                                                        forIndexPath:indexPath];
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundView = [UIView new];
+    cell.selectedBackgroundView = [UIView new];
+    
+    Player * player = [self.players objectAtIndex:indexPath.row];
+    cell.playerImage.image = [UIImage imageNamed:player.Image];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.playerSearchBar resignFirstResponder];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+#pragma Predicate Delegates
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    if(searchText.length  > 0)
+    {
+     NSArray *filteredarray = [self.players filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(Name CONTAINS[cd] %@)", searchText]];
+    self.players = nil;
+    self.players = [@[] mutableCopy];
+    [self.players setArray:filteredarray];
+    [self.playerTableView reloadData];
+    }
+    else
+    {
+        self.players = nil;
+        dataModel = [DataModel sharedClient];
+        PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+        self.players = playerItems.players;
+
+        [self.playerTableView reloadData];
+    }
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    [self filterContentForSearchText:searchText
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+}
+
+
+-(void)backButtonPressed
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 
 @end

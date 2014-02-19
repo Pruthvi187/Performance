@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuiltDemo/PlayerProfileViewController.m"
-            timestampString = "414388804.397139"
+            timestampString = "414479813.875935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "-updatePlayers:forMainPosition:"
             landmarkType = "5">
          </BreakpointContent>
