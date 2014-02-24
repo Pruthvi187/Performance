@@ -8,19 +8,20 @@
 
 #import "ModelItems.h"
 #import "Model.h"
+#import "Player.h"
 
 @implementation ModelItems
 
 @synthesize models;
 
-+(ModelItems*) modelItemsWithArray:(NSMutableArray *) array
++(ModelItems*) modelItemsWithArray:(NSMutableArray *) array forPlayer:(Player*) player
 {
     ModelItems * modelItems = [[ModelItems alloc] init];
-    [modelItems setModelItemsUsingJSONObject:array];
+    [modelItems setModelItemsUsingJSONObject:array forPlayer:player];
     return modelItems;
 }
 
--(void) setModelItemsUsingJSONObject:(NSMutableArray *)resultsArray
+-(void) setModelItemsUsingJSONObject:(NSMutableArray *)resultsArray forPlayer:(Player*) player
 {
     NSMutableArray * items = [[NSMutableArray alloc] init];
     int i =1;
@@ -31,9 +32,12 @@
        
         [model setValuesForKeysWithDictionary:item];
        
-            NSLog(@"Count is %d", i);
-            [items addObject: model];
-            i++;
+            if([model.Player_ID intValue] == [player.ID intValue])
+            {
+                   NSLog(@"Count is %d", i);
+                   [items addObject: model];
+                   i++;
+            }
         
     }
     self.models = items;

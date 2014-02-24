@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                    <rect key="frame" x="0.0" y="174" width="1024" height="697"/>
+                    <rect key="frame" x="0.0" y="174" width="1024" height="594"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <collectionViewLayout key="collectionViewLayout" id="18" customClass="RFQuiltLayout">
@@ -168,7 +168,6 @@
                 <constraint firstItem="8" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" id="11"/>
                 <constraint firstItem="8" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="13"/>
                 <constraint firstItem="fbX-4A-C8t" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="1lq-iI-YMn"/>
-                <constraint firstAttribute="bottom" secondItem="8" secondAttribute="bottom" constant="-103" id="RFd-Lo-8tK"/>
                 <constraint firstItem="k01-nS-YVw" firstAttribute="trailing" secondItem="8" secondAttribute="trailing" id="TrH-xa-Aih"/>
                 <constraint firstItem="k01-nS-YVw" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="WsR-1t-44s"/>
                 <constraint firstItem="fbX-4A-C8t" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="30" id="Xwp-HJ-1hN"/>
@@ -176,6 +175,7 @@
                 <constraint firstItem="k01-nS-YVw" firstAttribute="top" secondItem="6" secondAttribute="top" id="c6d-qe-Rh1"/>
                 <constraint firstItem="8" firstAttribute="top" secondItem="fbX-4A-C8t" secondAttribute="bottom" constant="129" id="drw-WX-fhS"/>
                 <constraint firstAttribute="centerX" secondItem="8" secondAttribute="centerX" id="gjT-6P-zu8"/>
+                <constraint firstAttribute="bottom" secondItem="8" secondAttribute="bottom" id="oFS-Af-FnP"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

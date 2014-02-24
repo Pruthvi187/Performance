@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class Player;
+
 @interface ModelItems : NSObject
 
 @property NSMutableArray * models;
 
-+(ModelItems*) modelItemsWithArray:(NSMutableArray *) array;
++(ModelItems*) modelItemsWithArray:(NSMutableArray *) array forPlayer:(Player*) player;
 
--(void) setModelItemsUsingJSONObject:(NSMutableArray *)resultsArray;
+-(void) setModelItemsUsingJSONObject:(NSMutableArray *)resultsArray forPlayer:(Player*) player;
 
 @end

@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class ModelItems, PlayerItems;
+@class ModelItems, PlayerItems, Player, WellnessPlayers;
 
 @interface DataModel : NSObject
 
 +(DataModel*) sharedClient;
 
--(ModelItems*) getModelItems;
+-(ModelItems*) getModelItems:(Player*) player;
+
+-(WellnessPlayers*) getPlayersWellness:(Player*) player;
 
 -(PlayerItems*) getPlayerItems:(NSString *) position forMainPosition:(NSString*)mainPosition;
 

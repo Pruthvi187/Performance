@@ -71,7 +71,11 @@ int num = 0;
     layout.direction = UICollectionViewScrollDirectionVertical;
     layout.blockPixels = CGSizeMake(155, 215);
     
-    [self.collectionView reloadData];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView reloadData];
+    } completion:^(BOOL finished) {}];
+    
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -115,7 +119,7 @@ int num = 0;
     NSLog(@"Tag is %d and %d", menuTableView.tag, [sender tag]);
     menuTableView.backgroundColor = [UIColor clearColor];
     popOverController.view = menuTableView;
-    popOverController.contentSizeForViewInPopover = CGSizeMake(450, 350);
+    popOverController.preferredContentSize = CGSizeMake(450, 370);
     filterController = [[UIPopoverController alloc] initWithContentViewController:popOverController];
     filterController.delegate =self;
     [filterController presentPopoverFromRect:[sender bounds] inView:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
@@ -175,7 +179,6 @@ int num = 0;
     [self.view bringSubviewToFront:teamStatsViewController.view];*/
 
 }
-
 
 
 #pragma mark – RFQuiltLayoutDelegate

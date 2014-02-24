@@ -150,7 +150,7 @@
 
 @property NSString * Player_ID;
 
-@property NSDate * DOB;
+@property NSString * DOB;
 
 @property NSString * Height;
 

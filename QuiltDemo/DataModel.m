@@ -9,6 +9,7 @@
 #import "DataModel.h"
 #import "PlayerItems.h"
 #import "ModelItems.h"
+#import "WellnessPlayers.h"
 
 @implementation DataModel
 
@@ -23,14 +24,14 @@
     return  dataModel;
 }
 
--(ModelItems*) getModelItems
+-(ModelItems*) getModelItems:(Player*) player
 {
     
     NSString * jsonString = [self getJSONString:@"PlayerData" ofType:@"json"];
     
     NSMutableArray * playerData =  [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     
-    ModelItems * modelItems = [ModelItems modelItemsWithArray:playerData];
+    ModelItems * modelItems = [ModelItems modelItemsWithArray:playerData forPlayer:player];
     
     //NSMutableArray * array = modelItems.models;
     
@@ -48,6 +49,17 @@
     
     return playrItems;
     
+}
+
+-(WellnessPlayers*) getPlayersWellness:(Player*) player
+{
+    NSString * jsonString = [self getJSONString:@"Wellness" ofType:@"json"];
+    
+    NSMutableArray * wellnessData =  [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    
+    WellnessPlayers * wellnessItems = [WellnessPlayers wellnessItemsWithArray:wellnessData forPlayer:player];
+    
+    return wellnessItems;
 }
 
 -(NSString*) getJSONString:(NSString*)fileName ofType:(NSString*)type
