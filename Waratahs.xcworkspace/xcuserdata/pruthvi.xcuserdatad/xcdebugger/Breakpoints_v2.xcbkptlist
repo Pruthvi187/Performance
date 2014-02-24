@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuiltDemo/PlayerDetailViewController.m"
-            timestampString = "414896855.561955"
+            timestampString = "414904575.524721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "719"
-            endingLineNumber = "719"
+            startingLineNumber = "722"
+            endingLineNumber = "722"
             landmarkName = "-wellBeingButtonClicked:"
             landmarkType = "5">
          </BreakpointContent>

@@ -69,19 +69,12 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 
 -(void) setupView
 {
+
+    DataModel * dataModelClient = [DataModel sharedClient];
     
-  
-    
-    
-    DataModel * dataModel = [DataModel sharedClient];
-    
-    WellnessPlayers * wellnessItems = [dataModel getPlayersWellness:self.player];
+    WellnessPlayers * wellnessItems = [dataModelClient getPlayersWellness:self.player];
     
     Wellness * wellness = [wellnessItems.wellness lastObject];
-    
-    ModelItems * modelItems = [dataModel getModelItems:self.player];
-    
-    Model * model = [modelItems.models firstObject];
     
     Utilities * utilities = [Utilities sharedClient];
     
@@ -463,12 +456,15 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     fitnessView.frame = CGRectMake(30, 100, 811, 315);
     [self.tabScrollView addSubview:fitnessView];
     [self.tabScrollView bringSubviewToFront:fitnessView];
+    
+    self.wellBeingButton.enabled = YES;
+    self.riskButton.enabled = YES;
+    self.fitnessButton.enabled = NO;
 }
 
 -(IBAction)riskButtonClicked:(id)sender
 {
-    wellnessView.hidden = YES;
-    fitnessView.hidden = YES;
+   
     
     riskView = [[[NSBundle mainBundle] loadNibNamed:@"RiskView" owner:self options:nil] objectAtIndex:0];
     riskView.frame = CGRectMake(30, 100, 811, 315);
@@ -479,6 +475,13 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
      [self.riskButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
      [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
      [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
+    
+    wellnessView.hidden = YES;
+    fitnessView.hidden = YES;
+    
+    self.wellBeingButton.enabled = YES;
+    self.riskButton.enabled = NO;
+    self.fitnessButton.enabled = YES;
 }
 
 -(IBAction)wellBeingButtonClicked:(id)sender
@@ -730,6 +733,10 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
+    
+    self.wellBeingButton.enabled = NO;
+    self.riskButton.enabled = YES;
+    self.fitnessButton.enabled = YES;
 }
 
 
