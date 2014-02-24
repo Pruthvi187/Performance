@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QuiltDemo/PlayerProfileViewController.m"
-            timestampString = "414479813.875935"
+            filePath = "QuiltDemo/PlayerDetailViewController.m"
+            timestampString = "414896855.561955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "-updatePlayers:forMainPosition:"
+            startingLineNumber = "719"
+            endingLineNumber = "719"
+            landmarkName = "-wellBeingButtonClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
