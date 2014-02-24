@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "PlayerProfileViewController.h"
 
-@interface TeamStatsViewController : UIViewController
+@interface TeamStatsViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
 @property(nonatomic, retain) PlayerProfileViewController * playerProfileViewController;
 
 @property(nonatomic, retain) IBOutlet UIButton * backButton;
+
+@property(nonatomic, retain) IBOutlet UIScrollView * contentScrollView;
+
+@property(nonatomic, retain) IBOutlet UICollectionView * graphCollectionView;
+
+
 
 
 
