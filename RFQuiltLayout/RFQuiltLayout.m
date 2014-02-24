@@ -396,6 +396,7 @@
 }
 
 
+
 // this will return the maximum width or height the quilt
 // layout can take, depending on we're growing horizontally
 // or vertically

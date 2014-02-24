@@ -20,4 +20,18 @@
 
 @property NSString * FilterPosition;
 
+@property NSString * ProfileImage;
+
+@property NSString * DOB;
+
+@property NSString * Age;
+
+@property NSString * Height;
+
+@property NSString * Weight;
+
+@property NSString * Debut;
+
+@property NSString * Caps;
+
 @end
