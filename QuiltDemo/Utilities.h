@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class WellnessPlayers;
+@class WellnessPlayers, ModelItems, PlayerItems;
 
 @interface Utilities : NSObject
 
 +(Utilities *) sharedClient;
 
 -(NSString *) getFilePath:(NSString *) fileName ofType:(NSString *)type;
+
+-(PlayerItems*) getSortedPlayerItems:(NSString*) sortType withSortKind:(BOOL)ascending;
 
 -(double) getAverageSleepQuality:(WellnessPlayers*)wellness;
 
@@ -37,5 +39,31 @@
 -(double) getAverageGroin:(WellnessPlayers*)wellness;
 
 -(double) getAverageHamstrings:(WellnessPlayers*)wellness;
+
+-(double) getAverageSumofVolume:(ModelItems*)modelItems;
+
+-(double) getAverageAcceleration:(ModelItems*)modelItems;
+
+-(double) getAverageTotalDistance:(ModelItems*)modelItems;
+
+-(double) getAverageForceLoadPM:(ModelItems*)modelItems;
+
+-(double) getAveragePercievedExertionRate:(WellnessPlayers*)wellnessItems;
+
+-(double) getAverageVelocityChangeLoad:(ModelItems*)modelItems;
+
+-(double) getAverageVelocityLoadPM:(ModelItems*)modelItems;
+
+-(double) getAverageTotalSprintDistance:(ModelItems*)modelItems;
+
+-(double) getAverageSitAndReach:(ModelItems*)modelItems;
+
+-(double) getAverageHipRotationL:(ModelItems*)modelItems;
+
+-(double) getAverageHipRotationR:(ModelItems*)modelItems;
+
+-(double) getAverageGroinSqueezeZero:(ModelItems*)modelItems;
+
+-(double) getAverageGroinSqueeze60:(ModelItems*)modelItems;
 
 @end

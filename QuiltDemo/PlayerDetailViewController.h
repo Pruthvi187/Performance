@@ -40,6 +40,32 @@
     NSString * groins;
     int avg_hamstring;
     NSString * hamstrings;
+    int avg_sitreach;
+    NSString * sitReach;
+    int avg_hiprotationl;
+    NSString * hipRotationL;
+    int avg_hiprotationr;
+    NSString * hipRotationR;
+    int avg_groinSqueeze0;
+    NSString * groinSqueeze0;
+    int avg_groinSqueeze60;
+    NSString * groinSqueeze60;
+    int avg_sumofvol;
+    NSString * SumofVol;
+    int avg_AcclEvents;
+    NSString * AcclEvents;
+    int avg_TotalDist;
+    NSString * TotalDistance;
+    int  avg_percievedExertion;
+    NSString * percievedExertion;
+    int avg_forceLoadPM;
+    NSString * forceLoadPM;
+    int avg_velChangeLoad;
+    NSString * velChangeLoad;
+    int avg_velLoadPM;
+    NSString * velLoadPM;
+    int avg_TotalSprintDist;
+    NSString * totalSprintDistance;
 }
 
 @property(nonatomic, retain) IBOutlet CPTGraphHostingView* hostView;
@@ -88,9 +114,31 @@
 
 @property(nonatomic, retain) IBOutlet UILabel * ageLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * yearsPlayingLabel;
+@property(nonatomic, retain) IBOutlet UILabel * riskRatingLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * positionLabel;
+
+@property(nonatomic, retain) IBOutlet UIButton * changeRiskButton;
+
+@property(nonatomic, retain) IBOutlet UIButton * fitnessIcon;
+
+@property(nonatomic, retain) IBOutlet UIButton * riskIcon;
+
+@property(nonatomic, retain) IBOutlet UIButton * wellbeingIcon;
+
+@property(nonatomic, retain) IBOutlet UILabel * riskChangeLabel;
+
+@property(nonatomic, retain) IBOutlet UIImageView * riskchangeImage;
+
+@property(nonatomic, retain) IBOutlet UILabel * fitnessTabLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * risTabkLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * wellbeingTabLabel;
+
+@property(nonatomic, retain) IBOutlet UIScrollView * mainScrollView;
+
+-(IBAction)changeRiskButtonClicked:(id)sender;
 
 -(IBAction)fitnessButtonClicked:(id)sender;
 

@@ -569,13 +569,24 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="avgBackPainView" destination="nTr-Es-QZE" id="HOp-w5-pdR"/>
+                <outlet property="avgCalvesView" destination="ZVx-iK-P5t" id="oHc-xG-3gi"/>
                 <outlet property="avgGroinLabel" destination="n1f-Fj-2tp" id="N7x-Ry-6mP"/>
+                <outlet property="avgGroinView" destination="ots-2D-oAw" id="X3b-F6-y6s"/>
+                <outlet property="avgHamstringView" destination="x5i-TR-dnk" id="syo-pt-Bcq"/>
+                <outlet property="avgHipFlexorQuadView" destination="fJ1-hW-u7K" id="vSn-qC-kYU"/>
+                <outlet property="avgMuscleSorenessView" destination="3n9-a1-Ghz" id="OnV-Pd-e3m"/>
+                <outlet property="avgROMTightnessView" destination="Dxq-T1-c4Q" id="hYV-Xg-Iej"/>
+                <outlet property="avgRecoveryIndexView" destination="7pc-41-I4f" id="FmV-Ed-nD4"/>
                 <outlet property="avgSleepQualityLabel" destination="6gz-Jn-nBN" id="wgB-y3-38o"/>
+                <outlet property="avgSleeplessnessView" destination="wQW-Le-VoH" id="H2Q-JR-M6p"/>
+                <outlet property="avgTrainingStateView" destination="ebr-62-TKu" id="KPh-P3-goU"/>
                 <outlet property="avgbackPainLabel" destination="xjc-WG-6gR" id="Z0Q-I2-bgS"/>
                 <outlet property="avgcalvesLabel" destination="8rQ-Xp-69f" id="Lba-vV-a4I"/>
                 <outlet property="avghamstringLabel" destination="QzY-b0-hIp" id="hHu-aq-M6P"/>
                 <outlet property="avghipflexorQuadLabel" destination="B8I-4F-R5Z" id="IvF-HJ-rHG"/>
                 <outlet property="avglegHeavinessLabel" destination="Kj0-6l-RRv" id="nGD-bH-C9N"/>
+                <outlet property="avglegHeavinessView" destination="XvX-cr-2FR" id="08p-71-MXN"/>
                 <outlet property="avgmuscleSorenessLabel" destination="qCe-FA-q2K" id="Niu-FR-wSK"/>
                 <outlet property="avgrecoveryIndexLabel" destination="mKz-bu-mhJ" id="EDU-dC-2XX"/>
                 <outlet property="avgromTightnessLabel" destination="cme-qz-B1I" id="MMt-qk-197"/>

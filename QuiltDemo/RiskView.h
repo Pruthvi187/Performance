@@ -12,11 +12,15 @@
 
 @property(nonatomic, retain) IBOutlet UIView * sumofVolView;
 
+@property(nonatomic, retain) IBOutlet UIView * avgSumofVolView;
+
 @property(nonatomic, retain) IBOutlet UILabel * sumofVolLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * avgsumofVolLabel;
 
 @property(nonatomic, retain) IBOutlet UIView * accEventsView;
+
+@property(nonatomic, retain) IBOutlet UIView * avgAccEventsView;
 
 @property(nonatomic, retain) IBOutlet UILabel * accEventsLabel;
 
@@ -24,11 +28,15 @@
 
 @property(nonatomic, retain) IBOutlet UIView * totalDistView;
 
+@property(nonatomic, retain) IBOutlet UIView * avgTotalDistView;
+
 @property(nonatomic, retain) IBOutlet UILabel * totalDistLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * avgtotalDistLabel;
 
 @property(nonatomic, retain) IBOutlet UIView * forceLoadView;
+
+@property(nonatomic, retain) IBOutlet UIView * avgForceLoadView;
 
 @property(nonatomic, retain) IBOutlet UILabel * forceLoadLabel;
 
@@ -36,11 +44,15 @@
 
 @property(nonatomic, retain) IBOutlet UIView * rateofPercExertionView;
 
+@property(nonatomic, retain) IBOutlet UIView * avgRateofPercExertionView;
+
 @property(nonatomic, retain) IBOutlet UILabel * rateofPercExertionLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * avgrateofPercExertionLabel;
 
 @property(nonatomic, retain) IBOutlet UIView * velchangeLoadView;
+
+@property(nonatomic, retain) IBOutlet UIView * avgVelChangeLoadView;
 
 @property(nonatomic, retain) IBOutlet UILabel * velchangeLoadLabel;
 
@@ -48,11 +60,15 @@
 
 @property(nonatomic, retain) IBOutlet UIView * velLoadPerMinView;
 
+@property(nonatomic, retain) IBOutlet UIView * avgLoadPerMinView;
+
 @property(nonatomic, retain) IBOutlet UILabel * velLoadPerMinLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * avgvelLoadPerMinLabel;
 
 @property(nonatomic, retain) IBOutlet UIView * totalSprintDistView;
+
+@property(nonatomic, retain) IBOutlet UIView * avgTotalSprintDistanceView;
 
 @property(nonatomic, retain) IBOutlet UILabel * totalSprintDistLabel;
 

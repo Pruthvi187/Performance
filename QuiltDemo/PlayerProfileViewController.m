@@ -15,6 +15,7 @@
 #import "PlayerItems.h"
 #import "Utilities.h"
 #import "Player.h"
+#import "Colours.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -46,6 +47,8 @@ int num = 0;
     backImageView.frame = self.view.frame;
     [self.view addSubview:backImageView];
     [self.view sendSubviewToBack:backImageView];
+    
+    self.optionsPlaceHolderView.backgroundColor = UIColorFromHexWithAlpha(0x001B4A, 0.75);
  
     
     UINib *industryNib = [UINib nibWithNibName:@"PlayerProfileCollectionCell" bundle:nil];
@@ -53,33 +56,28 @@ int num = 0;
     
     dataModel = [DataModel sharedClient];
     
-    //ModelItems * modelItems = [dataModel getModelItems];
-    
     PlayerItems * playerItems = nil;
     playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
     
-    
-    //self.models = [@[] mutableCopy];
-    //[self.models setArray:modelItems.models];
-    
     self.players = [@[] mutableCopy];
     [self.players setArray:playerItems.players];
-    
-   // [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     RFQuiltLayout* layout = (id)[self.collectionView collectionViewLayout];
     layout.direction = UICollectionViewScrollDirectionVertical;
     layout.blockPixels = CGSizeMake(155, 215);
     
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView reloadData];
-    } completion:^(BOOL finished) {}];
-    
+    [self sortPlayers:@"RiskRating" sortKind:NO];
     
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-   // [self.collectionView reloadData];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showTeamStats:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [self.teamStatsOpenButton addGestureRecognizer:singleTap];
+    [self.teamStatsOpenButton setUserInteractionEnabled:YES];
+    
+    
 }
 
 -(void) initialiseOptions
@@ -147,36 +145,13 @@ int num = 0;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
-    teamStatsViewController.view.backgroundColor = [UIColor blueColor];
-    //teamStatsViewController.view.alpha = 0.5f;
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    [self presentViewController:teamStatsViewController animated:NO completion:nil];
-    
-    teamStatsViewController.view.alpha = 0;
-    [UIView animateWithDuration:0.5 delay:0.4 options:UIModalTransitionStyleFlipHorizontal animations:^{
-         teamStatsViewController.view.alpha = 0.5;
-    } completion:nil];*/
+   
 
     PlayerDetailViewController * playerDetailViewController = [[PlayerDetailViewController alloc] initWithNibName:@"PlayerDetailViewController" bundle:nil];
     playerDetailViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     playerDetailViewController.player = [self.players objectAtIndex:indexPath.row];
+    playerDetailViewController.view.alpha = 1;
     [self presentViewController:playerDetailViewController animated:YES completion:nil];
-    
-    
-    
-   
-    /*[self addChildViewController:teamStatsViewController];
-    [UIView beginAnimations:@"fadeIn" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationDuration:0.4f];
-    teamStatsViewController.view.alpha = 0.5f;
-    teamStatsViewController.view.frame = CGRectMake(0, 40, 1024, 730);
-    [UIView commitAnimations];
-    [teamStatsViewController.view setTag:100];
-    [self.view addSubview:teamStatsViewController.view];
-    [teamStatsViewController didMoveToParentViewController:self];
-    [self.view bringSubviewToFront:teamStatsViewController.view];*/
 
 }
 
@@ -251,6 +226,24 @@ int num = 0;
         NSLog(@"Player is %@", [filterOptions objectAtIndex:indexPath.row]);
             [self updatePlayers:[filterOptions objectAtIndex:indexPath.row] forMainPosition:nil];
         }
+        [self.filterLabel setText:[filterOptions objectAtIndex:indexPath.row]];
+        [filterController dismissPopoverAnimated:YES];
+    }
+    else
+    {
+        if(indexPath.row == 0)
+        {
+            [self sortPlayers:@"RiskRating" sortKind:NO];
+        }
+        else if (indexPath.row == 1)
+        {
+            [self sortPlayers:@"RiskRating" sortKind:YES];
+        }
+        else if (indexPath.row == 2)
+        {
+            [self sortPlayers:@"FitnessRating" sortKind:NO];
+        }
+        [self.sortLabel setText:[sortOptions objectAtIndex:indexPath.row]];
         [filterController dismissPopoverAnimated:YES];
     }
 }
@@ -264,6 +257,33 @@ int num = 0;
     [self.players setArray:playerItems.players];
     
     [self.collectionView reloadData];
+    
+}
+
+-(void) sortPlayers:(NSString*)sortType sortKind:(BOOL)ascending
+{
+    self.players = nil;
+    self.players = [@[] mutableCopy];
+    PlayerItems * playerItems = nil;
+    playerItems = [utilities getSortedPlayerItems:sortType withSortKind:ascending];
+    [self.players setArray:playerItems.players];
+    
+    [self.collectionView reloadData];
+}
+
+-(void)showTeamStats:(id)sender
+{
+    TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
+    teamStatsViewController.view.backgroundColor = UIColorFromHexWithAlpha(0x001A49, 0.8);
+   
+     //teamStatsViewController.view.alpha = 0.5f;
+     self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    teamStatsViewController.view.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0.2 options:UIModalTransitionStyleFlipHorizontal animations:^{
+     teamStatsViewController.view.alpha = 1.0;
+    } completion:nil];
+     [self presentViewController:teamStatsViewController animated:NO completion:nil];
+     
     
 }
 

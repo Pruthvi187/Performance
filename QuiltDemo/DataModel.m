@@ -33,8 +33,6 @@
     
     ModelItems * modelItems = [ModelItems modelItemsWithArray:playerData forPlayer:player];
     
-    //NSMutableArray * array = modelItems.models;
-    
     return modelItems;
     
 }

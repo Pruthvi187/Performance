@@ -32,7 +32,7 @@
        
         [model setValuesForKeysWithDictionary:item];
        
-            if([model.Player_ID intValue] == [player.ID intValue])
+            if([model.ID intValue] == [player.ID intValue])
             {
                    NSLog(@"Count is %d", i);
                    [items addObject: model];

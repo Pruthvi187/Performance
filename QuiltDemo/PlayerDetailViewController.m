@@ -21,13 +21,22 @@
 #import "WellnessView.h"
 #import "Utilities.h"
 #import "Colours.h"
+#import "RiskEditViewController.h"
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
 
+typedef enum {
+    FITNESS   = 1,
+    RISK      = 2,
+    WELLBEING = 3,
+} IconValues;
+
 @interface PlayerDetailViewController ()
 {
     DataModel * dataModel;
+    ModelItems * modelItems;
+    Model * model;
 }
 @property (nonatomic) NSMutableArray * players;
 @property (strong,nonatomic) NSMutableArray *filteredPlayersArray;
@@ -49,11 +58,26 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    dataModel = [DataModel sharedClient];
+    
+    self.players = [@[] mutableCopy];
+    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    self.players = playerItems.players;
+    
+    self.filteredPlayersArray = nil;
+    self.filteredPlayersArray = [@[] mutableCopy];
+    [self.filteredPlayersArray setArray:self.players];
  
+    [self initiateViewSetUp];
+}
+
+-(void) initiateViewSetUp
+{
     [self setupView];
     
     [self initializeData];
-   
+    
     [self setupGraph];
     
     [self setupAxes];
@@ -71,6 +95,10 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 {
 
     DataModel * dataModelClient = [DataModel sharedClient];
+    
+    modelItems = [dataModelClient getModelItems:self.player];
+    
+    model = [modelItems.models lastObject];
     
     WellnessPlayers * wellnessItems = [dataModelClient getPlayersWellness:self.player];
     
@@ -122,6 +150,71 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     
     hamstrings = wellness.Hamstring;
     
+    avg_sitreach = (int)floor([utilities getAverageSitAndReach:modelItems]);
+    
+    sitReach = model.SitReach;
+    
+    avg_hiprotationr = (int)floor([utilities getAverageHipRotationR:modelItems]);
+    
+    hipRotationL = model.HipRotation_L;
+    
+    avg_hiprotationl = (int)floor([utilities getAverageHipRotationR:modelItems]);
+    
+    hipRotationR = model.HipRotation_R;
+    
+    avg_groinSqueeze0 = (int)floor([utilities getAverageGroinSqueezeZero:modelItems]);
+    
+    groinSqueeze0 = model.GroinSqueeze_0;
+    
+    avg_groinSqueeze60 = (int)floor([utilities getAverageGroinSqueeze60:modelItems]);
+    
+    groinSqueeze60 = model.GroinSqueeze_60;
+    
+    avg_sumofvol = (int)floor([utilities getAverageSumofVolume:modelItems]);
+    
+    SumofVol = model.Sum_ofV2;
+    
+    avg_AcclEvents = (int)floor([utilities getAverageAcceleration:modelItems]);
+    
+    AcclEvents = model.Sumof_AccTotal;
+    
+    avg_TotalDist = (int)floor([utilities getAverageTotalDistance:modelItems]);
+    
+    TotalDistance = model.SumofVol;
+    
+    avg_forceLoadPM = (int)floor(([utilities getAverageForceLoadPM:modelItems]));
+    
+    forceLoadPM  = model.AverageoffLmin;
+    
+    avg_percievedExertion = (int)floor([utilities getAveragePercievedExertionRate:wellnessItems]);
+    
+    percievedExertion = wellness.Perceived_Performance;
+    
+    avg_velChangeLoad = (int)floor([utilities getAverageVelocityChangeLoad:modelItems]);
+    
+    velChangeLoad = model.SumofVCLoadTotal;
+    
+    avg_velLoadPM = (int)floor(([utilities getAverageVelocityLoadPM:modelItems]));
+    
+    velLoadPM = model.AverageofvLmin;
+    
+    avg_TotalSprintDist = (int)floor([utilities getAverageTotalSprintDistance:modelItems]);
+    
+    totalSprintDistance = model.SumofSpr;
+    
+    [self.riskChangeLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRatingChange,@"%"]];
+    
+    if([self.player.RiskRatingChange intValue] < 0)
+    {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-down-green"]];
+        [self.riskChangeLabel setTextColor:UIColorFromHex(0x53B61D)];
+    }
+    else
+    {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-up-red"]];
+        [self.riskChangeLabel setTextColor:[UIColor redColor]];
+    }
+    
     self.dobLabel.text = self.player.DOB;
     
     self.ageLabel.text = self.player.Age;
@@ -142,38 +235,23 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     
     [self.playerName setText:self.player.Name];
     
-    //self.playerTableView.tableHeaderView = self.playerSearchBar;
-    
-    for (UIView *subView in self.playerSearchBar.subviews)
-    {
-        for (UIView *secondLevelSubview in subView.subviews){
-            if ([secondLevelSubview isKindOfClass:[UITextField class]])
-            {
-                UITextField *searchBarTextField = (UITextField *)secondLevelSubview;
-                
-                //set font color here
-                searchBarTextField.textColor = [UIColor whiteColor];
-                
-                break;
-            }
-        }
-    }
-    
+    [self.riskRatingLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRating,@"%"]];
+
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backButtonPressed)];
     singleTap.numberOfTapsRequired = 1;
     self.backButton.userInteractionEnabled = YES;
     [self.backButton addGestureRecognizer:singleTap];
     
-    
-    
     UITextField *searchField = [self.playerSearchBar valueForKey:@"_searchField"];
-    searchField.textColor = [UIColor whiteColor];
+    searchField.textColor = [UIColor blackColor];
+    // Change the search bar placeholder text color
+    [searchField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
     
     self.playerSearchBar.layer.borderWidth = 1;
     self.playerSearchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.playerSearchBar.layer.cornerRadius = 15.0f;
     
-    UIImage *backGroundImage = [UIImage imageNamed:@"background.png"];
+    UIImage *backGroundImage = [UIImage imageNamed:@"profile_grass.jpg"];
     UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
     backImageView.frame = self.playerSearchView.frame;
     [self.playerSearchView addSubview:backImageView];
@@ -185,8 +263,6 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     [self.view addSubview:backGradientImageView];
     [self.view sendSubviewToBack:backGradientImageView];
     
-    
-    
     UINib *playerCellNib = [UINib nibWithNibName:@"PlayerSearchCell" bundle:nil];
     [self.playerTableView registerNib:playerCellNib forCellReuseIdentifier:@"PlayerCell"];
     
@@ -194,16 +270,18 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     
     self.tabScrollView.scrollEnabled = YES;
     
-    fitnessView = [[[NSBundle mainBundle] loadNibNamed:@"FitnessView" owner:self options:nil] objectAtIndex:0];
-    fitnessView.frame = CGRectMake(30, 100, 811, 315);
-    [self.tabScrollView addSubview:fitnessView];
-    [self.tabScrollView bringSubviewToFront:fitnessView];
+    self.mainScrollView.delegate = self;
+    
+    self.mainScrollView.scrollEnabled = YES;
+    
+    [self setupFitnessView];
 }
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     self.tabScrollView.contentSize =CGSizeMake(851.0f, 650.0f);
+    self.mainScrollView.contentSize = CGSizeMake(1024.0f,2000.0f);
 }
 
 -(void) setupGraph
@@ -215,7 +293,6 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     graph.plotAreaFrame.plotArea.backgroundColor = [[UIColor clearColor] CGColor];
     
     self.hostView.hostedGraph = graph;
- 
     
 }
 
@@ -223,12 +300,12 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 {
     // Grid line styles
     CPTMutableLineStyle *majorGridLineStyle = [CPTMutableLineStyle lineStyle];
-    majorGridLineStyle.lineWidth = 0.75;
+    majorGridLineStyle.lineWidth = 0.8;
     majorGridLineStyle.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:1.0];
     
     CPTMutableLineStyle *minorGridLineStyle = [CPTMutableLineStyle lineStyle];
     minorGridLineStyle.lineWidth = 0.25;
-    minorGridLineStyle.dashPattern = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:1],nil];
+    minorGridLineStyle.dashPattern = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:3],nil];
     minorGridLineStyle.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:1.0];
     
     // Label y with an automatic label policy.
@@ -237,20 +314,16 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     CPTXYAxis *y = axisSet.yAxis;
     y.labelingPolicy              = CPTAxisLabelingPolicyEqualDivisions;
+    
+    
     y.minorTicksPerInterval       = 2;
     y.preferredNumberOfMajorTicks = 1;
     y.majorGridLineStyle          = majorGridLineStyle;
     y.minorGridLineStyle          = minorGridLineStyle;
    
-    
-  
     CPTXYAxis *x = axisSet.xAxis;
-    x.labelingPolicy              = CPTAxisLabelingPolicyNone;
-    NSMutableSet *tickLocations = [NSMutableSet set];
-    for ( NSUInteger loc = 2; loc <= 10; loc=loc+2 ) {
-        [tickLocations addObject:[NSDecimalNumber numberWithUnsignedInteger:loc]];
-    }
-    x.majorTickLocations = tickLocations;
+    x.labelingPolicy              = CPTAxisLabelingPolicyEqualDivisions;
+  
     x.minorTicksPerInterval       = 0;
     x.preferredNumberOfMajorTicks = 5;
     x.majorGridLineStyle          = majorGridLineStyle;
@@ -301,12 +374,12 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     [xRange expandRangeByFactor:CPTDecimalFromDouble(1.0)];
     plotSpace.xRange = xRange;
     CPTMutablePlotRange *yRange = [plotSpace.yRange mutableCopy];
-    [yRange expandRangeByFactor:CPTDecimalFromDouble(1.0)];
+    [yRange expandRangeByFactor:CPTDecimalFromDouble(10.0)];
     plotSpace.yRange = yRange;
     
     CPTPlotRange *globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(10.0)];
     plotSpace.globalXRange = globalXRange;
-    CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(10.0)];
+    CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(100.0)];
     plotSpace.globalYRange = globalYRange;
 }
 
@@ -314,7 +387,6 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 {
     
     self.players = [@[] mutableCopy];
-    dataModel = [DataModel sharedClient];
     PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
@@ -322,7 +394,20 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     
     for ( NSUInteger i = 0; i < 15; i++ ) {
         id x = [NSNumber numberWithDouble:i * 0.5];
-        id y = [NSNumber numberWithDouble:2.0 * rand() / (double)RAND_MAX];
+        id y;
+        if(i <14)
+        {
+            float low_bound = [self.player.RiskRating intValue]  - 20;
+            low_bound = low_bound > 0 ? low_bound : 0;
+            float high_bound = [self.player.RiskRating intValue] + 20 ;
+            high_bound = high_bound > 100 ? 90 : high_bound;
+            float rndValue = (((float)arc4random()/0x100000000)*(high_bound-low_bound)+low_bound);
+            y = [NSNumber numberWithFloat:rndValue];
+        }
+        else
+        {
+            y = [NSNumber numberWithDouble:[self.player.RiskRating intValue]];
+        }
         [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
     }
     self.dataForPlot = contentArray;
@@ -373,7 +458,7 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.players.count;
+    return self.filteredPlayersArray.count;
 }
 
 
@@ -386,7 +471,7 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     cell.backgroundView = [UIView new];
     cell.selectedBackgroundView = [UIView new];
     
-    Player * player = [self.players objectAtIndex:indexPath.row];
+    Player * player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
     cell.playerImage.image = [UIImage imageNamed:player.Image];
     
     return cell;
@@ -395,12 +480,15 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.playerSearchBar resignFirstResponder];
+    self.player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
+    [self initiateViewSetUp];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 190;
 }
+
 
 #pragma Predicate Delegates
 
@@ -408,18 +496,18 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 {
     if(searchText.length  > 0)
     {
-     NSArray *filteredarray = [self.players filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(Name CONTAINS[cd] %@)", searchText]];
-    self.players = nil;
-    self.players = [@[] mutableCopy];
-    [self.players setArray:filteredarray];
+     NSArray *filteredarray = [self.filteredPlayersArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(Name CONTAINS[cd] %@)", searchText]];
+    self.filteredPlayersArray = nil;
+    self.filteredPlayersArray = [@[] mutableCopy];
+    [self.filteredPlayersArray setArray:filteredarray];
     [self.playerTableView reloadData];
     }
     else
     {
-        self.players = nil;
+        self.filteredPlayersArray = nil;
         dataModel = [DataModel sharedClient];
         PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
-        self.players = playerItems.players;
+        self.filteredPlayersArray = playerItems.players;
 
         [self.playerTableView reloadData];
     }
@@ -444,6 +532,14 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
 
 -(IBAction)fitnessButtonClicked:(id)sender
 {
+    [self setupFitnessView];
+    
+}
+
+-(void) setupFitnessView
+{
+    int overallFitnessCount = 0;
+    
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
@@ -457,31 +553,437 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     [self.tabScrollView addSubview:fitnessView];
     [self.tabScrollView bringSubviewToFront:fitnessView];
     
+    fitnessView.sitReachCurrent.text = [NSString stringWithFormat:@"%@",sitReach];
+    fitnessView.avgssitReach.text = [NSString stringWithFormat:@"%d",avg_sitreach];
+    
+    fitnessView.groinSqueeze0Current.text = [NSString stringWithFormat:@"%@",groinSqueeze0];
+    fitnessView.avgGroinSqueeze0.text = [NSString stringWithFormat:@"%d",avg_groinSqueeze0];
+    
+    fitnessView.groinSqueeze60Current.text = [NSString stringWithFormat:@"%@",groinSqueeze60];
+    fitnessView.avgGroinSqueeze60.text = [NSString stringWithFormat:@"%d",avg_groinSqueeze60];
+    
+    fitnessView.hipRotationLCurrent.text = [NSString stringWithFormat:@"%@",hipRotationL];
+    fitnessView.avghipRotationL.text = [NSString stringWithFormat:@"%d",avg_hiprotationl];
+    
+    fitnessView.hipRotationRCurrent.text = [NSString stringWithFormat:@"%@",hipRotationR];
+    fitnessView.avghipRotationR.text = [NSString stringWithFormat:@"%d",avg_hiprotationr];
+    
+    CGRect sitReachFrame;
+    
+    double sitReachPC = ([sitReach intValue]/(double)avg_sitreach);
+    
+    if(sitReachPC < 1)
+    {
+        sitReachFrame  = fitnessView.sitReachView.frame;;
+    }
+    else
+    {
+        sitReachFrame = fitnessView.avgSitReachView.frame;
+    }
+    
+    overallFitnessCount = [self setViewChange:fitnessView.sitReachView withPercentage:sitReachPC withCount:overallFitnessCount];
+    
+    if(sitReachPC < 1)
+    {
+        sitReachFrame.size.width = sitReachFrame.size.width * sitReachPC;
+        sitReachFrame.size.height = sitReachFrame.size.height;
+        [fitnessView.sitReachView setFrame:sitReachFrame];
+    }
+    else
+    {
+        sitReachFrame.size.width = sitReachFrame.size.width / sitReachPC;
+        sitReachFrame.size.height = sitReachFrame.size.height;
+        [fitnessView.avgSitReachView setFrame:sitReachFrame];
+    }
+    
+    /* NSLayoutConstraint * sitReachWidthConstaint = [NSLayoutConstraint constraintWithItem:fitnessView.sitReachView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:fitnessView.sitReachView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:200];
+     [fitnessView.sitReachView addConstraint:sitReachWidthConstaint];*/
+    // [self.view setNeedsLayout];
+    
+    CGRect groinSqueeze0Frame;
+    
+    double groinSqueeze0PC = ([groinSqueeze0 intValue]/(double)avg_groinSqueeze0);
+    
+    if(groinSqueeze0PC < 1)
+    {
+        groinSqueeze0Frame = fitnessView.groinSquuze0View.frame;
+    }
+    else
+    {
+       groinSqueeze0Frame = fitnessView.avggroinSquuze0View.frame;
+    }
+    
+    overallFitnessCount = [self setViewChange:fitnessView.groinSquuze0View withPercentage:groinSqueeze0PC withCount:overallFitnessCount];
+    
+    if(groinSqueeze0PC < 1)
+    {
+        groinSqueeze0Frame.size.width = groinSqueeze0Frame.size.width * groinSqueeze0PC;
+        groinSqueeze0Frame.size.height = groinSqueeze0Frame.size.height;
+        [fitnessView.groinSquuze0View setFrame:groinSqueeze0Frame];
+     }
+    else
+    {
+        groinSqueeze0Frame.size.width = groinSqueeze0Frame.size.width / groinSqueeze0PC;
+        groinSqueeze0Frame.size.height = groinSqueeze0Frame.size.height;
+        [fitnessView.avggroinSquuze0View setFrame:groinSqueeze0Frame];
+    }
+    
+    CGRect groinSqueeze60Frame;
+    
+    
+    double groinSqueeze60PC = ([groinSqueeze60 intValue]/(double)avg_groinSqueeze60);
+    
+    if(groinSqueeze60PC < 1)
+    {
+        groinSqueeze60Frame = fitnessView.groinSquuze60View.frame;;
+    }
+    else
+    {
+        groinSqueeze60Frame = fitnessView.avgGroinSquuze60View.frame;;
+    }
+    
+    overallFitnessCount = [self setViewChange:fitnessView.groinSquuze60View withPercentage:groinSqueeze60PC withCount:overallFitnessCount];
+ 
+    if(groinSqueeze60PC < 1)
+    {
+        groinSqueeze60Frame.size.width = groinSqueeze60Frame.size.width * groinSqueeze60PC;
+        groinSqueeze60Frame.size.height = groinSqueeze60Frame.size.height;
+        [fitnessView.groinSquuze60View setFrame:groinSqueeze60Frame];
+    }
+    else
+    {
+        groinSqueeze60Frame.size.width = groinSqueeze60Frame.size.width / groinSqueeze60PC;
+        groinSqueeze60Frame.size.height = groinSqueeze60Frame.size.height;
+        [fitnessView.avgGroinSquuze60View setFrame:groinSqueeze60Frame];
+    }
+    
+    CGRect hipRotationLFrame;
+    
+    double hipRotationLPC = ([hipRotationL intValue]/(double)avg_hiprotationl);
+    
+    if(hipRotationLPC < 1)
+    {
+        hipRotationLFrame = fitnessView.hipRotationL.frame;
+    }
+    else
+    {
+        hipRotationLFrame = fitnessView.avgHipRotationLView.frame;;
+    }
+    
+    overallFitnessCount = [self setViewChange:fitnessView.hipRotationL withPercentage:hipRotationLPC withCount:overallFitnessCount];
+    
+    if(hipRotationLPC < 1)
+    {
+        hipRotationLFrame.size.width = hipRotationLFrame.size.width * hipRotationLPC;
+        hipRotationLFrame.size.height = hipRotationLFrame.size.height;
+        [fitnessView.hipRotationL setFrame:hipRotationLFrame];
+    }
+    else
+    {
+        hipRotationLFrame.size.width = hipRotationLFrame.size.width / hipRotationLPC;
+        hipRotationLFrame.size.height = hipRotationLFrame.size.height;
+        [fitnessView.avgHipRotationLView setFrame:hipRotationLFrame];
+    }
+    
+    CGRect hipRotationRFrame;
+    
+    double hipRotationRPC = ([hipRotationR intValue]/(double)avg_hiprotationr);
+    
+    if(hipRotationLPC < 1)
+    {
+        hipRotationRFrame =  fitnessView.hipRotationR.frame;
+    }
+    else
+    {
+        hipRotationRFrame =  fitnessView.avgHipRotationRView.frame;
+    }
+    
+    overallFitnessCount = [self setViewChange:fitnessView.hipRotationR withPercentage:hipRotationRPC withCount:overallFitnessCount];
+    
+    if(hipRotationLPC < 1)
+    {
+        hipRotationRFrame.size.width = hipRotationRFrame.size.width * hipRotationRPC;
+        hipRotationRFrame.size.height = hipRotationRFrame.size.height;
+        [fitnessView.hipRotationR setFrame:hipRotationRFrame];
+    }
+    else
+    {
+        hipRotationRFrame.size.width = hipRotationRFrame.size.width / hipRotationRPC;
+        hipRotationRFrame.size.height = hipRotationRFrame.size.height;
+        [fitnessView.avgHipRotationRView setFrame:hipRotationRFrame];
+    }
+    
+    CGRect overallFitnessView = fitnessView.progressView.frame;
+    
+    double overallPC = overallFitnessCount/5.0;
+    
+    [self setViewChange:fitnessView.progressView withPercentage:overallPC withCount:0];
+    
+    overallFitnessView.size.width = overallFitnessView.size.width * overallPC;
+    overallFitnessView.size.height = overallFitnessView.size.height;
+    [fitnessView.progressView setFrame:overallFitnessView];
+    
+    [fitnessView.riskCountLabel setText:[NSString stringWithFormat:@"%d/5",overallFitnessCount]];
+    
+    [self setIcon:self.fitnessIcon withPercentage:overallPC withValue:FITNESS];
+    
+    [self.fitnessTabLabel setTextColor:[UIColor whiteColor]];
+    [self.risTabkLabel setTextColor:UIColorFromHex(0x001B4A)];
+    [self.wellbeingTabLabel setTextColor:UIColorFromHex(0x001B4A)];
+    
     self.wellBeingButton.enabled = YES;
     self.riskButton.enabled = YES;
     self.fitnessButton.enabled = NO;
+    
+    self.riskButton.backgroundColor = [UIColor blackColor];
 }
 
 -(IBAction)riskButtonClicked:(id)sender
 {
-   
+    int overallRiskCount = 0;
     
     riskView = [[[NSBundle mainBundle] loadNibNamed:@"RiskView" owner:self options:nil] objectAtIndex:0];
     riskView.frame = CGRectMake(30, 100, 811, 315);
     [self.tabScrollView addSubview:riskView];
     [self.tabScrollView bringSubviewToFront:riskView];
  
-    
-     [self.riskButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
-     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
-     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
-    
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
+    
+    riskView.sumofVolLabel.text = [NSString stringWithFormat:@"%d",[SumofVol intValue]];
+    riskView.avgsumofVolLabel.text = [NSString stringWithFormat:@"%d",avg_sumofvol];
+    
+    riskView.accEventsLabel.text = [NSString stringWithFormat:@"%d",[AcclEvents intValue]];
+    riskView.avgaccEventsLabel.text = [NSString stringWithFormat:@"%d",avg_AcclEvents];
+    
+    riskView.totalDistLabel.text = [NSString stringWithFormat:@"%d",[TotalDistance intValue]];
+    riskView.avgtotalDistLabel.text = [NSString stringWithFormat:@"%d",avg_TotalDist];
+    
+    riskView.forceLoadLabel.text = [NSString stringWithFormat:@"%d",[forceLoadPM intValue]];
+    riskView.avgforceLoadLabel.text = [NSString stringWithFormat:@"%d", avg_forceLoadPM];
+    
+    riskView.rateofPercExertionLabel.text = [NSString stringWithFormat:@"%d", [percievedExertion intValue]];
+    riskView.avgrateofPercExertionLabel.text = [NSString stringWithFormat:@"%d", avg_percievedExertion];
+    
+    riskView.velchangeLoadLabel.text = [NSString stringWithFormat:@"%d", [velChangeLoad intValue]];
+    riskView.avgvelchangeLoadLabel.text = [NSString stringWithFormat:@"%d",avg_velChangeLoad];
+    
+    riskView.velLoadPerMinLabel.text = [NSString stringWithFormat:@"%d",[velLoadPM intValue]];
+    riskView.avgvelLoadPerMinLabel.text = [NSString stringWithFormat:@"%d",avg_velLoadPM];
+    
+    riskView.totalSprintDistLabel.text = [NSString stringWithFormat:@"%d", [totalSprintDistance intValue]];
+    riskView.avgtotalSprintDistLabel.text = [NSString stringWithFormat:@"%d", avg_TotalSprintDist];
+    
+    
+    CGRect sumofDistFrame;
+    
+    double sumofVolPC = ([SumofVol intValue]/(double)avg_sumofvol);
+    
+    overallRiskCount = [self setViewChange:riskView.sumofVolView withPercentage:sumofVolPC withCount:overallRiskCount];
+    
+    if(sumofVolPC < 1)
+    {
+        sumofDistFrame  = riskView.sumofVolView.frame;
+    }
+    else
+    {
+        sumofDistFrame  = riskView.avgSumofVolView.frame;
+    }
+    
+    if(sumofVolPC < 1)
+    {
+        sumofDistFrame.size.width = sumofDistFrame.size.width * sumofVolPC;
+        sumofDistFrame.size.height = sumofDistFrame.size.height;
+        [riskView.sumofVolView setFrame:sumofDistFrame];
+    }
+    else
+    {
+        sumofDistFrame.size.width = sumofDistFrame.size.width / sumofVolPC;
+        sumofDistFrame.size.height = sumofDistFrame.size.height;
+        [riskView.avgSumofVolView setFrame:sumofDistFrame];
+    }
+    
+    CGRect acclEventsFrame;
+    
+    double acclEventsPC = ([AcclEvents intValue]/(double)avg_AcclEvents);
+    
+    overallRiskCount = [self setViewChange:riskView.accEventsView withPercentage:acclEventsPC withCount:overallRiskCount];
+    
+    if(acclEventsPC < 1)
+    {
+        acclEventsFrame = riskView.accEventsView.frame;
+    }
+    else
+    {
+        acclEventsFrame  = riskView.avgAccEventsView.frame;
+    }
+    
+    if(acclEventsPC < 1)
+    {
+        acclEventsFrame.size.width = acclEventsFrame.size.width * acclEventsPC;
+        acclEventsFrame.size.height = acclEventsFrame.size.height;
+        [riskView.accEventsView setFrame:acclEventsFrame];
+    }
+    else
+    {
+        acclEventsFrame.size.width = acclEventsFrame.size.width / acclEventsPC;
+        acclEventsFrame.size.height = acclEventsFrame.size.height;
+        [riskView.avgAccEventsView setFrame:acclEventsFrame];
+    }
+    
+    CGRect totalDistanceFrame;
+    
+    double totalDistPC = ([TotalDistance intValue]/(double)avg_TotalDist);
+    
+    overallRiskCount = [self setViewChange:riskView.totalDistView withPercentage:totalDistPC withCount:overallRiskCount];
+    
+    if(totalDistPC < 1)
+    {
+        totalDistanceFrame = riskView.totalDistView.frame;
+        totalDistanceFrame.size.width = totalDistanceFrame.size.width * totalDistPC;
+        totalDistanceFrame.size.height = totalDistanceFrame.size.height;
+        [riskView.totalDistView setFrame:totalDistanceFrame];
+    }
+    else
+    {
+        totalDistanceFrame  = riskView.avgTotalDistView.frame;
+        totalDistanceFrame.size.width = totalDistanceFrame.size.width / totalDistPC;
+        totalDistanceFrame.size.height = totalDistanceFrame.size.height;
+        [riskView.avgTotalDistView setFrame:totalDistanceFrame];
+    }
+ 
+    
+    CGRect forceLoadPMFrame;
+    
+    double forceLoadPC = ([forceLoadPM intValue]/(double)avg_forceLoadPM);
+    
+    overallRiskCount = [self setViewChange:riskView.forceLoadView withPercentage:forceLoadPC withCount:overallRiskCount];
+    
+    if(forceLoadPC < 1)
+    {
+        forceLoadPMFrame = riskView.forceLoadView.frame;
+        forceLoadPMFrame.size.width = forceLoadPMFrame.size.width * forceLoadPC;
+        forceLoadPMFrame.size.height = forceLoadPMFrame.size.height;
+        [riskView.forceLoadView setFrame:forceLoadPMFrame];
+    }
+    else
+    {
+        forceLoadPMFrame = riskView.avgForceLoadView.frame;
+        forceLoadPMFrame.size.width = forceLoadPMFrame.size.width / forceLoadPC;
+        forceLoadPMFrame.size.height = forceLoadPMFrame.size.height;
+        [riskView.avgForceLoadView setFrame:forceLoadPMFrame];
+    }
+    
+    CGRect rateOfExertionFrame;
+    
+    double rateofExertionPC = ([percievedExertion intValue]/(double)avg_percievedExertion);
+    
+    overallRiskCount = [self setViewChange:riskView.rateofPercExertionView withPercentage:rateofExertionPC withCount:overallRiskCount];
+    
+    if(rateofExertionPC < 1)
+    {
+        rateOfExertionFrame = riskView.rateofPercExertionView.frame;
+        rateOfExertionFrame.size.width = rateOfExertionFrame.size.width * rateofExertionPC;
+        rateOfExertionFrame.size.height = rateOfExertionFrame.size.height;
+        [riskView.rateofPercExertionView setFrame:rateOfExertionFrame];
+    }
+    else
+    {
+        rateOfExertionFrame = riskView.avgRateofPercExertionView.frame;
+        rateOfExertionFrame.size.width = rateOfExertionFrame.size.width / rateofExertionPC;
+        rateOfExertionFrame.size.height = rateOfExertionFrame.size.height;
+        [riskView.avgRateofPercExertionView setFrame:rateOfExertionFrame];
+    }
+    
+    CGRect velChangeLoadFrame;
+    
+    double velLoadPC = ([velChangeLoad intValue]/(double)avg_velChangeLoad);
+    
+    overallRiskCount = [self setViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
+    
+    if(velLoadPC < 1)
+    {
+        velChangeLoadFrame = riskView.velchangeLoadView.frame;
+        velChangeLoadFrame.size.width = velChangeLoadFrame.size.width * velLoadPC;
+        velChangeLoadFrame.size.height = velChangeLoadFrame.size.height;
+        [riskView.velchangeLoadView setFrame:velChangeLoadFrame];
+    }
+    else
+    {
+        velChangeLoadFrame = riskView.avgVelChangeLoadView.frame;
+        velChangeLoadFrame.size.width = velChangeLoadFrame.size.width / velLoadPC;
+        velChangeLoadFrame.size.height = velChangeLoadFrame.size.height;
+        [riskView.avgVelChangeLoadView setFrame:velChangeLoadFrame];
+    }
+    
+    CGRect velLoadPMFrame;
+    
+    double velLoadPMPC = ([velLoadPM intValue]/(double)avg_velLoadPM);
+    
+    overallRiskCount = [self setViewChange:riskView.velLoadPerMinView withPercentage:velLoadPMPC withCount:overallRiskCount];
+    
+    if(velLoadPMPC < 1)
+    {
+        velLoadPMFrame = riskView.velLoadPerMinView.frame;
+        velLoadPMFrame.size.width = velLoadPMFrame.size.width * velLoadPMPC;
+        velLoadPMFrame.size.height = velLoadPMFrame.size.height;
+        [riskView.velLoadPerMinView setFrame:velLoadPMFrame];
+    }
+    else
+    {
+        velLoadPMFrame = riskView.avgLoadPerMinView.frame;
+        velLoadPMFrame.size.width = velLoadPMFrame.size.width / velLoadPMPC;
+        velLoadPMFrame.size.height = velLoadPMFrame.size.height;
+        [riskView.avgLoadPerMinView setFrame:velLoadPMFrame];
+    }
+    
+    CGRect totalSprintDistFrame;
+    
+    double totalSprintPC = ([totalSprintDistance intValue]/(double)avg_TotalSprintDist);
+    
+    overallRiskCount = [self setViewChange:riskView.totalSprintDistView withPercentage:totalSprintPC withCount:overallRiskCount];
+    
+    if(totalSprintPC < 1)
+    {
+        totalSprintDistFrame = riskView.totalSprintDistView.frame;
+        totalSprintDistFrame.size.width = totalSprintDistFrame.size.width * totalSprintPC;
+        totalSprintDistFrame.size.height = totalSprintDistFrame.size.height;
+        [riskView.totalSprintDistView setFrame:totalSprintDistFrame];
+    }
+    else
+    {
+        totalSprintDistFrame = riskView.avgTotalSprintDistanceView.frame;
+        totalSprintDistFrame.size.width = totalSprintDistFrame.size.width / totalSprintPC;
+        totalSprintDistFrame.size.height = totalSprintDistFrame.size.height;
+        [riskView.avgTotalSprintDistanceView setFrame:totalSprintDistFrame];
+    }
+    
+    CGRect overallRiskView = riskView.overallRiskView.frame;
+    
+    double overallPC = overallRiskCount/8.0;
+    
+    [self setViewChange:riskView.overallRiskView withPercentage:overallPC withCount:0];
+    
+    overallRiskView.size.width = overallRiskView.size.width * overallPC;
+    overallRiskView.size.height = overallRiskView.size.height;
+    [riskView.overallRiskView setFrame:overallRiskView];
+    
+    [riskView.riskCountView setText:[NSString stringWithFormat:@"%d/8",overallRiskCount]];
+    
+    [self setIcon:self.riskIcon withPercentage:overallPC withValue:RISK];
     
     self.wellBeingButton.enabled = YES;
     self.riskButton.enabled = NO;
     self.fitnessButton.enabled = YES;
+    
+    
+    [self.fitnessTabLabel setTextColor:UIColorFromHex(0x001B4A)];
+    [self.risTabkLabel setTextColor:[UIColor whiteColor]];
+    [self.wellbeingTabLabel setTextColor:UIColorFromHex(0x001B4A)];
+    
+    [self.riskButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
+    [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
+    [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
 }
 
 -(IBAction)wellBeingButtonClicked:(id)sender
@@ -528,201 +1030,244 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     wellnessView.hamstringLabel.text = [NSString stringWithFormat:@"%@",hamstrings];
     wellnessView.avghamstringLabel.text = [NSString stringWithFormat:@"%d",avg_hamstring];
     
-    CGRect sleepQualFrame = wellnessView.sleeplessnessView.frame;
+    CGRect sleepQualFrame;
     
     double  sleepPC = ([sleep_quality intValue]/(double)avg_sleep_quality);
     
-    if(sleepPC < 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.sleeplessnessView withPercentage:sleepPC withCount:overallWellnessCount];
+    
+    if(sleepPC < 1)
     {
-        [wellnessView.sleeplessnessView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        sleepQualFrame = wellnessView.sleeplessnessView.frame;
+        sleepQualFrame.size.width = sleepQualFrame.size.width * sleepPC;
+        sleepQualFrame.size.height = sleepQualFrame.size.height;
+        [wellnessView.sleeplessnessView setFrame:sleepQualFrame];
     }
     else
     {
-        overallWellnessCount++;
+        sleepQualFrame = wellnessView.avgSleeplessnessView.frame;
+        sleepQualFrame.size.width = sleepQualFrame.size.width / sleepPC;
+        sleepQualFrame.size.height = sleepQualFrame.size.height;
+        [wellnessView.avgSleeplessnessView setFrame:sleepQualFrame];
     }
     
-    sleepQualFrame.size.width = sleepQualFrame.size.width * sleepPC;
-    sleepQualFrame.size.height = sleepQualFrame.size.height;
-    [wellnessView.sleeplessnessView setFrame:sleepQualFrame];
-    
-    CGRect legHeavinessFrame = wellnessView.legHeavinessView.frame;
+    CGRect legHeavinessFrame;
     
     double  legHeavinessPC = ([leg_heaviness intValue]/(double)avg_leg_heaviness);
     
-    if(legHeavinessPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.legHeavinessView withPercentage:legHeavinessPC withCount:overallWellnessCount];
+    
+    if(legHeavinessPC < 1)
     {
-        [wellnessView.legHeavinessView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        legHeavinessFrame = wellnessView.legHeavinessView.frame;
+        legHeavinessFrame.size.width = legHeavinessFrame.size.width * legHeavinessPC;
+        legHeavinessFrame.size.height = legHeavinessFrame.size.height;
+        [wellnessView.legHeavinessView setFrame:legHeavinessFrame];
     }
     else
     {
-        overallWellnessCount++;
+        legHeavinessFrame = wellnessView.avglegHeavinessView.frame;
+        legHeavinessFrame.size.width = legHeavinessFrame.size.width / legHeavinessPC;
+        legHeavinessFrame.size.height = legHeavinessFrame.size.height;
+        [wellnessView.avglegHeavinessView setFrame:legHeavinessFrame];
     }
     
-    legHeavinessFrame.size.width = legHeavinessFrame.size.width * legHeavinessPC;
-    legHeavinessFrame.size.height = legHeavinessFrame.size.height;
-    [wellnessView.legHeavinessView setFrame:legHeavinessFrame];
-    
-    CGRect backPainView = wellnessView.backPainView.frame;
+    CGRect backPainView;
     
     double  backPainPC = ([back_pain intValue]/(double)avg_back_pain);
     
-    if(backPainPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.backPainView withPercentage:backPainPC withCount:overallWellnessCount];
+    
+    if(backPainPC < 1)
     {
-        [wellnessView.backPainView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        backPainView = wellnessView.backPainView.frame;
+        backPainView.size.width = backPainView.size.width * backPainPC;
+        backPainView.size.height = backPainView.size.height;
+        [wellnessView.backPainView setFrame:backPainView];
     }
     else
     {
-        overallWellnessCount++;
+        backPainView = wellnessView.avgBackPainView.frame;
+        backPainView.size.width = backPainView.size.width / backPainPC;
+        backPainView.size.height = backPainView.size.height;
+        [wellnessView.avgBackPainView setFrame:backPainView];
     }
     
-    backPainView.size.width = backPainView.size.width * backPainPC;
-    backPainView.size.height = backPainView.size.height;
-    [wellnessView.backPainView setFrame:backPainView];
-    
-    CGRect calvesView = wellnessView.calvesView.frame;
+    CGRect calvesView;
     
     double calvesPC = ([calves intValue]/(double)avg_calves);
     
-    if(calvesPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.calvesView withPercentage:calvesPC withCount:overallWellnessCount];
+    
+    if(calvesPC < 1)
     {
-        [wellnessView.calvesView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        calvesView = wellnessView.calvesView.frame;
+        calvesView.size.width = calvesView.size.width * calvesPC;
+        calvesView.size.height = calvesView.size.height;
+        [wellnessView.calvesView setFrame:calvesView];
     }
     else
     {
-        overallWellnessCount++;
+        calvesView = wellnessView.avgCalvesView.frame;
+        calvesView.size.width = calvesView.size.width / calvesPC;
+        calvesView.size.height = calvesView.size.height;
+        [wellnessView.avgCalvesView setFrame:calvesView];
     }
     
-    calvesView.size.width = calvesView.size.width * calvesPC;
-    calvesView.size.height = calvesView.size.height;
-    [wellnessView.calvesView setFrame:calvesView];
-    
-    CGRect recoveryIndexView = wellnessView.recoveryIndexView.frame;
+    CGRect recoveryIndexView;
     
     double recoveryIndexPC = ([recovery_index intValue]/(double)avg_recovery_index);
     
-    if(recoveryIndexPC < 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.recoveryIndexView withPercentage:recoveryIndexPC withCount:overallWellnessCount];
+    
+    if(recoveryIndexPC < 1)
     {
-        [wellnessView.recoveryIndexView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        recoveryIndexView = wellnessView.recoveryIndexView.frame;
+        recoveryIndexView.size.width = recoveryIndexView.size.width * recoveryIndexPC;
+        recoveryIndexView.size.height = recoveryIndexView.size.height;
+        [wellnessView.recoveryIndexView setFrame:recoveryIndexView];
     }
     else
     {
-        overallWellnessCount++;
+        recoveryIndexView = wellnessView.avgRecoveryIndexView.frame;
+        recoveryIndexView.size.width = recoveryIndexView.size.width / recoveryIndexPC;
+        recoveryIndexView.size.height = recoveryIndexView.size.height;
+        [wellnessView.avgRecoveryIndexView setFrame:recoveryIndexView];
     }
     
-    recoveryIndexView.size.width = recoveryIndexView.size.width * recoveryIndexPC;
-    recoveryIndexView.size.height = recoveryIndexView.size.height;
-    [wellnessView.recoveryIndexView setFrame:recoveryIndexView];
-    
-    CGRect muscleSorenessFrame = wellnessView.muscleSorenessView.frame;
+    CGRect muscleSorenessFrame;
     
     double muscleSorenessPC = ([muscle_soreness intValue]/(double)avg_muscle_soreness);
     
-    if(muscleSorenessPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.muscleSorenessView withPercentage:muscleSorenessPC withCount:overallWellnessCount];
+    
+    if(muscleSorenessPC < 1)
     {
-        [wellnessView.recoveryIndexView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        muscleSorenessFrame = wellnessView.muscleSorenessView.frame;
+        muscleSorenessFrame.size.width = muscleSorenessFrame.size.width * muscleSorenessPC;
+        muscleSorenessFrame.size.height = muscleSorenessFrame.size.height;
+        [wellnessView.muscleSorenessView setFrame:muscleSorenessFrame];
     }
     else
     {
-        overallWellnessCount++;
+        muscleSorenessFrame = wellnessView.avgMuscleSorenessView.frame;
+        muscleSorenessFrame.size.width = muscleSorenessFrame.size.width / muscleSorenessPC;
+        muscleSorenessFrame.size.height = muscleSorenessFrame.size.height;
+        [wellnessView.avgMuscleSorenessView setFrame:muscleSorenessFrame];
     }
     
-    muscleSorenessFrame.size.width = muscleSorenessFrame.size.width * muscleSorenessPC;
-    muscleSorenessFrame.size.height = muscleSorenessFrame.size.height;
-    [wellnessView.muscleSorenessView setFrame:muscleSorenessFrame];
-    
-    CGRect trainingStateFrame = wellnessView.trainingStateView.frame;
+    CGRect trainingStateFrame;
     
     double trainingStatePC = ([training_state intValue]/(double)avg_training_state);
     
-    if(trainingStatePC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.trainingStateView withPercentage:trainingStatePC withCount:overallWellnessCount];
+    
+    if(trainingStatePC < 1)
     {
-        [wellnessView.trainingStateView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        trainingStateFrame = wellnessView.trainingStateView.frame;
+        trainingStateFrame.size.width = trainingStateFrame.size.width * trainingStatePC;
+        trainingStateFrame.size.height = trainingStateFrame.size.height;
+        [wellnessView.trainingStateView setFrame:trainingStateFrame];
     }
     else
     {
-        overallWellnessCount++;
+        trainingStateFrame = wellnessView.avgTrainingStateView.frame;
+        trainingStateFrame.size.width = trainingStateFrame.size.width / trainingStatePC;
+        trainingStateFrame.size.height = trainingStateFrame.size.height;
+        [wellnessView.avgTrainingStateView setFrame:trainingStateFrame];
     }
     
-    trainingStateFrame.size.width = trainingStateFrame.size.width * trainingStatePC;
-    trainingStateFrame.size.height = trainingStateFrame.size.height;
-    [wellnessView.trainingStateView setFrame:trainingStateFrame];
-    
-    CGRect romTightnessFrame = wellnessView.romTightnessView.frame;
+    CGRect romTightnessFrame;
     
     double romTighnessPC = ([rom_tightness intValue]/(double)avg_rom_tightness);
     
-    if(romTighnessPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.romTightnessView withPercentage:romTighnessPC withCount:overallWellnessCount];
+    
+    if(romTighnessPC < 1)
     {
-        [wellnessView.romTightnessView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        romTightnessFrame = wellnessView.romTightnessView.frame;
+        romTightnessFrame.size.width = romTightnessFrame.size.width * romTighnessPC;
+        romTightnessFrame.size.height = romTightnessFrame.size.height;
+        [wellnessView.romTightnessView setFrame:romTightnessFrame];
     }
     else
     {
-        overallWellnessCount++;
+        romTightnessFrame = wellnessView.avgROMTightnessView.frame;
+        romTightnessFrame.size.width = romTightnessFrame.size.width / romTighnessPC;
+        romTightnessFrame.size.height = romTightnessFrame.size.height;
+        [wellnessView.avgROMTightnessView setFrame:romTightnessFrame];
     }
-    
-    romTightnessFrame.size.width = romTightnessFrame.size.width * romTighnessPC;
-    romTightnessFrame.size.height = romTightnessFrame.size.height;
-    [wellnessView.romTightnessView setFrame:romTightnessFrame];
     
     CGRect hipFlexorQuadFrame = wellnessView.hipflexorQuadView.frame;
     
     double hipflexorPC = ([hipflexor_quads intValue]/(double)avg_hipflexor_quads);
     
-    if(hipflexorPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.hipflexorQuadView withPercentage:hipflexorPC withCount:overallWellnessCount];
+    
+    if(hipflexorPC < 1)
     {
-        [wellnessView.hipflexorQuadView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        hipFlexorQuadFrame = wellnessView.hipflexorQuadView.frame;
+        hipFlexorQuadFrame.size.width = hipFlexorQuadFrame.size.width * hipflexorPC;
+        hipFlexorQuadFrame.size.height = hipFlexorQuadFrame.size.height;
+        [wellnessView.hipflexorQuadView setFrame:hipFlexorQuadFrame];
     }
     else
     {
-        overallWellnessCount++;
+        hipFlexorQuadFrame = wellnessView.avgHipFlexorQuadView.frame;
+        hipFlexorQuadFrame.size.width = hipFlexorQuadFrame.size.width / hipflexorPC;
+        hipFlexorQuadFrame.size.height = hipFlexorQuadFrame.size.height;
+        [wellnessView.avgHipFlexorQuadView setFrame:hipFlexorQuadFrame];
     }
     
-    hipFlexorQuadFrame.size.width = hipFlexorQuadFrame.size.width * hipflexorPC;
-    hipFlexorQuadFrame.size.height = hipFlexorQuadFrame.size.height;
-    [wellnessView.hipflexorQuadView setFrame:hipFlexorQuadFrame];
-    
-    CGRect groinFrame = wellnessView.groinView.frame;
+    CGRect groinFrame;
     
     double groinPC = ([groins intValue]/(double)avg_groins);
     
-    if(groinPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.groinView withPercentage:groinPC withCount:overallWellnessCount];
+    
+    if(groinPC < 1)
     {
-        [wellnessView.groinView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        groinFrame = wellnessView.groinView.frame;
+        groinFrame.size.width = groinFrame.size.width * groinPC;
+        groinFrame.size.height = groinFrame.size.height;
+        [wellnessView.groinView setFrame:groinFrame];
     }
     else
     {
-        overallWellnessCount++;
+        groinFrame = wellnessView.avgGroinView.frame;
+        groinFrame.size.width = groinFrame.size.width / groinPC;
+        groinFrame.size.height = groinFrame.size.height;
+        [wellnessView.avgGroinView setFrame:groinFrame];
     }
     
-    groinFrame.size.width = groinFrame.size.width * groinPC;
-    groinFrame.size.height = groinFrame.size.height;
-    [wellnessView.groinView setFrame:groinFrame];
-    
-    CGRect hamstringFrame = wellnessView.hamstringView.frame;
+    CGRect hamstringFrame;
     
     double hamStringPC = ([hamstrings intValue]/(double)avg_hamstring);
     
-    if(hamStringPC > 1.0)
+    overallWellnessCount = [self setViewChange:wellnessView.hamstringView withPercentage:hamStringPC withCount:overallWellnessCount];
+    
+    if(hamStringPC < 1)
     {
-        [wellnessView.hamstringView setBackgroundColor:UIColorFromHex(0xF6691B)];
+        hamstringFrame = wellnessView.hamstringView.frame;
+        hamstringFrame.size.width = hamstringFrame.size.width * hamStringPC;
+        hamstringFrame.size.height = hamstringFrame.size.height;
+        [wellnessView.hamstringView setFrame:hamstringFrame];
     }
     else
     {
-        overallWellnessCount++;
+        hamstringFrame = wellnessView.avgHamstringView.frame;
+        hamstringFrame.size.width = hamstringFrame.size.width / hamStringPC;
+        hamstringFrame.size.height = hamstringFrame.size.height;
+        [wellnessView.avgHamstringView setFrame:hamstringFrame];
     }
-    
-    hamstringFrame.size.width = hamstringFrame.size.width * hamStringPC;
-    hamstringFrame.size.height = hamstringFrame.size.height;
-    [wellnessView.hamstringView setFrame:hamstringFrame];
     
     CGRect overallwellnessView = wellnessView.overallWelnessView.frame;
     
     double overallPC = overallWellnessCount/11.0;
     
-    if(overallPC > 0.5)
-    {
-        [wellnessView.overallWelnessView setBackgroundColor:UIColorFromHex(0x53B61E)];
-    }
+    [self setViewChange:wellnessView.overallWelnessView withPercentage:overallPC withCount:0];
+    
+    [self setIcon:self.wellbeingIcon withPercentage:overallPC withValue:WELLBEING];
     
     overallwellnessView.size.width = overallwellnessView.size.width * overallPC;
     overallwellnessView.size.height = overallwellnessView.size.height;
@@ -734,11 +1279,111 @@ static NSString *const SELECTION_PLOT = @"Selection Plot";
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     
+    [self.fitnessTabLabel setTextColor:UIColorFromHex(0x001B4A)];
+    [self.risTabkLabel setTextColor:UIColorFromHex(0x001B4A)];
+    [self.wellbeingTabLabel setTextColor:[UIColor whiteColor]];
+    
     self.wellBeingButton.enabled = NO;
     self.riskButton.enabled = YES;
     self.fitnessButton.enabled = YES;
+ 
 }
 
+-(IBAction)changeRiskButtonClicked:(id)sender
+{
+    RiskEditViewController * riskEditViewController = [[RiskEditViewController alloc] initWithNibName:@"RiskEditViewController" bundle:nil];
+    self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    riskEditViewController.player = self.player;
+    riskEditViewController.modelItems = modelItems;
+    riskEditViewController.model = model;
+    [self presentViewController:riskEditViewController animated:YES completion:nil];
+}
+
+-(int) setViewChange:(UIView*)view withPercentage:(float)percentageValue withCount:(int)count
+{
+    if(percentageValue < 0.8 && percentageValue >= 0.6)
+    {
+        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+        
+    }
+    else if (percentageValue < 0.6)
+    {
+        [view setBackgroundColor:[UIColor redColor]];
+    }
+    else if (percentageValue > 1.2 && percentageValue <= 1.6)
+    {
+        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+    }
+    else if (percentageValue > 1.6)
+    {
+        [view setBackgroundColor:[UIColor redColor]];
+    }
+    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
+    {
+        [view setBackgroundColor:UIColorFromHex(0x53B61D)];
+        count++;
+    }
+    
+    return count;
+}
+
+
+-(void) setIcon:(UIButton*)view withPercentage:(float)percentageValue withValue:(int)value
+{
+    NSString * orangeIcon;
+    NSString * redIcon;
+    NSString * greenIcon;
+    
+    switch (value) {
+        case FITNESS:
+        {
+            orangeIcon = @"icons-fit-orange";
+            redIcon = @"icons-fit-red";
+            greenIcon = @"icons-fit-green";
+            break;
+        }
+        case RISK:
+        {
+            orangeIcon = @"icons-risk-orange";
+            redIcon = @"icons-risk-red";
+            greenIcon = @"icons-risk-green";
+            break;
+        }
+        case WELLBEING:
+        {
+            orangeIcon = @"icons-well-orange";
+            redIcon = @"icons-well-red";
+            greenIcon = @"icons-well-green";
+            break;
+        }
+        default:
+            break;
+    }
+    
+    
+    if(percentageValue < 0.8 && percentageValue >= 0.6)
+    {
+        [view setImage:[UIImage imageNamed:orangeIcon] forState:UIControlStateNormal];
+        
+    }
+    else if (percentageValue < 0.6)
+    {
+        [view setImage:[UIImage imageNamed:redIcon] forState:UIControlStateNormal];
+    }
+    else if (percentageValue > 1.2 && percentageValue <= 1.6)
+    {
+        [view setImage:[UIImage imageNamed:orangeIcon] forState:UIControlStateNormal];
+    }
+    else if (percentageValue > 1.6)
+    {
+       [view setImage:[UIImage imageNamed:redIcon] forState:UIControlStateNormal];
+    }
+    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
+    {
+        [view setImage:[UIImage imageNamed:greenIcon] forState:UIControlStateNormal];
+    }
+
+}
 
 
 

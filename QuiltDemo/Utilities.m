@@ -9,6 +9,10 @@
 #import "Utilities.h"
 #import "WellnessPlayers.h"
 #import "Wellness.h"
+#import "ModelItems.h"
+#import "Model.h"
+#import "PlayerItems.h"
+#import "DataModel.h"
 
 @implementation Utilities
 
@@ -27,6 +31,25 @@
 {
     NSString * filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:type];
     return filePath;
+}
+
+-(PlayerItems*) getSortedPlayerItems:(NSString*) sortType withSortKind:(BOOL)ascending
+{
+    NSSortDescriptor * sortDescriptior = [[NSSortDescriptor alloc] initWithKey:sortType
+                                                                     ascending:ascending];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptior, nil];
+    
+    DataModel * dataModel = [DataModel sharedClient];
+    
+    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    
+    NSArray *unsortedArray = [NSArray arrayWithArray:playerItems.players];
+    NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors:sortDescriptors];
+    
+    playerItems.players = [[NSMutableArray alloc] initWithArray:sortedArray];
+    
+    return playerItems;
 }
 
 -(double) getAverageSleepQuality:(WellnessPlayers*)wellness 
@@ -182,5 +205,189 @@
     
     return hamstrings/count;
 }
+
+
+-(double) getAverageSumofVolume:(ModelItems*)modelItems
+{
+    double sumofVols = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        sumofVols = sumofVols + [model.Sum_ofV2 floatValue];
+        count++;
+    }
+    
+    return sumofVols/count;
+}
+
+-(double) getAverageAcceleration:(ModelItems*)modelItems
+{
+    double sumofAcc = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        sumofAcc = sumofAcc + [model.Sumof_AccTotal floatValue];
+        count++;
+    }
+    
+    return sumofAcc/count;
+}
+
+-(double) getAverageTotalDistance:(ModelItems*)modelItems
+{
+    double sumofTotalDist = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        sumofTotalDist = sumofTotalDist + [model.SumofVol floatValue];
+        count++;
+    }
+    
+    return sumofTotalDist/count;
+}
+
+-(double) getAverageForceLoadPM:(ModelItems*)modelItems
+{
+    double forceLoadPM = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        forceLoadPM = forceLoadPM + [model.AverageoffLmin floatValue];
+        count++;
+    }
+    
+    return forceLoadPM/count;
+}
+
+-(double) getAveragePercievedExertionRate:(WellnessPlayers*)wellnessItems
+{
+    double percievedExertionRate = 0;
+    int count = 0;
+    
+    for(Wellness * wellnes in wellnessItems.wellness)
+    {
+        percievedExertionRate = percievedExertionRate + [wellnes.Perceived_Performance floatValue];
+        count++;
+    }
+    
+    return percievedExertionRate/count;
+}
+
+-(double) getAverageVelocityChangeLoad:(ModelItems*)modelItems
+{
+    double avgVelChangeLoad = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        avgVelChangeLoad = avgVelChangeLoad + [model.SumofVCLoadTotal floatValue];
+        count++;
+    }
+    
+    return avgVelChangeLoad/count;
+}
+
+-(double) getAverageVelocityLoadPM:(ModelItems*)modelItems
+{
+    double avgVelLoadPM = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        avgVelLoadPM = avgVelLoadPM + [model.AverageofvLmin floatValue];
+        count++;
+    }
+    
+    return avgVelLoadPM/count;
+}
+
+-(double) getAverageTotalSprintDistance:(ModelItems*)modelItems
+{
+    double totalSprintDist = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        totalSprintDist = totalSprintDist + [model.SumofSpr floatValue];
+        count++;
+    }
+    
+    return totalSprintDist/count;
+}
+
+-(double) getAverageSitAndReach:(ModelItems*)modelItems
+{
+    double totalSitReach = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        totalSitReach = totalSitReach + [model.SitReach floatValue];
+        count++;
+    }
+    
+    return totalSitReach/count;
+}
+
+-(double) getAverageHipRotationL:(ModelItems*)modelItems
+{
+    double hipRotationL = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        hipRotationL = hipRotationL + [model.HipRotation_L floatValue];
+        count++;
+    }
+    
+    return hipRotationL/count;
+}
+
+-(double) getAverageHipRotationR:(ModelItems*)modelItems
+{
+    double hipRotationR = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        hipRotationR = hipRotationR + [model.HipRotation_R floatValue];
+        count++;
+    }
+    
+    return hipRotationR/count;
+}
+
+-(double) getAverageGroinSqueezeZero:(ModelItems*)modelItems
+{
+    double groinSqueezeZero = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        groinSqueezeZero = groinSqueezeZero + [model.GroinSqueeze_0 floatValue];
+        count++;
+    }
+    
+    return groinSqueezeZero/count;
+}
+
+-(double) getAverageGroinSqueeze60:(ModelItems*)modelItems
+{
+    double groinSqueeze60 = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        groinSqueeze60 = groinSqueeze60 + [model.GroinSqueeze_60 floatValue];
+        count++;
+    }
+    
+    return groinSqueeze60/count;
+}
+
 
 @end

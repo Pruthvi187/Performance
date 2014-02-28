@@ -34,4 +34,12 @@
 
 @property NSString * Caps;
 
+@property NSString * Wellbeing;
+
+@property NSString * RiskRating;
+
+@property NSString * FitnessRating;
+
+@property NSString * RiskRatingChange;
+
 @end

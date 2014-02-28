@@ -11,7 +11,11 @@
     "Height":"183",
     "Weight":"113",
     "Debut":"2006",
-    "Caps":"109"
+    "Caps":"109",
+    "Wellbeing":6,
+    "RiskRating":14,
+    "FitnessRating":0,
+    "RiskRatingChange":9
   },
   {
     "Name": "Damien Fitzpatric",
@@ -25,7 +29,11 @@
     "Height":"183",
     "Weight":"106",
     "Debut":"2009",
-    "Caps":"21"
+    "Caps":"21",
+    "Wellbeing":11,
+    "RiskRating":16,
+    "FitnessRating":4,
+    "RiskRatingChange":1
   },
   {
     "Name": "Al Baxter",
@@ -39,7 +47,11 @@
     "Height":"193",
     "Weight":"122",
     "Debut":"2000",
-    "Caps":"121"
+    "Caps":"121",
+    "Wellbeing":7,
+    "RiskRating":5,
+    "FitnessRating":4,
+    "RiskRatingChange":-1
   },
   {
     "Name": "Dan Vickerman",
@@ -53,7 +65,11 @@
     "Height":"204",
     "Weight":"119",
     "Debut":"2001",
-    "Caps":"58"
+    "Caps":"58",
+    "Wellbeing":3,
+    "RiskRating":4,
+    "FitnessRating":5,
+    "RiskRatingChange":-3
   },
     {
     "Name": "Dean Mumm",
@@ -67,7 +83,11 @@
     "Height":"196",
     "Weight":"109",
     "Debut":"2007",
-    "Caps":"83"
+    "Caps":"83",
+    "Wellbeing":3,
+    "RiskRating":3,
+    "FitnessRating":4,
+    "RiskRatingChange":-7
  },
   {
     "Name": "Rocky Elsom",
@@ -81,7 +101,11 @@
     "Height":"197",
     "Weight":"106",
     "Debut":"2003",
-    "Caps":"71"
+    "Caps":"71",
+    "Wellbeing":3,
+    "RiskRating":13,
+    "FitnessRating":0,
+    "RiskRatingChange":3
   },
     {
     "Name": "Phil Waugh",
@@ -95,7 +119,11 @@
     "Height":"175",
     "Weight":"100",
     "Debut":"1999",
-    "Caps":"124"
+    "Caps":"124",
+    "Wellbeing":10,
+    "RiskRating":12,
+    "FitnessRating":5,
+    "RiskRatingChange":1
   },
   {
     "Name": "David Lyons",
@@ -109,7 +137,11 @@
     "Height":"192",
     "Weight":"117",
     "Debut":"2000",
-    "Caps":"124"
+    "Caps":"124",
+    "Wellbeing":7,
+    "RiskRating":8,
+    "FitnessRating":5,
+    "RiskRatingChange":-1
   },
   {
     "Name": "Chris Whitaker",
@@ -123,7 +155,11 @@
     "Height":"178",
     "Weight":"82",
     "Debut":"1997",
-    "Caps":"118"
+    "Caps":"118",
+    "Wellbeing":3,
+    "RiskRating":6,
+    "FitnessRating":5,
+    "RiskRatingChange":-1
   },
   {
     "Name": "Daniel Halangahu",
@@ -137,7 +173,11 @@
     "Height":"178",
     "Weight":"82",
     "Debut":"1997",
-    "Caps":"118"
+    "Caps":"118",
+    "Wellbeing":9,
+    "RiskRating":2,
+    "FitnessRating":3,
+    "RiskRatingChange":-7
   },
   {
     "Name": "Mat Rogers",
@@ -151,7 +191,11 @@
     "Height":"182",
     "Weight":"87",
     "Debut":"1995",
-    "Caps":"tba"
+    "Caps":"tba",
+    "Wellbeing":5,
+    "RiskRating":12,
+    "FitnessRating":4,
+    "RiskRatingChange":1
   },
   {
     "Name": "Tom Cater",
@@ -165,7 +209,11 @@
     "Height":"189",
     "Weight":"103",
     "Debut":"2008",
-    "Caps":"76"
+    "Caps":"76",
+    "Wellbeing":7,
+    "RiskRating":94,
+    "FitnessRating":0,
+    "RiskRatingChange":9
   },
   {
     "Name": "Ben Jacobs",
@@ -179,7 +227,11 @@
     "Height":"185",
     "Weight":"98",
     "Debut":"2004",
-    "Caps":"34"
+    "Caps":"34",
+    "Wellbeing":7,
+    "RiskRating":98,
+    "FitnessRating":3,
+    "RiskRatingChange":10
   },
   {
     "Name": "Drew Mitchell",
@@ -193,7 +245,11 @@
     "Height":"182",
     "Weight":"92",
     "Debut":"2004",
-    "Caps":"39"
+    "Caps":"39",
+    "Wellbeing":5,
+    "RiskRating":10,
+    "FitnessRating":0,
+    "RiskRatingChange":-7
   },
   {
     "Name": "Berrick Barnes",
@@ -207,6 +263,10 @@
     "Height":"183",
     "Weight":"87",
     "Debut":"2004",
-    "Caps":"43"
+    "Caps":"43",
+    "Wellbeing":4,
+    "RiskRating":51,
+    "FitnessRating":3,
+    "RiskRatingChange":7
   }
 ]

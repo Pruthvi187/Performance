@@ -40,10 +40,20 @@ typedef enum PlayerPositions {
 
 @property(nonatomic, retain) IBOutlet UIButton * filterButton;
 
+@property(nonatomic, retain) IBOutlet UILabel * filterLabel;
+
 @property(nonatomic, retain) IBOutlet UIButton * sortButton;
+
+@property(nonatomic, retain) IBOutlet UILabel * sortLabel;
+
+@property(nonatomic, retain) IBOutlet UIImageView * teamStatsOpenButton;
+
+@property(nonatomic, retain) IBOutlet UIView * optionsPlaceHolderView;
 
 -(IBAction)showFilterOptions:(id)sender;
 
 -(IBAction)showSortOptions:(id)sender;
+
+-(IBAction)showTeamStats:(id)sender;
 
 @end
