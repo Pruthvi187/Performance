@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "02E25B01168B74B0009CA089"
-               BuildableName = "Performance.app"
+               BuildableName = "Waratahs.app"
                BlueprintName = "Waratahs"
                ReferencedContainer = "container:Waratahs.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02E25B01168B74B0009CA089"
-            BuildableName = "Performance.app"
+            BuildableName = "Waratahs.app"
             BlueprintName = "Waratahs"
             ReferencedContainer = "container:Waratahs.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02E25B01168B74B0009CA089"
-            BuildableName = "Performance.app"
+            BuildableName = "Waratahs.app"
             BlueprintName = "Waratahs"
             ReferencedContainer = "container:Waratahs.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02E25B01168B74B0009CA089"
-            BuildableName = "Performance.app"
+            BuildableName = "Waratahs.app"
             BlueprintName = "Waratahs"
             ReferencedContainer = "container:Waratahs.xcodeproj">
          </BuildableReference>
