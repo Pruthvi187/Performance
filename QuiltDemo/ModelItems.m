@@ -3,7 +3,7 @@
 //  GraphApp
 //
 //  Created by Pruthvi on 12/02/14.
-//  Copyright (c) 2014 Pruthvi. All rights reserved.
+// 
 //
 
 #import "ModelItems.h"

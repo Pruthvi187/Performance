@@ -66,7 +66,7 @@
     "Weight":"119",
     "Debut":"2001",
     "Caps":"58",
-    "Wellbeing":3,
+    "Wellbeing":11,
     "RiskRating":4,
     "FitnessRating":5,
     "RiskRatingChange":-3
@@ -84,7 +84,7 @@
     "Weight":"109",
     "Debut":"2007",
     "Caps":"83",
-    "Wellbeing":3,
+    "Wellbeing":11,
     "RiskRating":3,
     "FitnessRating":4,
     "RiskRatingChange":-7
@@ -102,7 +102,7 @@
     "Weight":"106",
     "Debut":"2003",
     "Caps":"71",
-    "Wellbeing":3,
+    "Wellbeing":11,
     "RiskRating":13,
     "FitnessRating":0,
     "RiskRatingChange":3
@@ -156,7 +156,7 @@
     "Weight":"82",
     "Debut":"1997",
     "Caps":"118",
-    "Wellbeing":3,
+    "Wellbeing":7,
     "RiskRating":6,
     "FitnessRating":5,
     "RiskRatingChange":-1
@@ -192,7 +192,7 @@
     "Weight":"87",
     "Debut":"1995",
     "Caps":"tba",
-    "Wellbeing":5,
+    "Wellbeing":11,
     "RiskRating":12,
     "FitnessRating":4,
     "RiskRatingChange":1
@@ -210,7 +210,7 @@
     "Weight":"103",
     "Debut":"2008",
     "Caps":"76",
-    "Wellbeing":7,
+    "Wellbeing":5,
     "RiskRating":94,
     "FitnessRating":0,
     "RiskRatingChange":9
@@ -228,7 +228,7 @@
     "Weight":"98",
     "Debut":"2004",
     "Caps":"34",
-    "Wellbeing":7,
+    "Wellbeing":9,
     "RiskRating":98,
     "FitnessRating":3,
     "RiskRatingChange":10
@@ -246,7 +246,7 @@
     "Weight":"92",
     "Debut":"2004",
     "Caps":"39",
-    "Wellbeing":5,
+    "Wellbeing":11,
     "RiskRating":10,
     "FitnessRating":0,
     "RiskRatingChange":-7
@@ -264,7 +264,7 @@
     "Weight":"87",
     "Debut":"2004",
     "Caps":"43",
-    "Wellbeing":4,
+    "Wellbeing":7,
     "RiskRating":51,
     "FitnessRating":3,
     "RiskRatingChange":7

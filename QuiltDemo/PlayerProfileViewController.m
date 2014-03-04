@@ -243,6 +243,10 @@ int num = 0;
         {
             [self sortPlayers:@"FitnessRating" sortKind:NO];
         }
+        else if(indexPath.row == 3)
+        {
+            [self sortPlayers:@"Wellbeing" sortKind:NO];
+        }
         [self.sortLabel setText:[sortOptions objectAtIndex:indexPath.row]];
         [filterController dismissPopoverAnimated:YES];
     }
