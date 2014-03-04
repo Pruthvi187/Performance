@@ -278,7 +278,7 @@ int num = 0;
 -(void)showTeamStats:(id)sender
 {
     TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
-    teamStatsViewController.view.backgroundColor = UIColorFromHexWithAlpha(0x001A49, 0.8);
+    teamStatsViewController.view.backgroundColor = UIColorFromHexWithAlpha(0x001A49, 0.9);
    
      //teamStatsViewController.view.alpha = 0.5f;
      self.modalPresentationStyle = UIModalPresentationCurrentContext;

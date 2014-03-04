@@ -69,7 +69,9 @@ static NSString *const BACK_ROW_PLOT = @"Back Row";
 -(IBAction)dismissView:(id)sender
 {
     NSLog(@"Clicked");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self dismissViewControllerAnimated:YES completion:nil  ];
+    
     
 }
 

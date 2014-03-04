@@ -12,10 +12,10 @@
 typedef enum PlayerPositions {
     Forwards = 1,
     Backs = 2,
-    Back_Row = 3,
-    Front_Row  = 4,
-    Half_Backs = 5,
-    Three_Quarters = 6,
+    Back_row = 3,
+    Front_row  = 4,
+    Half_backs = 5,
+    Three_quarters = 6,
     Fullback = 7
 } PlayerPositions;
 

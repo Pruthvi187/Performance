@@ -544,6 +544,11 @@ typedef enum {
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     
+    [self.fitnessLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
+    [self.riskLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+    [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+
+    
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
     riskView.hidden = YES;
@@ -746,7 +751,12 @@ typedef enum {
     riskView.frame = CGRectMake(30, 100, 811, 315);
     [self.tabScrollView addSubview:riskView];
     [self.tabScrollView bringSubviewToFront:riskView];
- 
+    
+    [self.riskLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
+    [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+    [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+
+    
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
     
@@ -992,6 +1002,11 @@ typedef enum {
     riskView.hidden = YES;
     
     int overallWellnessCount = 0;
+    
+    [self.wellbeingLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
+    [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+    [self.riskLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
+
     
     wellnessView = [[[NSBundle mainBundle] loadNibNamed:@"WellnessView" owner:self options:nil] objectAtIndex:0];
     wellnessView.frame = CGRectMake(30, 100, 811, 315);

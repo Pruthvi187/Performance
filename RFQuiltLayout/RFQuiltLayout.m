@@ -61,9 +61,9 @@
     BOOL isVert = self.direction == UICollectionViewScrollDirectionVertical;
     
     if (isVert)
-        return CGSizeMake(self.collectionView.frame.size.width, (self.furthestBlockPoint.y+1) * self.blockPixels.height);
+        return CGSizeMake(self.collectionView.frame.size.width, (self.furthestBlockPoint.y+1) * self.blockPixels.height-100);
     else
-        return CGSizeMake((self.furthestBlockPoint.x+1) * self.blockPixels.width, self.collectionView.frame.size.height);
+        return CGSizeMake((self.furthestBlockPoint.x+1) * self.blockPixels.width, self.collectionView.frame.size.height-100);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -332,7 +332,7 @@
 
 - (void) setPosition:(CGPoint)point forIndexPath:(NSIndexPath*)indexPath {
     BOOL isVert = self.direction == UICollectionViewScrollDirectionVertical;
-    
+
     // to avoid creating unbounded nsmutabledictionaries we should
     // have the innerdict be the unrestricted dimension
     
