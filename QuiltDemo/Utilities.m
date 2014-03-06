@@ -34,17 +34,21 @@
 }
 
 -(PlayerItems*) getSortedPlayerItems:(NSString*) sortType withSortKind:(BOOL)ascending
+                         withPlayers:(NSMutableArray*)players
 {
     NSSortDescriptor * sortDescriptior = [[NSSortDescriptor alloc] initWithKey:sortType
                                                                      ascending:ascending];
     
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptior, nil];
     
+
+    
     DataModel * dataModel = [DataModel sharedClient];
     
     PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+
     
-    NSArray *unsortedArray = [NSArray arrayWithArray:playerItems.players];
+    NSArray *unsortedArray = [NSArray arrayWithArray:players];
     NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors:sortDescriptors];
     
     playerItems.players = [[NSMutableArray alloc] initWithArray:sortedArray];

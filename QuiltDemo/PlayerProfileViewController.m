@@ -117,7 +117,7 @@ int num = 0;
     NSLog(@"Tag is %d and %d", menuTableView.tag, [sender tag]);
     menuTableView.backgroundColor = [UIColor clearColor];
     popOverController.view = menuTableView;
-    popOverController.preferredContentSize = CGSizeMake(450, 370);
+    popOverController.preferredContentSize = CGSizeMake(450, 250);
     filterController = [[UIPopoverController alloc] initWithContentViewController:popOverController];
     filterController.delegate =self;
     [filterController presentPopoverFromRect:[sender bounds] inView:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
@@ -266,10 +266,11 @@ int num = 0;
 
 -(void) sortPlayers:(NSString*)sortType sortKind:(BOOL)ascending
 {
+   
+    PlayerItems * playerItems = nil;
+    playerItems = [utilities getSortedPlayerItems:sortType withSortKind:ascending withPlayers:self.players];
     self.players = nil;
     self.players = [@[] mutableCopy];
-    PlayerItems * playerItems = nil;
-    playerItems = [utilities getSortedPlayerItems:sortType withSortKind:ascending];
     [self.players setArray:playerItems.players];
     
     [self.collectionView reloadData];

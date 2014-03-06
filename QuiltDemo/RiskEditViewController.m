@@ -55,24 +55,43 @@
     
     [self setViewChange:self.currentSumofVolView withPercentage:sumofVolPC];
     
+
+    CGRect sumofV1Frame;
+    
+    
     if(sumofVolPC < 1)
     {
-        NSLayoutConstraint * sitReachWidthConstaint = [NSLayoutConstraint constraintWithItem:self.currentSumofVolView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.currentSumofVolView.frame.size.width * sumofVolPC];
-        [self.view addConstraint:sitReachWidthConstaint];
+        sumofV1Frame = self.currentSumofVolView.frame;
+        sumofV1Frame.size.width = sumofV1Frame.size.width * sumofVolPC;
+        sumofV1Frame.size.height = sumofV1Frame.size.height;
+        [self.currentSumofVolView setFrame:sumofV1Frame];
         lowestRange = [sumofVol intValue];
         midRange = (int)avgSumofVol;
+        self.sumofVolSlider.value = 0;
     }
     else
     {
-        NSLayoutConstraint * sitReachWidthConstaint = [NSLayoutConstraint constraintWithItem:self.avgSumofVolView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.avgSumofVolView.frame.size.width / sumofVolPC];
-        [self.view addConstraint:sitReachWidthConstaint];
+        sumofV1Frame = self.avgSumofVolView.frame;
+        sumofV1Frame.size.width = sumofV1Frame.size.width / sumofVolPC;
+        sumofV1Frame.size.height = sumofV1Frame.size.height;
+        [self.avgSumofVolView setFrame:sumofV1Frame];
         midRange = [sumofVol intValue];
         lowestRange = (int)avgSumofVol;
+         self.sumofVolSlider.value = 20;
     }
     
     lowerRange = (int)floor((midRange -lowestRange)/2.0) + lowestRange;
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
+    
+    if(sumofVolPC == 1.0)
+    {
+        lowestRange = (int)floor([sumofVol intValue]/4.0);
+        lowerRange = (int)floor([sumofVol intValue]/2.0);
+        upperRange = (midRange+lowestRange);
+        upMostRange = (midRange + lowerRange);
+        
+    }
     
     [self.avgSumofVolLabel setText:[NSString stringWithFormat:@"%d",avgSumofVol]];
     [self.currentSumofVolLabel setText:[NSString stringWithFormat:@"%@",sumofVol]];
@@ -90,24 +109,43 @@
     
     [self setViewChange:self.currentAcclEvents withPercentage:acclEventsPC];
     
+    CGRect acclEventsFrame;
+    
     if(acclEventsPC < 1)
     {
-        NSLayoutConstraint * acclEvetnsConstaint = [NSLayoutConstraint constraintWithItem:self.currentAcclEvents attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.currentAcclEvents.frame.size.width * acclEventsPC];
-        [self.view addConstraint:acclEvetnsConstaint];
+        acclEventsFrame = self.currentAcclEvents.frame;
+        acclEventsFrame.size.width = acclEventsFrame.size.width * acclEventsPC;
+        acclEventsFrame.size.height = acclEventsFrame.size.height;
+        [self.currentAcclEvents setFrame:acclEventsFrame];
         lowestRange = [accEvent intValue];
         midRange = (int)avgAcclEvents;
+        self.acclEventsSlider.value = 0;
     }
     else
     {
-        NSLayoutConstraint * acclAvgEvetnsConstaint = [NSLayoutConstraint constraintWithItem:self.avgAcclEvents attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.avgAcclEvents.frame.size.width / acclEventsPC];
-        [self.view addConstraint:acclAvgEvetnsConstaint];
+        acclEventsFrame = self.avgAcclEvents.frame;
+        acclEventsFrame.size.width = acclEventsFrame.size.width / acclEventsPC;
+        acclEventsFrame.size.height = acclEventsFrame.size.height;
+        [self.avgAcclEvents setFrame:acclEventsFrame];
         midRange = [accEvent intValue];
         lowestRange = (int)avgAcclEvents;
+        self.acclEventsSlider.value = 20;
     }
     
     lowerRange = (int)floor((midRange -lowestRange)/2.0) + lowestRange;
+
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
+    
+    if(acclEventsPC == 1.0)
+    {
+        lowestRange = (int)floor([accEvent intValue]/4.0);
+        lowerRange = (int)floor([accEvent intValue]/2.0);
+        upperRange = (midRange+lowestRange);
+        upMostRange = (midRange + lowerRange);
+        
+    }
+    
     
     [self.avgAcclEventsLabel setText:[NSString stringWithFormat:@"%d",avgAcclEvents]];
     [self.currentAcclEventsLabel setText:[NSString stringWithFormat:@"%@",accEvent]];
@@ -125,24 +163,42 @@
     
     [self setViewChange:self.currentSitReachView withPercentage:sitReachPC];
     
+    CGRect sitReachWidthFrame;
+    
     if(sitReachPC < 1)
     {
-        NSLayoutConstraint * sitReachConstraint = [NSLayoutConstraint constraintWithItem:self.currentSitReachView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.currentSitReachView.frame.size.width * sitReachPC];
-        [self.view addConstraint:sitReachConstraint];
+        sitReachWidthFrame = self.currentSitReachView.frame;
+        sitReachWidthFrame.size.width = sitReachWidthFrame.size.width * sitReachPC;
+        sitReachWidthFrame.size.height = sitReachWidthFrame.size.height;
+        [self.currentSitReachView setFrame:sitReachWidthFrame];
         lowestRange = [sitReach intValue];
         midRange = (int)avgSitReach;
+        self.sitReachSlider.value = 0;
     }
     else
     {
-        NSLayoutConstraint * avgSitReachConstraint = [NSLayoutConstraint constraintWithItem:self.avgSitReachView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.avgSitReachView.frame.size.width / sitReachPC];
-        [self.view addConstraint:avgSitReachConstraint];
+        sitReachWidthFrame = self.avgSitReachView.frame;
+        sitReachWidthFrame.size.width = sitReachWidthFrame.size.width / sitReachPC;
+        sitReachWidthFrame.size.height = sitReachWidthFrame.size.height;
+        [self.avgSitReachView setFrame:sitReachWidthFrame];
         midRange = [sitReach intValue];
         lowestRange = (int)avgSitReach;
+        self.sitReachSlider.value = 20;
     }
     
     lowerRange = (int)floor((midRange -lowestRange)/2.0) + lowestRange;
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
+    
+    if(sitReachPC == 1.0)
+    {
+        lowestRange = (int)floor([sitReach intValue]/4.0);
+        lowerRange = (int)floor([sitReach intValue]/2.0);
+        upperRange = (midRange+lowestRange);
+        upMostRange = (midRange + lowerRange);
+        
+    }
+    
     
     [self.avgSitReachLabel setText:[NSString stringWithFormat:@"%d",avgSitReach]];
     [self.currentSitReachLabel setText:[NSString stringWithFormat:@"%@",sitReach]];
@@ -160,25 +216,43 @@
     
     [self setViewChange:self.currentSprintDistView withPercentage:totalSprDistPC];
     
+    CGRect currentSprintDistFrame;
+    
     if(totalSprDistPC < 1)
     {
-        NSLayoutConstraint * totalSprintDistConstraint = [NSLayoutConstraint constraintWithItem:self.currentSprintDistView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.currentSprintDistView.frame.size.width * totalSprDistPC];
-        [self.view addConstraint:totalSprintDistConstraint];
+        currentSprintDistFrame = self.currentSprintDistView.frame;
+        currentSprintDistFrame.size.width = currentSprintDistFrame.size.width * totalSprDistPC;
+        currentSprintDistFrame.size.height = currentSprintDistFrame.size.height;
+        [self.currentSprintDistView setFrame:currentSprintDistFrame];
         lowestRange = [totalSprDist intValue];
-         midRange = (int)avgSprDist;
+        midRange = (int)avgSprDist;
+        self.totalSprintSlider.value = 0;
     }
     else
     {
-        NSLayoutConstraint * avgTotalSprintDistanceConstraint = [NSLayoutConstraint constraintWithItem:self.avgSprintDistView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.avgSprintDistView.frame.size.width / totalSprDistPC];
-        [self.view addConstraint:avgTotalSprintDistanceConstraint];
-        
+        currentSprintDistFrame = self.avgSprintDistView.frame;
+        currentSprintDistFrame.size.width = currentSprintDistFrame.size.width / totalSprDistPC;
+        currentSprintDistFrame.size.height = currentSprintDistFrame.size.height;
+        [self.avgSprintDistView setFrame:currentSprintDistFrame];
         midRange = [totalSprDist intValue];
         lowestRange = (int)avgSprDist;
+        self.totalSprintSlider.value = 20;
     }
     
     lowerRange = (int)floor((midRange -lowestRange)/2.0) + lowestRange;
+    
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
+    
+    if(totalSprDistPC == 1.0)
+    {
+        lowestRange = (int)floor([totalSprDist intValue]/4.0);
+        lowerRange = (int)floor([totalSprDist intValue]/2.0);
+        upperRange = (midRange+lowestRange);
+        upMostRange = (midRange + lowerRange);
+   
+    }
+    
     
     [self.avgSprintDistLabel setText:[NSString stringWithFormat:@"%d",avgSprDist]];
     [self.currentSprintDistLabel setText:[NSString stringWithFormat:@"%@",totalSprDist]];
@@ -197,25 +271,46 @@
     
     [self setViewChange:self.currentHipRotationView withPercentage:hipRotationPC];
     
+    
+    CGRect hipRotationFrame;
+    
     if(hipRotationPC < 1)
     {
-        NSLayoutConstraint * hipRotationConstraint = [NSLayoutConstraint constraintWithItem:self.currentHipRotationView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.currentHipRotationView.frame.size.width * hipRotationPC];
-        [self.view addConstraint:hipRotationConstraint];
+        hipRotationFrame = self.currentHipRotationView.frame;
+        hipRotationFrame.size.width = hipRotationFrame.size.width * hipRotationPC;
+        hipRotationFrame.size.height = hipRotationFrame.size.height;
+        [self.currentHipRotationView setFrame:hipRotationFrame];
         lowestRange = [hipRotation intValue];
         midRange = (int)avgHipRotaion;
+        self.hipRotationSlider.value = 0;
     }
     else
     {
-        NSLayoutConstraint * avghipRotationConstraint = [NSLayoutConstraint constraintWithItem:self.avgHipRotationView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:self.avgHipRotationView.frame.size.width / hipRotationPC];
-        [self.view addConstraint:avghipRotationConstraint];
+        hipRotationFrame = self.avgHipRotationView.frame;
+        hipRotationFrame.size.width = hipRotationFrame.size.width / hipRotationPC;
+        hipRotationFrame.size.height = hipRotationFrame.size.height;
+        [self.avgHipRotationView setFrame:hipRotationFrame];
         midRange = [hipRotation intValue];
         lowestRange = (int)avgHipRotaion;
+        self.hipRotationSlider.value = 20;
     }
     
-    
+   
+   
     lowerRange = (int)floor((midRange -lowestRange)/2.0) + lowestRange;
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
+    
+    if(hipRotationPC == 1.0)
+    {
+        lowestRange = (int)floor([hipRotation intValue]/4.0);
+        lowerRange = (int)floor([hipRotation intValue]/2.0);
+        midRange = [hipRotation intValue];
+        upperRange = (midRange+lowestRange);
+        upMostRange = (midRange + lowerRange);
+    }
+    
+ 
     
     [self.avgHipRotationLabel setText:[NSString stringWithFormat:@"%d",avgHipRotaion]];
     [self.currentHipRotationLabel setText:[NSString stringWithFormat:@"%@",hipRotation]];

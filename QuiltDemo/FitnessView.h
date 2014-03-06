@@ -10,6 +10,20 @@
 
 @interface FitnessView : UIView
 
+@property(nonatomic, retain) IBOutlet UILabel * playerStatusLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * injurySiteLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * injuryIncidentlabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * playerTravelLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * injurySiteText;
+
+@property(nonatomic, retain) IBOutlet UILabel * gamesMissedLabel;
+
+@property(nonatomic, retain) IBOutlet UILabel * injuryIncidentText;
+
 @property(nonatomic, retain) IBOutlet UIView * progressView;
 
 @property(nonatomic, retain) IBOutlet UILabel * riskCountLabel;
@@ -53,5 +67,6 @@
 @property(nonatomic, retain) IBOutlet UILabel * groinSqueeze60Current;
 
 @property(nonatomic, retain) IBOutlet UILabel * avgGroinSqueeze60;
+
 
 @end

@@ -37,6 +37,16 @@ typedef enum {
     DataModel * dataModel;
     ModelItems * modelItems;
     Model * model;
+    Model * playerModel;
+    
+    BOOL isInjured;
+    
+    NSString * playerStatus;
+    NSString * playerInjuryArea;
+    NSString * playerInjuryDurationWeeks;
+    NSString * playerInjuryDurarionGames;
+    NSString * travelDuration;
+    NSString * travelWeeks;
 }
 @property (nonatomic) NSMutableArray * players;
 @property (strong,nonatomic) NSMutableArray *filteredPlayersArray;
@@ -74,6 +84,8 @@ typedef enum {
 
 -(void) initiateViewSetUp
 {
+    isInjured = FALSE;
+    
     [self setupView];
     
     [self initializeData];
@@ -97,6 +109,15 @@ typedef enum {
     DataModel * dataModelClient = [DataModel sharedClient];
     
     modelItems = [dataModelClient getModelItems:self.player];
+    
+    for(Model *item in modelItems.models)
+    {
+        if([item.Player_Status isEqualToString:@"INJURED"])
+        {
+            playerModel = item;
+            isInjured = TRUE;
+        }
+    }
     
     model = [modelItems.models lastObject];
     
@@ -247,10 +268,6 @@ typedef enum {
     // Change the search bar placeholder text color
     [searchField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
     
-    self.playerSearchBar.layer.borderWidth = 1;
-    self.playerSearchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.playerSearchBar.layer.cornerRadius = 15.0f;
-    
     UIImage *backGroundImage = [UIImage imageNamed:@"profile_grass.jpg"];
     UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
     backImageView.frame = self.playerSearchView.frame;
@@ -273,6 +290,10 @@ typedef enum {
     self.mainScrollView.delegate = self;
     
     self.mainScrollView.scrollEnabled = YES;
+    
+    [self setIcon:self.fitnessIcon withPercentage:[self.player.FitnessRating doubleValue]/5.0 withValue:FITNESS];
+    [self setIcon:self.riskIcon withPercentage:[self.player.RiskRatingValue doubleValue]/8.0 withValue:RISK];
+    [self setIcon:self.wellbeingIcon withPercentage:[self.player.Wellbeing doubleValue]/11.0 withValue:WELLBEING];
     
     [self setupFitnessView];
 }
@@ -473,7 +494,7 @@ typedef enum {
     
     Player * player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
     cell.playerImage.image = [UIImage imageNamed:player.Image];
-    
+    self.player = player;
     return cell;
 }
 
@@ -572,6 +593,38 @@ typedef enum {
     
     fitnessView.hipRotationRCurrent.text = [NSString stringWithFormat:@"%@",hipRotationR];
     fitnessView.avghipRotationR.text = [NSString stringWithFormat:@"%d",avg_hiprotationr];
+    
+    fitnessView.playerStatusLabel.text = model.Player_Status;
+    
+    if(isInjured)
+    {
+        fitnessView.injurySiteLabel.hidden = FALSE;
+        fitnessView.injurySiteText.hidden = FALSE;
+        fitnessView.injuryIncidentlabel.hidden = FALSE;
+        fitnessView.injuryIncidentText.hidden = FALSE;
+        fitnessView.playerTravelLabel.hidden = FALSE;
+        fitnessView.gamesMissedLabel.hidden = FALSE;
+        
+        fitnessView.playerStatusLabel.text = playerModel.Player_Status;
+        
+        if(playerModel.Injury_Site.length == 0)
+        {
+            playerModel.Injury_Site = @"Left hamstring";
+        }
+        
+        if(playerModel.Injury_ProposedMechanisms.length == 0)
+        {
+            playerModel.Injury_ProposedMechanisms = @"During training";
+        }
+        
+        fitnessView.injurySiteLabel.text = playerModel.Injury_Site;
+        fitnessView.injuryIncidentlabel.text = playerModel.Injury_ProposedMechanisms;
+        [fitnessView.gamesMissedLabel setText:[NSString stringWithFormat:@"This player has been injured for %d weeks and has missed %d game",[playerModel.InjuryDuration_Weeks intValue] + 3, [playerModel.InjuryDuration_GamesMissed intValue]]];
+        
+        [fitnessView.playerTravelLabel setText:[NSString stringWithFormat:@"The player has travelled %d times this season, for a total of %d days.",[playerModel.Travel intValue] + 4, ([playerModel.Travel_Duration intValue] + 4) *7]];
+    }
+    
+    
     
     CGRect sitReachFrame;
     
@@ -694,7 +747,7 @@ typedef enum {
     
     double hipRotationRPC = ([hipRotationR intValue]/(double)avg_hiprotationr);
     
-    if(hipRotationLPC < 1)
+    if(hipRotationRPC < 1)
     {
         hipRotationRFrame =  fitnessView.hipRotationR.frame;
     }
@@ -705,7 +758,7 @@ typedef enum {
     
     overallFitnessCount = [self setViewChange:fitnessView.hipRotationR withPercentage:hipRotationRPC withCount:overallFitnessCount];
     
-    if(hipRotationLPC < 1)
+    if(hipRotationRPC < 1)
     {
         hipRotationRFrame.size.width = hipRotationRFrame.size.width * hipRotationRPC;
         hipRotationRFrame.size.height = hipRotationRFrame.size.height;

@@ -97,10 +97,7 @@
 		AC1720E518B7170200A0274F /* player-indicator-container.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1720E218B7170200A0274F /* player-indicator-container.png */; };
 		AC76770218AC6F1A00664E8C /* PlayerProfileCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */; };
 		AC76770618AC6F9400664E8C /* PlayerProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */; };
-		AC76770818AC702900664E8C /* cafe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AC76770718AC702900664E8C /* cafe.jpg */; };
 		AC76770A18AC71FA00664E8C /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = AC76770918AC71FA00664E8C /* Player.png */; };
-		AC76770C18AC807B00664E8C /* SortButton.png in Resources */ = {isa = PBXBuildFile; fileRef = AC76770B18AC807B00664E8C /* SortButton.png */; };
-		AC76770E18AC808900664E8C /* FilterButton.png in Resources */ = {isa = PBXBuildFile; fileRef = AC76770D18AC808900664E8C /* FilterButton.png */; };
 		AC76771018AC856800664E8C /* PlayerData.json in Resources */ = {isa = PBXBuildFile; fileRef = AC76770F18AC856800664E8C /* PlayerData.json */; };
 		AC76771218AC85B600664E8C /* PlayerProfile.csv in Resources */ = {isa = PBXBuildFile; fileRef = AC76771118AC85B600664E8C /* PlayerProfile.csv */; };
 		AC76771418AC891E00664E8C /* PlayerProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = AC76771318AC891E00664E8C /* PlayerProfile.json */; };
@@ -151,7 +148,7 @@
 		0239B55A168BB0F4008B8AD6 /* RFQuiltLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFQuiltLayout.h; path = RFQuiltLayout/RFQuiltLayout.h; sourceTree = SOURCE_ROOT; };
 		0239B55B168BB0F4008B8AD6 /* RFQuiltLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFQuiltLayout.m; path = RFQuiltLayout/RFQuiltLayout.m; sourceTree = SOURCE_ROOT; };
 		026492D516D3628600992E42 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		02E25B02168B74B0009CA089 /* Waratahs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Waratahs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02E25B02168B74B0009CA089 /* Performance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Performance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E25B06168B74B0009CA089 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02E25B08168B74B0009CA089 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02E25B0E168B74B0009CA089 /* Waratahs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Waratahs-Info.plist"; sourceTree = "<group>"; };
@@ -261,10 +258,7 @@
 		AC76770018AC6F1A00664E8C /* PlayerProfileCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerProfileCollectionCell.h; sourceTree = "<group>"; };
 		AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerProfileCollectionCell.m; sourceTree = "<group>"; };
 		AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerProfileCollectionCell.xib; sourceTree = "<group>"; };
-		AC76770718AC702900664E8C /* cafe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cafe.jpg; sourceTree = "<group>"; };
 		AC76770918AC71FA00664E8C /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
-		AC76770B18AC807B00664E8C /* SortButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SortButton.png; sourceTree = "<group>"; };
-		AC76770D18AC808900664E8C /* FilterButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FilterButton.png; sourceTree = "<group>"; };
 		AC76770F18AC856800664E8C /* PlayerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PlayerData.json; sourceTree = "<group>"; };
 		AC76771118AC85B600664E8C /* PlayerProfile.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayerProfile.csv; sourceTree = "<group>"; };
 		AC76771318AC891E00664E8C /* PlayerProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PlayerProfile.json; sourceTree = "<group>"; };
@@ -346,7 +340,7 @@
 		02E25B03168B74B0009CA089 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				02E25B02168B74B0009CA089 /* Waratahs.app */,
+				02E25B02168B74B0009CA089 /* Performance.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -570,17 +564,14 @@
 				AC17205518B41C2B00A0274F /* Images */,
 				AC17201B18B2D84B00A0274F /* players */,
 				AC76771518AD974000664E8C /* Options.plist */,
-				AC76770B18AC807B00664E8C /* SortButton.png */,
 				AC76771118AC85B600664E8C /* PlayerProfile.csv */,
 				AC76770918AC71FA00664E8C /* Player.png */,
-				AC76770718AC702900664E8C /* cafe.jpg */,
 				AC1720E018B7170200A0274F /* player-bg-bottom.png */,
 				AC1720E118B7170200A0274F /* player-bg-top.png */,
 				AC1720E218B7170200A0274F /* player-indicator-container.png */,
 				AC76770F18AC856800664E8C /* PlayerData.json */,
 				AC1720D918B7026A00A0274F /* Wellness.json */,
 				AC76771318AC891E00664E8C /* PlayerProfile.json */,
-				AC76770D18AC808900664E8C /* FilterButton.png */,
 			);
 			name = Artifacts;
 			sourceTree = "<group>";
@@ -623,7 +614,7 @@
 			);
 			name = Waratahs;
 			productName = QuiltDemo;
-			productReference = 02E25B02168B74B0009CA089 /* Waratahs.app */;
+			productReference = 02E25B02168B74B0009CA089 /* Performance.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -637,7 +628,7 @@
 				ORGANIZATIONNAME = "Bryce Redd";
 				TargetAttributes = {
 					02E25B01168B74B0009CA089 = {
-						DevelopmentTeam = NNT3J28DQL;
+						DevelopmentTeam = MPH356C628;
 					};
 				};
 			};
@@ -674,7 +665,6 @@
 				AC17207918B41C2B00A0274F /* btn-change-risk.png in Resources */,
 				AC1720B318B473D800A0274F /* David_Lyons_profile.png in Resources */,
 				AC17209318B41C2B00A0274F /* stats2.png in Resources */,
-				AC76770818AC702900664E8C /* cafe.jpg in Resources */,
 				AC17207C18B41C2B00A0274F /* btn-team-stats-close.png in Resources */,
 				AC99E81518C05BF6009B9DBD /* app_icon_small.png in Resources */,
 				AC17209018B41C2B00A0274F /* player-risk-box.png in Resources */,
@@ -743,7 +733,6 @@
 				AC99E7FE18BF1B29009B9DBD /* Ben_Jacobs.png in Resources */,
 				AC99E80118BF1B29009B9DBD /* Chris_Whitaker.png in Resources */,
 				AC1720E418B7170200A0274F /* player-bg-top.png in Resources */,
-				AC76770E18AC808900664E8C /* FilterButton.png in Resources */,
 				AC76771218AC85B600664E8C /* PlayerProfile.csv in Resources */,
 				AC17208C18B41C2B00A0274F /* icons-well-green.png in Resources */,
 				AC1720E518B7170200A0274F /* player-indicator-container.png in Resources */,
@@ -768,7 +757,6 @@
 				AC99E80B18BF1B29009B9DBD /* Tom_Carter.png in Resources */,
 				AC1720B918B473D800A0274F /* Tom_Carter_profile.png in Resources */,
 				AC1720DA18B7026A00A0274F /* Wellness.json in Resources */,
-				AC76770C18AC807B00664E8C /* SortButton.png in Resources */,
 				AC99E80918BF1B29009B9DBD /* Phil_Waugh.png in Resources */,
 				AC99E80618BF1B29009B9DBD /* Dean_Mumm.png in Resources */,
 			);
@@ -919,14 +907,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Waratahs;
-				PROVISIONING_PROFILE = "D242A26A-6546-4812-B49C-1AD637A58911";
+				PRODUCT_NAME = Performance;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -936,14 +924,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Waratahs;
-				PROVISIONING_PROFILE = "D242A26A-6546-4812-B49C-1AD637A58911";
+				PRODUCT_NAME = Performance;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

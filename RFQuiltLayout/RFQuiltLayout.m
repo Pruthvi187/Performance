@@ -61,9 +61,9 @@
     BOOL isVert = self.direction == UICollectionViewScrollDirectionVertical;
     
     if (isVert)
-        return CGSizeMake(self.collectionView.frame.size.width, (self.furthestBlockPoint.y+1) * self.blockPixels.height-100);
+        return CGSizeMake(self.collectionView.frame.size.width, (self.furthestBlockPoint.y+1) * self.blockPixels.height);
     else
-        return CGSizeMake((self.furthestBlockPoint.x+1) * self.blockPixels.width, self.collectionView.frame.size.height-100);
+        return CGSizeMake((self.furthestBlockPoint.x+1) * self.blockPixels.width, self.collectionView.frame.size.height);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {

@@ -15,7 +15,8 @@
     "Wellbeing":6,
     "RiskRating":14,
     "FitnessRating":0,
-    "RiskRatingChange":9
+    "RiskRatingChange":9,
+    "RiskRatingValue":1
   },
   {
     "Name": "Damien Fitzpatric",
@@ -33,7 +34,8 @@
     "Wellbeing":11,
     "RiskRating":16,
     "FitnessRating":4,
-    "RiskRatingChange":1
+    "RiskRatingChange":1,
+    "RiskRatingValue":3
   },
   {
     "Name": "Al Baxter",
@@ -48,10 +50,11 @@
     "Weight":"122",
     "Debut":"2000",
     "Caps":"121",
-    "Wellbeing":7,
+    "Wellbeing":11,
     "RiskRating":5,
     "FitnessRating":4,
-    "RiskRatingChange":-1
+    "RiskRatingChange":-1,
+    "RiskRatingValue":2
   },
   {
     "Name": "Dan Vickerman",
@@ -69,7 +72,8 @@
     "Wellbeing":11,
     "RiskRating":4,
     "FitnessRating":5,
-    "RiskRatingChange":-3
+    "RiskRatingChange":-3,
+    "RiskRatingValue":2
   },
     {
     "Name": "Dean Mumm",
@@ -87,7 +91,8 @@
     "Wellbeing":11,
     "RiskRating":3,
     "FitnessRating":4,
-    "RiskRatingChange":-7
+    "RiskRatingChange":-7,
+    "RiskRatingValue":3
  },
   {
     "Name": "Rocky Elsom",
@@ -105,7 +110,8 @@
     "Wellbeing":11,
     "RiskRating":13,
     "FitnessRating":0,
-    "RiskRatingChange":3
+    "RiskRatingChange":3,
+    "RiskRatingValue":3
   },
     {
     "Name": "Phil Waugh",
@@ -123,7 +129,8 @@
     "Wellbeing":10,
     "RiskRating":12,
     "FitnessRating":5,
-    "RiskRatingChange":1
+    "RiskRatingChange":1,
+    "RiskRatingValue":3
   },
   {
     "Name": "David Lyons",
@@ -138,10 +145,11 @@
     "Weight":"117",
     "Debut":"2000",
     "Caps":"124",
-    "Wellbeing":7,
+    "Wellbeing":10,
     "RiskRating":8,
     "FitnessRating":5,
-    "RiskRatingChange":-1
+    "RiskRatingChange":-1,
+    "RiskRatingValue":2
   },
   {
     "Name": "Chris Whitaker",
@@ -159,7 +167,8 @@
     "Wellbeing":7,
     "RiskRating":6,
     "FitnessRating":5,
-    "RiskRatingChange":-1
+    "RiskRatingChange":-1,
+    "RiskRatingValue":1
   },
   {
     "Name": "Daniel Halangahu",
@@ -177,7 +186,8 @@
     "Wellbeing":9,
     "RiskRating":2,
     "FitnessRating":3,
-    "RiskRatingChange":-7
+    "RiskRatingChange":-7,
+    "RiskRatingValue":5
   },
   {
     "Name": "Mat Rogers",
@@ -195,7 +205,8 @@
     "Wellbeing":11,
     "RiskRating":12,
     "FitnessRating":4,
-    "RiskRatingChange":1
+    "RiskRatingChange":1,
+    "RiskRatingValue":4
   },
   {
     "Name": "Tom Cater",
@@ -213,7 +224,8 @@
     "Wellbeing":5,
     "RiskRating":94,
     "FitnessRating":0,
-    "RiskRatingChange":9
+    "RiskRatingChange":9,
+    "RiskRatingValue":3
   },
   {
     "Name": "Ben Jacobs",
@@ -231,7 +243,8 @@
     "Wellbeing":9,
     "RiskRating":98,
     "FitnessRating":3,
-    "RiskRatingChange":10
+    "RiskRatingChange":10,
+    "RiskRatingValue":2
   },
   {
     "Name": "Drew Mitchell",
@@ -249,7 +262,8 @@
     "Wellbeing":11,
     "RiskRating":10,
     "FitnessRating":0,
-    "RiskRatingChange":-7
+    "RiskRatingChange":-7,
+    "RiskRatingValue":2
   },
   {
     "Name": "Berrick Barnes",
@@ -267,6 +281,7 @@
     "Wellbeing":7,
     "RiskRating":51,
     "FitnessRating":3,
-    "RiskRatingChange":7
+    "RiskRatingChange":7,
+    "RiskRatingValue":2
   }
 ]

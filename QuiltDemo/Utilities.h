@@ -16,7 +16,7 @@
 
 -(NSString *) getFilePath:(NSString *) fileName ofType:(NSString *)type;
 
--(PlayerItems*) getSortedPlayerItems:(NSString*) sortType withSortKind:(BOOL)ascending;
+-(PlayerItems*) getSortedPlayerItems:(NSString*) sortType withSortKind:(BOOL)ascending withPlayers:(NSMutableArray*)players;
 
 -(double) getAverageSleepQuality:(WellnessPlayers*)wellness;
 

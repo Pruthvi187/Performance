@@ -42,4 +42,6 @@
 
 @property NSString * RiskRatingChange;
 
+@property NSString * RiskRatingValue;
+
 @end

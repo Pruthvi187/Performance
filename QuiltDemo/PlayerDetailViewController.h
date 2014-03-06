@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CorePlot/CorePlot-CocoaTouch.h>
 
-@class Player, TabBarView, FitnessView, WellnessView, RiskView;
+@class Player, TabBarView, FitnessView, WellnessView, RiskView, ModelItems;
 
 @interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 {
@@ -18,6 +18,7 @@
     FitnessView * fitnessView;
     WellnessView * wellnessView;
     RiskView * riskView;
+
     int avg_sleep_quality;
     NSString *  sleep_quality;
     int avg_leg_heaviness;
