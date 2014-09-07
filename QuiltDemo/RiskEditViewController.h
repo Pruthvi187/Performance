@@ -120,6 +120,9 @@
 
 @property(nonatomic, retain) IBOutlet UILabel * hipRotationUpMostRange;
 
+@property(nonatomic, retain) IBOutlet UILabel * riskChangeLabel;
+
+@property(nonatomic, retain) IBOutlet UIImageView * riskchangeImage;
 
 @property(strong, nonatomic) Player * player;
 

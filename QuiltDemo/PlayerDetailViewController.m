@@ -494,7 +494,7 @@ typedef enum {
     
     Player * player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
     cell.playerImage.image = [UIImage imageNamed:player.Image];
-    self.player = player;
+    //self.player = player;
     return cell;
 }
 
@@ -619,9 +619,10 @@ typedef enum {
         
         fitnessView.injurySiteLabel.text = playerModel.Injury_Site;
         fitnessView.injuryIncidentlabel.text = playerModel.Injury_ProposedMechanisms;
-        [fitnessView.gamesMissedLabel setText:[NSString stringWithFormat:@"This player has been injured for %d weeks and has missed %d game",[playerModel.InjuryDuration_Weeks intValue] + 3, [playerModel.InjuryDuration_GamesMissed intValue]]];
+        [fitnessView.gamesMissedLabel setText:[NSString stringWithFormat:@"This player has been injured for %d weeks and has missed %d games",[playerModel.InjuryDuration_Weeks intValue] + 3, [playerModel.InjuryDuration_GamesMissed intValue]]];
         
-        [fitnessView.playerTravelLabel setText:[NSString stringWithFormat:@"The player has travelled %d times this season, for a total of %d days.",[playerModel.Travel intValue] + 4, ([playerModel.Travel_Duration intValue] + 4) *7]];
+        [fitnessView.playerTravelLabel setText:[NSString stringWithFormat:@"The player has travelled %d times this season, for a total of %d days.",0, 0]];
+        //[fitnessView.playerTravelLabel setText:[NSString stringWithFormat:@"The player has travelled %d times this season, for a total of %d days.",[playerModel.Travel intValue] + 4, ([playerModel.Travel_Duration intValue] + 4) *7]];
     }
     
     

@@ -310,6 +310,20 @@
         upMostRange = (midRange + lowerRange);
     }
     
+    
+    [self.riskChangeLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRatingChange,@"%"]];
+    
+    if([self.player.RiskRatingChange intValue] < 0)
+    {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-down-green"]];
+        [self.riskChangeLabel setTextColor:UIColorFromHex(0x53B61D)];
+    }
+    else
+    {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-up-red"]];
+        [self.riskChangeLabel setTextColor:[UIColor redColor]];
+    }
+    
  
     
     [self.avgHipRotationLabel setText:[NSString stringWithFormat:@"%d",avgHipRotaion]];
