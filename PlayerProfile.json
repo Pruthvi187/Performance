@@ -133,12 +133,12 @@
     "RiskRatingValue":3
   },
   {
-    "Name": "Wycliff Paul",
+    "Name": "Wycliff Palu",
     "Position": "No. 8",
     "ID": 8,
-    "Image" : "Wycliff_Paul",
+    "Image" : "Wycliff_Palu",
     "FilterPosition" : "Back Row",
-    "ProfileImage": "Wycliff_Paul_profile",
+    "ProfileImage": "Wycliff_Palu_profile",
     "DOB": "27/7/1982",
     "Age":"32",
     "Height":"1.94m",
