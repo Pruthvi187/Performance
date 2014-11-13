@@ -631,7 +631,7 @@
 				ORGANIZATIONNAME = "Bryce Redd";
 				TargetAttributes = {
 					02E25B01168B74B0009CA089 = {
-						DevelopmentTeam = KEY72ZG462;
+						DevelopmentTeam = MPH356C628;
 					};
 				};
 			};
@@ -916,12 +916,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -933,12 +933,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
