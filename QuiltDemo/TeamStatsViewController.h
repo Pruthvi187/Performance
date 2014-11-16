@@ -13,7 +13,7 @@
 @class Player;
 
 @interface TeamStatsViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate,
-            UICollectionViewDelegateFlowLayout, UIPageViewControllerDelegate, UIPageViewControllerDataSource, CPTPlotDataSource, CPTPlotDelegate>
+            UICollectionViewDelegateFlowLayout, CPTPlotDataSource, CPTPlotDelegate>
 {
     CPTXYGraph * graph;
     NSMutableArray *dataForPlot;

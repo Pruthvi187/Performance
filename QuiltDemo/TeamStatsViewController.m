@@ -21,7 +21,6 @@ static NSString *const BACK_ROW_PLOT = @"Back Row";
     DataModel * dataModel;
     NSMutableArray * backsPlotArray;
 }
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong, nonatomic) NSMutableArray *statsGraphArray;
@@ -31,26 +30,16 @@ static NSString *const BACK_ROW_PLOT = @"Back Row";
 
 @implementation TeamStatsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom se
-        
-    }
-    return self;
-}
-
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.contentScrollView.contentSize = CGSizeMake(1024, 1600);
+  //  self.contentScrollView.contentSize = CGSizeMake(1024, 1600);
 }
 
 - (void)viewDidLoad
 {
-    
+    [super viewDidLoad];
     self.contentScrollView.scrollEnabled = YES;
     
     UINib * graphCellNib = [UINib nibWithNibName:@"GraphCollectionCell" bundle:nil];

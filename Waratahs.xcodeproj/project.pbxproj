@@ -143,6 +143,8 @@
 		ACA6C4E218BC628100091BE5 /* change-risk-bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E118BC628100091BE5 /* change-risk-bg2.png */; };
 		ACA6C4E418BC637E00091BE5 /* change-risk-bg2.fw.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E318BC637E00091BE5 /* change-risk-bg2.fw.png */; };
 		ACA6C4E618BD64E700091BE5 /* scale.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E518BD64E700091BE5 /* scale.png */; };
+		ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB116F81A15C2F700002A96 /* StatsVC.m */; };
+		ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB116F91A15C2F700002A96 /* StatsVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -311,6 +313,9 @@
 		ACA6C4E118BC628100091BE5 /* change-risk-bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change-risk-bg2.png"; sourceTree = "<group>"; };
 		ACA6C4E318BC637E00091BE5 /* change-risk-bg2.fw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change-risk-bg2.fw.png"; sourceTree = "<group>"; };
 		ACA6C4E518BD64E700091BE5 /* scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scale.png; sourceTree = "<group>"; };
+		ACB116F71A15C2F700002A96 /* StatsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsVC.h; sourceTree = "<group>"; };
+		ACB116F81A15C2F700002A96 /* StatsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsVC.m; sourceTree = "<group>"; };
+		ACB116F91A15C2F700002A96 /* StatsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,6 +599,9 @@
 				ACA6C4D618BC4E1500091BE5 /* RiskEditViewController.h */,
 				ACA6C4D718BC4E1500091BE5 /* RiskEditViewController.m */,
 				ACA6C4D818BC4E1500091BE5 /* RiskEditViewController.xib */,
+				ACB116F71A15C2F700002A96 /* StatsVC.h */,
+				ACB116F81A15C2F700002A96 /* StatsVC.m */,
+				ACB116F91A15C2F700002A96 /* StatsVC.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -683,6 +691,7 @@
 				AC17208E18B41C2B00A0274F /* icons-well-red.png in Resources */,
 				7F70B46519B9A26500FDA1E6 /* Adam_Ashley-Cooper.png in Resources */,
 				7F70B45619B9A26500FDA1E6 /* Benn_Robinson_profile.png in Resources */,
+				ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */,
 				AC99E7EC18BD9D28009B9DBD /* charts_4.png in Resources */,
 				AC17208118B41C2B00A0274F /* icon-triangle-down-green.png in Resources */,
 				7F8F80CC19C66CCF005AC35D /* Wycliff_Palu.png in Resources */,
@@ -814,6 +823,7 @@
 				AC1720CE18B5B03B00A0274F /* RiskView.m in Sources */,
 				AC99E7DE18BD93B9009B9DBD /* RFGraphsCell.m in Sources */,
 				AC17205218B3200000A0274F /* PlayerSearchCell.m in Sources */,
+				ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */,
 				AC1720D518B6F58B00A0274F /* Wellness.m in Sources */,
 				02E25B17168B74B0009CA089 /* WaratahsAppDelegate.m in Sources */,
 				ACA6C4CC18BACE5F00091BE5 /* Colours.m in Sources */,
@@ -880,7 +890,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "32600214-31ed-4eed-b4fe-a7b75a9ade08";
 				SDKROOT = iphoneos;
@@ -903,7 +913,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "32600214-31ed-4eed-b4fe-a7b75a9ade08";
@@ -916,14 +926,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5ada02cf-5bed-4087-81cc-fe4b339916b7";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -933,14 +943,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (XV4S8PNEB5)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5ada02cf-5bed-4087-81cc-fe4b339916b7";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

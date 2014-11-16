@@ -16,6 +16,7 @@
 #import "Utilities.h"
 #import "Player.h"
 #import "Colours.h"
+#import "StatsVC.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -39,7 +40,7 @@ int num = 0;
 
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     [self initialiseOptions];
     
     UIImage *backGroundImage = [UIImage imageNamed:@"background.png"];
@@ -71,6 +72,7 @@ int num = 0;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showTeamStats:)];
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
@@ -278,15 +280,19 @@ int num = 0;
 
 -(void)showTeamStats:(id)sender
 {
-    TeamStatsViewController *teamStatsViewController = [[TeamStatsViewController alloc] initWithNibName:@"TeamStatsViewController" bundle:nil];
+    StatsVC *teamStatsViewController = [[StatsVC alloc] initWithNibName:@"StatsVC" bundle:nil];
     teamStatsViewController.view.backgroundColor = UIColorFromHexWithAlpha(0x001A49, 0.9);
    
-     //teamStatsViewController.view.alpha = 0.5f;
-     self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    self.providesPresentationContextTransitionStyle = YES;
+    self.definesPresentationContext = YES;
+    [teamStatsViewController setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    
+    
     teamStatsViewController.view.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:UIModalTransitionStyleFlipHorizontal animations:^{
      teamStatsViewController.view.alpha = 1.0;
     } completion:nil];
+    teamStatsViewController.view.alpha = 1.0;
      [self presentViewController:teamStatsViewController animated:NO completion:nil];
      
     
