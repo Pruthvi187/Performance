@@ -72,7 +72,7 @@ typedef enum {
     dataModel = [DataModel sharedClient];
     
     self.players = [@[] mutableCopy];
-    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
     self.filteredPlayersArray = nil;
@@ -267,12 +267,6 @@ typedef enum {
     searchField.textColor = [UIColor blackColor];
     // Change the search bar placeholder text color
     [searchField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
-    
-    UIImage *backGroundImage = [UIImage imageNamed:@"profile_grass.jpg"];
-    UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
-    backImageView.frame = self.playerSearchView.frame;
-    [self.playerSearchView addSubview:backImageView];
-    [self.playerSearchView sendSubviewToBack:backImageView];
     
     UIImage *backGroundGradientImage = [UIImage imageNamed:@"player-bg-top.png"];
     UIImageView * backGradientImageView = [[UIImageView alloc] initWithImage:backGroundGradientImage];
@@ -505,9 +499,8 @@ typedef enum {
     [self initiateViewSetUp];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 190;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 215;
 }
 
 

@@ -60,7 +60,6 @@
 		AC17204C18B2DFFC00A0274F /* PlayerItems.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204B18B2DFFC00A0274F /* PlayerItems.m */; };
 		AC17204F18B2E6AA00A0274F /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17204E18B2E6AA00A0274F /* Utilities.m */; };
 		AC17205218B3200000A0274F /* PlayerSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17205118B3200000A0274F /* PlayerSearchCell.m */; };
-		AC17205418B3202100A0274F /* PlayerSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC17205318B3202100A0274F /* PlayerSearchCell.xib */; };
 		AC17207818B41C2B00A0274F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17205618B41C2B00A0274F /* background.png */; };
 		AC17207918B41C2B00A0274F /* btn-change-risk.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17205718B41C2B00A0274F /* btn-change-risk.png */; };
 		AC17207A18B41C2B00A0274F /* btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = AC17205818B41C2B00A0274F /* btn-close.png */; };
@@ -114,6 +113,7 @@
 		AC29EF151BA7B4FA005406DA /* zurich-cn-bt-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF131BA7B4FA005406DA /* zurich-cn-bt-bold.ttf */; };
 		AC29EF161BA7B4FA005406DA /* Zurich__Condensed_BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF141BA7B4FA005406DA /* Zurich__Condensed_BT.ttf */; };
 		AC29EF181BA7DD59005406DA /* SoldierProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF171BA7DD59005406DA /* SoldierProfile.json */; };
+		AC29EF1C1BA7F598005406DA /* PlayerSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF1B1BA7F598005406DA /* PlayerSearchCell.xib */; };
 		AC76770218AC6F1A00664E8C /* PlayerProfileCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */; };
 		AC76770618AC6F9400664E8C /* PlayerProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */; };
 		AC76770A18AC71FA00664E8C /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = AC76770918AC71FA00664E8C /* Player.png */; };
@@ -219,7 +219,6 @@
 		AC17204E18B2E6AA00A0274F /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		AC17205018B3200000A0274F /* PlayerSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerSearchCell.h; sourceTree = "<group>"; };
 		AC17205118B3200000A0274F /* PlayerSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerSearchCell.m; sourceTree = "<group>"; };
-		AC17205318B3202100A0274F /* PlayerSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerSearchCell.xib; sourceTree = "<group>"; };
 		AC17205618B41C2B00A0274F /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		AC17205718B41C2B00A0274F /* btn-change-risk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-change-risk.png"; sourceTree = "<group>"; };
 		AC17205818B41C2B00A0274F /* btn-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-close.png"; sourceTree = "<group>"; };
@@ -280,6 +279,7 @@
 		AC29EF131BA7B4FA005406DA /* zurich-cn-bt-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zurich-cn-bt-bold.ttf"; sourceTree = "<group>"; };
 		AC29EF141BA7B4FA005406DA /* Zurich__Condensed_BT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zurich__Condensed_BT.ttf; sourceTree = "<group>"; };
 		AC29EF171BA7DD59005406DA /* SoldierProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SoldierProfile.json; sourceTree = "<group>"; };
+		AC29EF1B1BA7F598005406DA /* PlayerSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerSearchCell.xib; sourceTree = "<group>"; };
 		AC76770018AC6F1A00664E8C /* PlayerProfileCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerProfileCollectionCell.h; sourceTree = "<group>"; };
 		AC76770118AC6F1A00664E8C /* PlayerProfileCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerProfileCollectionCell.m; sourceTree = "<group>"; };
 		AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerProfileCollectionCell.xib; sourceTree = "<group>"; };
@@ -418,7 +418,7 @@
 				AC76770518AC6F9400664E8C /* PlayerProfileCollectionCell.xib */,
 				AC17205018B3200000A0274F /* PlayerSearchCell.h */,
 				AC17205118B3200000A0274F /* PlayerSearchCell.m */,
-				AC17205318B3202100A0274F /* PlayerSearchCell.xib */,
+				AC29EF1B1BA7F598005406DA /* PlayerSearchCell.xib */,
 				AC1720BE18B5787A00A0274F /* TabBarView.h */,
 				AC1720BF18B5787A00A0274F /* TabBarView.m */,
 				AC1720C518B5966800A0274F /* FitnessView.h */,
@@ -714,6 +714,7 @@
 				AC17208118B41C2B00A0274F /* icon-triangle-down-green.png in Resources */,
 				7F8F80CC19C66CCF005AC35D /* Wycliff_Palu.png in Resources */,
 				7F70B46E19B9A26500FDA1E6 /* Michael_Hooper.png in Resources */,
+				AC29EF1C1BA7F598005406DA /* PlayerSearchCell.xib in Resources */,
 				AC17207A18B41C2B00A0274F /* btn-close.png in Resources */,
 				AC1720C918B5967A00A0274F /* FitnessView.xib in Resources */,
 				AC76770A18AC71FA00664E8C /* Player.png in Resources */,
@@ -739,7 +740,6 @@
 				AC76771C18ADC0AB00664E8C /* TeamStatsViewController.xib in Resources */,
 				AC99E7EA18BD9D28009B9DBD /* charts_2.png in Resources */,
 				AC99E7ED18BD9D28009B9DBD /* charts_5.png in Resources */,
-				AC17205418B3202100A0274F /* PlayerSearchCell.xib in Resources */,
 				AC99E81718C05BF6009B9DBD /* load_screen_small.png in Resources */,
 				AC17207E18B41C2B00A0274F /* change-risk-bg.png in Resources */,
 				AC1720DF18B7136800A0274F /* WellnessView.xib in Resources */,

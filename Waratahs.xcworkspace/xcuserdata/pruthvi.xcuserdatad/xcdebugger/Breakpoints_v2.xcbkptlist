@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuiltDemo/PlayerDetailViewController.m"
-            timestampString = "415689506.499694"
+            timestampString = "463993757.990866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "439"
-            endingLineNumber = "439"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "-numberOfRecordsForPlot:"
             landmarkType = "5">
          </BreakpointContent>
