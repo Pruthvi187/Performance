@@ -43,13 +43,13 @@ int num = 0;
     [super viewDidLoad];
     [self initialiseOptions];
     
-    UIImage *backGroundImage = [UIImage imageNamed:@"background.png"];
+    UIImage *backGroundImage = [UIImage imageNamed:@"Background"];
     UIImageView * backImageView = [[UIImageView alloc] initWithImage:backGroundImage];
     backImageView.frame = self.view.frame;
     [self.view addSubview:backImageView];
     [self.view sendSubviewToBack:backImageView];
     
-    self.optionsPlaceHolderView.backgroundColor = UIColorFromHexWithAlpha(0x001B4A, 0.75);
+   // self.optionsPlaceHolderView.backgroundColor = UIColorFromHexWithAlpha(0x001B4A, 0.75);
  
     
     UINib *industryNib = [UINib nibWithNibName:@"PlayerProfileCollectionCell" bundle:nil];
@@ -58,14 +58,14 @@ int num = 0;
     dataModel = [DataModel sharedClient];
     
     PlayerItems * playerItems = nil;
-    playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     
     self.players = [@[] mutableCopy];
     [self.players setArray:playerItems.players];
     
     RFQuiltLayout* layout = (id)[self.collectionView collectionViewLayout];
     layout.direction = UICollectionViewScrollDirectionVertical;
-    layout.blockPixels = CGSizeMake(155, 215);
+    layout.blockPixels = CGSizeMake(221, 290);
     
     [self sortPlayers:@"RiskRating" sortKind:NO];
     
@@ -116,7 +116,7 @@ int num = 0;
     menuTableView.delegate = self;
     [menuTableView setRowHeight:50];
     menuTableView.tag = [sender tag];
-    NSLog(@"Tag is %d and %d", menuTableView.tag, [sender tag]);
+    NSLog(@"Tag is %ld and %ld", menuTableView.tag, [sender tag]);
     menuTableView.backgroundColor = [UIColor clearColor];
     popOverController.view = menuTableView;
     popOverController.preferredContentSize = CGSizeMake(450, 250);
@@ -126,6 +126,10 @@ int num = 0;
     
 }
 
+
+-(BOOL)prefersStatusBarHidden{
+    return NO;
+}
 
 
 #pragma mark - UICollectionView Datasource
@@ -141,6 +145,17 @@ int num = 0;
     Player * player = [self.players objectAtIndex:indexPath.row];
     
     cell.playerImage.image = [UIImage imageNamed:player.Image];
+    [cell.playerName setText:player.Name];
+    
+    
+    
+    NSMutableAttributedString * riskText = [utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.RiskRating, @"%"]];
+    NSMutableAttributedString * fitnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.FitnessRating, @"%"]];
+    NSMutableAttributedString * wellBeingText = [utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.Wellbeing, @"%"]];
+
+    [cell.riskText setAttributedText:riskText];
+    [cell.fitnessText setAttributedText:fitnessText];
+    [cell.wellBeingText setAttributedText:wellBeingText];
     
     return cell;
 }
@@ -163,10 +178,10 @@ int num = 0;
 - (CGSize) blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.row >= self.players.count)
-        NSLog(@"Asking for index paths of non-existant cells!! %d from %d cells", indexPath.row, self.players.count);
+        NSLog(@"Asking for index paths of non-existant cells!! %ld from %lu cells", indexPath.row, (unsigned long)self.players.count);
     
-    if (indexPath.row % 13 == 0)
-        return CGSizeMake(2, 2);
+   // if (indexPath.row % 13 == 0)
+   //     return CGSizeMake(2, 2);
     
     
     return CGSizeMake(1, 1);
@@ -259,7 +274,7 @@ int num = 0;
     self.players = nil;
     self.players = [@[] mutableCopy];
     PlayerItems * playerItems = nil;
-    playerItems = [dataModel getPlayerItems:position forMainPosition:mainPosition];
+    playerItems = [dataModel getSoldierItems:position forMainPosition:mainPosition];
     [self.players setArray:playerItems.players];
     
     [self.collectionView reloadData];
@@ -294,8 +309,8 @@ int num = 0;
     } completion:nil];
     teamStatsViewController.view.alpha = 1.0;
      [self presentViewController:teamStatsViewController animated:NO completion:nil];
-     
     
 }
+
 
 @end

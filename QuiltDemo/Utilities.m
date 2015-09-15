@@ -393,5 +393,16 @@
     return groinSqueeze60/count;
 }
 
+- (NSMutableAttributedString*) getAttributedString:(NSString*) string  {
+    
+    NSInteger rangeLength = [string length];
+
+    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:14] range:NSMakeRange(0, rangeLength - 1)];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:10] range:NSMakeRange(rangeLength - 1, 1)];
+    return attributedString;
+
+}
+
 
 @end

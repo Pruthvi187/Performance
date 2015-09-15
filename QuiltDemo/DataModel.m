@@ -49,6 +49,18 @@
     
 }
 
+-(PlayerItems*) getSoldierItems:(NSString *) position forMainPosition:(NSString*)mainPosition
+{
+    NSString * jsonString = [self getJSONString:@"SoldierProfile" ofType:@"json"];
+    
+    NSMutableArray * playerProfileData =  [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    
+    PlayerItems * playrItems = [PlayerItems playerItemsWithArray:playerProfileData ofPosition:position forMainPosition:(NSString*)mainPosition];
+    
+    return playrItems;
+    
+}
+
 -(WellnessPlayers*) getPlayersWellness:(Player*) player
 {
     NSString * jsonString = [self getJSONString:@"Wellness" ofType:@"json"];

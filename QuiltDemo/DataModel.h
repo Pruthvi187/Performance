@@ -20,5 +20,7 @@
 
 -(PlayerItems*) getPlayerItems:(NSString *) position forMainPosition:(NSString*)mainPosition;
 
+-(PlayerItems*) getSoldierItems:(NSString *) position forMainPosition:(NSString*)mainPosition;
+
 
 @end

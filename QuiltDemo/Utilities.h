@@ -66,4 +66,6 @@
 
 -(double) getAverageGroinSqueeze60:(ModelItems*)modelItems;
 
+- (NSMutableAttributedString*) getAttributedString:(NSString*) string;
+
 @end
