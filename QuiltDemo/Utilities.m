@@ -395,13 +395,19 @@
 
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string  {
     
+    return [self getAttributedString:string mainTextFontSize:14 subTextFontSize:10];
+
+}
+
+- (NSMutableAttributedString*) getAttributedString:(NSString*) string mainTextFontSize:(NSInteger) fontsize subTextFontSize: (NSInteger) secondFontSize {
+    
     NSInteger rangeLength = [string length];
-
+    
     NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:string];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:14] range:NSMakeRange(0, rangeLength - 1)];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:10] range:NSMakeRange(rangeLength - 1, 1)];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:fontsize] range:NSMakeRange(0, rangeLength - 1)];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:secondFontSize] range:NSMakeRange(rangeLength - 1, 1)];
     return attributedString;
-
+    
 }
 
 

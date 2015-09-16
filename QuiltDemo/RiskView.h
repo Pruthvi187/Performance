@@ -75,6 +75,7 @@
 @property(nonatomic, retain) IBOutlet UILabel * avgtotalSprintDistLabel;
 
 @property(nonatomic, retain) IBOutlet UIView * overallRiskView;
+@property (weak, nonatomic) IBOutlet UILabel *riskRatingChangeLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * riskCountView;
 

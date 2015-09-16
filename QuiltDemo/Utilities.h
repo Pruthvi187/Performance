@@ -68,4 +68,6 @@
 
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string;
 
+- (NSMutableAttributedString*) getAttributedString:(NSString*) string mainTextFontSize:(NSInteger) fontsize subTextFontSize: (NSInteger) secondFontSize;
+
 @end

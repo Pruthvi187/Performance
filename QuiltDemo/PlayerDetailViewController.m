@@ -39,6 +39,8 @@ typedef enum {
     Model * model;
     Model * playerModel;
     
+    Utilities * utilities;
+    
     BOOL isInjured;
     
     NSString * playerStatus;
@@ -80,6 +82,8 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    utilities = [Utilities sharedClient];
     
     dataModel = [DataModel sharedClient];
     
@@ -136,8 +140,6 @@ typedef enum {
     WellnessPlayers * wellnessItems = [dataModelClient getPlayersWellness:self.player];
     
     Wellness * wellness = [wellnessItems.wellness lastObject];
-    
-    Utilities * utilities = [Utilities sharedClient];
     
     avg_sleep_quality = (int)floor([utilities getAverageSleepQuality:wellnessItems]);
     
@@ -504,9 +506,14 @@ typedef enum {
     cell.backgroundColor = [UIColor clearColor];
     cell.backgroundView = [UIView new];
     cell.selectedBackgroundView = [UIView new];
+
     
     Player * player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
     cell.playerImage.image = [UIImage imageNamed:player.Image];
+    [cell.playerName setText:player.Name];
+    [cell.playerRiskLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.RiskRating, @"%"] mainTextFontSize:12 subTextFontSize:10]];
+    [cell.playerWellBeingLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.Wellbeing, @"%"] mainTextFontSize:12 subTextFontSize:10]];
+    [cell.playerFitnessLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.FitnessRating, @"%"] mainTextFontSize:12 subTextFontSize:10]];
     //self.player = player;
     return cell;
 }
@@ -1054,7 +1061,8 @@ typedef enum {
     overallRiskView.size.height = overallRiskView.size.height;
     [riskView.overallRiskView setFrame:overallRiskView];
     
-    [riskView.riskCountView setText:[NSString stringWithFormat:@"%d/8",overallRiskCount]];
+    [riskView.riskCountView setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:36 subTextFontSize:20]];
+    [riskView.riskRatingChangeLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRatingChange, @"%"] mainTextFontSize:18 subTextFontSize:12]];
     
     [self setIcon:self.riskIcon withPercentage:overallPC withValue:RISK];
     
