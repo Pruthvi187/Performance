@@ -64,6 +64,18 @@ typedef enum {
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBar"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    
+    UIBarButtonItem * leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButton"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = leftBar;
+
+}
+
 
 - (void)viewDidLoad
 {
@@ -252,7 +264,7 @@ typedef enum {
     
     //self.yearsPlayingLabel.text = [NSString stringWithFormat:@"%@",model.Yrs_Playing];
     
-    [self.profileImage setImage:[UIImage imageNamed:self.player.ProfileImage]];
+    [self.profileImage setImage:[UIImage imageNamed:self.player.Image]];
     
     [self.playerName setText:self.player.Name];
     
@@ -265,8 +277,10 @@ typedef enum {
     
     UITextField *searchField = [self.playerSearchBar valueForKey:@"_searchField"];
     searchField.textColor = [UIColor blackColor];
+    [searchField setBorderStyle:UITextBorderStyleNone];
     // Change the search bar placeholder text color
     [searchField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.playerSearchBar setImage:[UIImage imageNamed:@"Search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     
     UIImage *backGroundGradientImage = [UIImage imageNamed:@"player-bg-top.png"];
     UIImageView * backGradientImageView = [[UIImageView alloc] initWithImage:backGroundGradientImage];
@@ -289,13 +303,13 @@ typedef enum {
     [self setIcon:self.riskIcon withPercentage:[self.player.RiskRatingValue doubleValue]/8.0 withValue:RISK];
     [self setIcon:self.wellbeingIcon withPercentage:[self.player.Wellbeing doubleValue]/11.0 withValue:WELLBEING];
     
-    [self setupFitnessView];
+    [self setUpRiskView];
 }
 
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tabScrollView.contentSize =CGSizeMake(851.0f, 650.0f);
+    self.tabScrollView.contentSize =CGSizeMake(320.0f, 650.0f);
     self.mainScrollView.contentSize = CGSizeMake(1024.0f,2000.0f);
 }
 
@@ -303,11 +317,16 @@ typedef enum {
 {
     // Create graph and apply a dark theme
     graph = [(CPTXYGraph *)[CPTXYGraph alloc] initWithFrame : self.hostView.bounds];
-    graph.backgroundColor = [[UIColor clearColor] CGColor];
+    graph.backgroundColor = [[UIColor orangeColor] CGColor];
     graph.plotAreaFrame.backgroundColor = [[UIColor clearColor] CGColor];
     graph.plotAreaFrame.plotArea.backgroundColor = [[UIColor clearColor] CGColor];
     
     self.hostView.hostedGraph = graph;
+    
+    graph.paddingBottom = 0.0f;
+    graph.paddingTop = 0.0f;
+    graph.paddingRight  = 0.0f;
+    graph.paddingLeft = 0.0f;
     
 }
 
@@ -331,8 +350,8 @@ typedef enum {
     y.labelingPolicy              = CPTAxisLabelingPolicyEqualDivisions;
     
     
-    y.minorTicksPerInterval       = 2;
-    y.preferredNumberOfMajorTicks = 1;
+    y.minorTicksPerInterval       = 0;
+    y.preferredNumberOfMajorTicks = 0;
     y.majorGridLineStyle          = majorGridLineStyle;
     y.minorGridLineStyle          = minorGridLineStyle;
    
@@ -340,7 +359,7 @@ typedef enum {
     x.labelingPolicy              = CPTAxisLabelingPolicyEqualDivisions;
   
     x.minorTicksPerInterval       = 0;
-    x.preferredNumberOfMajorTicks = 5;
+    x.preferredNumberOfMajorTicks = 0;
     x.majorGridLineStyle          = majorGridLineStyle;
     x.minorGridLineStyle          = minorGridLineStyle;
     
@@ -402,7 +421,7 @@ typedef enum {
 {
     
     self.players = [@[] mutableCopy];
-    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
     NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
@@ -496,6 +515,7 @@ typedef enum {
 {
     [self.playerSearchBar resignFirstResponder];
     self.player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
+    [self.navigationController.navigationBar.topItem setTitle:self.player.Name];
     [self initiateViewSetUp];
 }
 
@@ -508,23 +528,33 @@ typedef enum {
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-    if(searchText.length  > 0)
-    {
-     NSArray *filteredarray = [self.filteredPlayersArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(Name CONTAINS[cd] %@)", searchText]];
-    self.filteredPlayersArray = nil;
-    self.filteredPlayersArray = [@[] mutableCopy];
-    [self.filteredPlayersArray setArray:filteredarray];
-    [self.playerTableView reloadData];
-    }
-    else
-    {
+    if(searchText.length  > 0) {
+        
+         NSArray *filteredarray = [self.filteredPlayersArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(Name CONTAINS[cd] %@)", searchText]];
+        self.filteredPlayersArray = nil;
+        self.filteredPlayersArray = [@[] mutableCopy];
+        [self.filteredPlayersArray setArray:filteredarray];
+        [self.playerTableView reloadData];
+        
+    } else {
+        
         self.filteredPlayersArray = nil;
         dataModel = [DataModel sharedClient];
-        PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+        PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
         self.filteredPlayersArray = playerItems.players;
 
         [self.playerTableView reloadData];
     }
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    searchBar.placeholder = nil;
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+    searchBar.placeholder = @"Search";
+    return YES;
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -537,7 +567,7 @@ typedef enum {
 }
 
 
--(void)backButtonPressed
+-(void)backButtonPressed: (id) sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -790,8 +820,7 @@ typedef enum {
     self.riskButton.backgroundColor = [UIColor blackColor];
 }
 
--(IBAction)riskButtonClicked:(id)sender
-{
+- (void) setUpRiskView {
     int overallRiskCount = 0;
     
     riskView = [[[NSBundle mainBundle] loadNibNamed:@"RiskView" owner:self options:nil] objectAtIndex:0];
@@ -802,7 +831,7 @@ typedef enum {
     [self.riskLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
-
+    
     
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
@@ -908,7 +937,7 @@ typedef enum {
         totalDistanceFrame.size.height = totalDistanceFrame.size.height;
         [riskView.avgTotalDistView setFrame:totalDistanceFrame];
     }
- 
+    
     
     CGRect forceLoadPMFrame;
     
@@ -1041,6 +1070,13 @@ typedef enum {
     [self.riskButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
+    
+}
+
+-(IBAction)riskButtonClicked:(id)sender {
+    
+    [self setUpRiskView];
+  
 }
 
 -(IBAction)wellBeingButtonClicked:(id)sender

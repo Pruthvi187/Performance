@@ -168,8 +168,9 @@ int num = 0;
     playerDetailViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     playerDetailViewController.player = [self.players objectAtIndex:indexPath.row];
     playerDetailViewController.view.alpha = 1;
-    [self presentViewController:playerDetailViewController animated:YES completion:nil];
-
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:playerDetailViewController];
+    [self presentViewController:navController animated:YES completion:nil];
+    //[navController pushViewController:<#(UIViewController *)#> animated:<#(BOOL)#>]
 }
 
 
