@@ -24,6 +24,7 @@
 #import "RiskEditViewController.h"
 #import "CustomPresentationController.h"
 #import "CustomDismissController.h"
+#import "DimmingPresentationController.h"
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
@@ -1473,6 +1474,7 @@ typedef enum {
 {
     RiskEditViewController * riskEditViewController = [[RiskEditViewController alloc] initWithNibName:@"RiskEditViewController" bundle:nil];
     riskEditViewController.transitioningDelegate = self;
+    riskEditViewController.modalPresentationStyle = UIModalPresentationCustom;
     riskEditViewController.player = self.player;
     riskEditViewController.modelItems = modelItems;
     riskEditViewController.model = model;
@@ -1598,10 +1600,14 @@ typedef enum {
     return customController;
     
 }
-
+/*
 - (id <UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
     CustomDismissController * dismissController = [CustomDismissController new];
     return dismissController;
+}*/
+
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    return [[DimmingPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
 }
 
 

@@ -13,13 +13,14 @@
 #import "Utilities.h"
 #import "Colours.h"
 
-@interface RiskEditViewController ()
-{
+@interface RiskEditViewController () {
     int lowestRange;
     int lowerRange;
     int midRange;
     int upperRange;
     int upMostRange;
+    
+    Utilities * utilites;
 }
 
 @end
@@ -39,13 +40,13 @@
 {
     [super viewDidLoad];
     
+    utilites = [Utilities sharedClient];
+    
     currentSumofSliderValue = 42;
     
-    [self.riskPercentageLabel setText:[NSString stringWithFormat:@"%@",self.player.RiskRating]];
+    [self.riskPercentageLabel setAttributedText:[utilites getAttributedString:[NSString stringWithFormat:@"%@%@",self.player.RiskRating, @"%"] mainTextFontSize:40 subTextFontSize:24]];
     
-    [self.currentriskPercentageLabel setText:[NSString stringWithFormat:@"%@",self.player.RiskRating]];
-    
-    Utilities * utilites = [Utilities sharedClient];
+    [self.currentriskPercentageLabel setAttributedText:[utilites getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:40 subTextFontSize:24]];
     
     NSString * sumofVol = self.model.Sum_ofV2;
     
@@ -55,12 +56,9 @@
     
     [self setViewChange:self.currentSumofVolView withPercentage:sumofVolPC];
     
-
     CGRect sumofV1Frame;
     
-    
-    if(sumofVolPC < 1)
-    {
+    if(sumofVolPC < 1) {
         sumofV1Frame = self.currentSumofVolView.frame;
         sumofV1Frame.size.width = sumofV1Frame.size.width * sumofVolPC;
         sumofV1Frame.size.height = sumofV1Frame.size.height;
@@ -69,8 +67,7 @@
         midRange = (int)avgSumofVol;
         self.sumofVolSlider.value = 0;
     }
-    else
-    {
+    else {
         sumofV1Frame = self.avgSumofVolView.frame;
         sumofV1Frame.size.width = sumofV1Frame.size.width / sumofVolPC;
         sumofV1Frame.size.height = sumofV1Frame.size.height;
@@ -84,8 +81,7 @@
     upperRange = midRange + (midRange-lowerRange);
     upMostRange = midRange + (midRange - lowestRange);
     
-    if(sumofVolPC == 1.0)
-    {
+    if(sumofVolPC == 1.0) {
         lowestRange = (int)floor([sumofVol intValue]/4.0);
         lowerRange = (int)floor([sumofVol intValue]/2.0);
         upperRange = (midRange+lowestRange);
@@ -310,18 +306,13 @@
         upMostRange = (midRange + lowerRange);
     }
     
-    
     [self.riskChangeLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRatingChange,@"%"]];
     
-    if([self.player.RiskRatingChange intValue] < 0)
-    {
-        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-down-green"]];
-        [self.riskChangeLabel setTextColor:UIColorFromHex(0x53B61D)];
+    if([self.player.RiskRatingChange intValue] < 0) {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"Down"]];
     }
-    else
-    {
-        [self.riskchangeImage setImage:[UIImage imageNamed:@"icon-triangle-up-red"]];
-        [self.riskChangeLabel setTextColor:[UIColor redColor]];
+    else {
+        [self.riskchangeImage setImage:[UIImage imageNamed:@"Up"]];
     }
     
  
@@ -335,11 +326,11 @@
     [self.hipRotationUpMostRange setText:[NSString stringWithFormat:@"%d", upMostRange]];
     
 
-    [self.sumofVolSlider setThumbImage:[UIImage imageNamed:@"change-risk-indicator.png"] forState:UIControlStateNormal];
-    [self.acclEventsSlider setThumbImage:[UIImage imageNamed:@"change-risk-indicator.png"] forState:UIControlStateNormal];
-    [self.sitReachSlider setThumbImage:[UIImage imageNamed:@"change-risk-indicator.png"] forState:UIControlStateNormal];
-    [self.totalSprintSlider setThumbImage:[UIImage imageNamed:@"change-risk-indicator.png"] forState:UIControlStateNormal];
-    [self.hipRotationSlider setThumbImage:[UIImage imageNamed:@"change-risk-indicator.png"] forState:UIControlStateNormal];
+    [self.sumofVolSlider setThumbImage:[UIImage imageNamed:@"Slider"] forState:UIControlStateNormal];
+    [self.acclEventsSlider setThumbImage:[UIImage imageNamed:@"Slider"] forState:UIControlStateNormal];
+    [self.sitReachSlider setThumbImage:[UIImage imageNamed:@"Slider"] forState:UIControlStateNormal];
+    [self.totalSprintSlider setThumbImage:[UIImage imageNamed:@"Slider"] forState:UIControlStateNormal];
+    [self.hipRotationSlider setThumbImage:[UIImage imageNamed:@"Slider"] forState:UIControlStateNormal];
     
     self.sumofVolSlider.continuous = NO;
     self.acclEventsSlider.continuous = NO;
@@ -377,14 +368,19 @@
 
 -(void)changeRiskValue
 {
-    if(newSumofSliderValue > currentSumofSliderValue)
-    {
-        self.riskPercentageLabel.text = [NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] + (newSumofSliderValue - currentSumofSliderValue)/10];
+    if(newSumofSliderValue > currentSumofSliderValue) {
+        
+        NSString * riskPercentageString =[NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] + (newSumofSliderValue - currentSumofSliderValue)/10];
+        
+        self.riskPercentageLabel.attributedText = [utilites getAttributedString:[NSString stringWithFormat:@"%@%@", riskPercentageString, @"%"] mainTextFontSize:40 subTextFontSize:24];
+        
         currentSumofSliderValue = newSumofSliderValue;
     }
-    else if(newSumofSliderValue < currentSumofSliderValue)
-    {
-        self.riskPercentageLabel.text = [NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] - (currentSumofSliderValue - newSumofSliderValue)/10];
+    else if(newSumofSliderValue < currentSumofSliderValue) {
+        
+         NSString * riskPercentageString = [NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] - (currentSumofSliderValue - newSumofSliderValue)/10];
+        
+        self.riskPercentageLabel.attributedText = [utilites getAttributedString:[NSString stringWithFormat:@"%@%@", riskPercentageString, @"%"] mainTextFontSize:40 subTextFontSize:24];
         currentSumofSliderValue = newSumofSliderValue;
     }
 }
@@ -394,7 +390,7 @@
 {
     if(percentageValue < 0.8 && percentageValue >= 0.6)
     {
-        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+        [view setBackgroundColor:UIColorFromHex(0x1E8034)];
     }
     else if (percentageValue < 0.6)
     {

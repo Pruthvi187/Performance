@@ -30,7 +30,7 @@
         toViewController.view.frame = finalFrameForVC;
     }completion:^(BOOL finished){
         [transitionContext completeTransition:YES];
-        fromViewControlelr.view.alpha = 1.0;
+        //fromViewControlelr.view.alpha = 1.0;
     }];
 }
 

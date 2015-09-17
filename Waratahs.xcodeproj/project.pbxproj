@@ -148,6 +148,7 @@
 		ACA6C4E618BD64E700091BE5 /* scale.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E518BD64E700091BE5 /* scale.png */; };
 		ACA9E74D1BAA6D5200BDD092 /* CustomPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */; };
 		ACA9E7501BAA72D800BDD092 /* CustomDismissController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */; };
+		ACA9E7531BAA7F8000BDD092 /* DimmingPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */; };
 		ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB116F81A15C2F700002A96 /* StatsVC.m */; };
 		ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB116F91A15C2F700002A96 /* StatsVC.xib */; };
 /* End PBXBuildFile section */
@@ -325,6 +326,8 @@
 		ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresentationController.m; sourceTree = "<group>"; };
 		ACA9E74E1BAA72D800BDD092 /* CustomDismissController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDismissController.h; sourceTree = "<group>"; };
 		ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDismissController.m; sourceTree = "<group>"; };
+		ACA9E7511BAA7F8000BDD092 /* DimmingPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimmingPresentationController.h; sourceTree = "<group>"; };
+		ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DimmingPresentationController.m; sourceTree = "<group>"; };
 		ACB116F71A15C2F700002A96 /* StatsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsVC.h; sourceTree = "<group>"; };
 		ACB116F81A15C2F700002A96 /* StatsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsVC.m; sourceTree = "<group>"; };
 		ACB116F91A15C2F700002A96 /* StatsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
@@ -637,6 +640,8 @@
 				ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */,
 				ACA9E74E1BAA72D800BDD092 /* CustomDismissController.h */,
 				ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */,
+				ACA9E7511BAA7F8000BDD092 /* DimmingPresentationController.h */,
+				ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -864,6 +869,7 @@
 				AC99E7DE18BD93B9009B9DBD /* RFGraphsCell.m in Sources */,
 				AC17205218B3200000A0274F /* PlayerSearchCell.m in Sources */,
 				ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */,
+				ACA9E7531BAA7F8000BDD092 /* DimmingPresentationController.m in Sources */,
 				AC1720D518B6F58B00A0274F /* Wellness.m in Sources */,
 				02E25B17168B74B0009CA089 /* WaratahsAppDelegate.m in Sources */,
 				ACA6C4CC18BACE5F00091BE5 /* Colours.m in Sources */,

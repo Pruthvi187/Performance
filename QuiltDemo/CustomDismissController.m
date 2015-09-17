@@ -39,6 +39,7 @@
         toViewController.view.alpha = 1.0;
         
     }completion:^(BOOL finished){
+        toViewController.view.alpha = 1.0;
         [transitionContext completeTransition:YES];
     }];
 }
