@@ -521,6 +521,7 @@
                 <outlet property="avgvelchangeLoadLabel" destination="WrC-Gn-2j7" id="CFH-Re-zyE"/>
                 <outlet property="forceLoadLabel" destination="DG4-kO-5BW" id="daa-SM-ueE"/>
                 <outlet property="forceLoadView" destination="vaN-EX-d8J" id="TxX-NR-JxE"/>
+                <outlet property="manageRiskButton" destination="Lak-9o-fjg" id="YTo-XK-c5S"/>
                 <outlet property="overallRiskView" destination="zy2-bg-QQd" id="1g2-QY-tCi"/>
                 <outlet property="rateofPercExertionLabel" destination="W6M-WI-Kea" id="fWl-EV-hKV"/>
                 <outlet property="rateofPercExertionView" destination="4YO-Jh-NlC" id="teB-sY-ZKW"/>

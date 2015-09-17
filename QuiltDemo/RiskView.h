@@ -3,7 +3,7 @@
 //  Waratahs
 //
 //  Created by Pruthvi on 20/02/14.
-//  Copyright (c) 2014 Bryce Redd. All rights reserved.
+ 
 //
 
 #import <UIKit/UIKit.h>
@@ -78,5 +78,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *riskRatingChangeLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * riskCountView;
+@property (weak, nonatomic) IBOutlet UIButton *manageRiskButton;
 
 @end

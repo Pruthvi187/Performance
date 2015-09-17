@@ -3,7 +3,7 @@
 //  Waratahs
 //
 //  Created by Pruthvi on 17/02/14.
-//  Copyright (c) 2014 Bryce Redd. All rights reserved.
+ 
 //
 
 #import "PlayerDetailViewController.h"
@@ -22,6 +22,8 @@
 #import "Utilities.h"
 #import "Colours.h"
 #import "RiskEditViewController.h"
+#import "CustomPresentationController.h"
+#import "CustomDismissController.h"
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
@@ -900,6 +902,7 @@ typedef enum {
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     
+    [riskView.manageRiskButton addTarget:self action:@selector(changeRiskButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
@@ -1466,10 +1469,10 @@ typedef enum {
  
 }
 
--(IBAction)changeRiskButtonClicked:(id)sender
+-(void)changeRiskButtonClicked:(id)sender
 {
     RiskEditViewController * riskEditViewController = [[RiskEditViewController alloc] initWithNibName:@"RiskEditViewController" bundle:nil];
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    riskEditViewController.transitioningDelegate = self;
     riskEditViewController.player = self.player;
     riskEditViewController.modelItems = modelItems;
     riskEditViewController.model = model;
@@ -1585,6 +1588,23 @@ typedef enum {
     }
   
 }
+
+#pragma mark - UIViewControllerTransitioning Delegate Methods
+
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                   presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    CustomPresentationController * customController = [CustomPresentationController new];
+    return customController;
+    
+}
+
+- (id <UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
+    CustomDismissController * dismissController = [CustomDismissController new];
+    return dismissController;
+}
+
+
 
 
 @end

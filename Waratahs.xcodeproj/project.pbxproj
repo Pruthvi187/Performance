@@ -146,6 +146,8 @@
 		ACA6C4E218BC628100091BE5 /* change-risk-bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E118BC628100091BE5 /* change-risk-bg2.png */; };
 		ACA6C4E418BC637E00091BE5 /* change-risk-bg2.fw.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E318BC637E00091BE5 /* change-risk-bg2.fw.png */; };
 		ACA6C4E618BD64E700091BE5 /* scale.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA6C4E518BD64E700091BE5 /* scale.png */; };
+		ACA9E74D1BAA6D5200BDD092 /* CustomPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */; };
+		ACA9E7501BAA72D800BDD092 /* CustomDismissController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */; };
 		ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB116F81A15C2F700002A96 /* StatsVC.m */; };
 		ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB116F91A15C2F700002A96 /* StatsVC.xib */; };
 /* End PBXBuildFile section */
@@ -319,6 +321,10 @@
 		ACA6C4E118BC628100091BE5 /* change-risk-bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change-risk-bg2.png"; sourceTree = "<group>"; };
 		ACA6C4E318BC637E00091BE5 /* change-risk-bg2.fw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change-risk-bg2.fw.png"; sourceTree = "<group>"; };
 		ACA6C4E518BD64E700091BE5 /* scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scale.png; sourceTree = "<group>"; };
+		ACA9E74B1BAA6D5200BDD092 /* CustomPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresentationController.h; sourceTree = "<group>"; };
+		ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresentationController.m; sourceTree = "<group>"; };
+		ACA9E74E1BAA72D800BDD092 /* CustomDismissController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDismissController.h; sourceTree = "<group>"; };
+		ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDismissController.m; sourceTree = "<group>"; };
 		ACB116F71A15C2F700002A96 /* StatsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsVC.h; sourceTree = "<group>"; };
 		ACB116F81A15C2F700002A96 /* StatsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsVC.m; sourceTree = "<group>"; };
 		ACB116F91A15C2F700002A96 /* StatsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
@@ -372,6 +378,7 @@
 		02E25B0C168B74B0009CA089 /* Waratahs */ = {
 			isa = PBXGroup;
 			children = (
+				ACA9E7491BAA6D2000BDD092 /* Animation */,
 				AC1720BA18B572C200A0274F /* Categories */,
 				AC17204618B2DE7B00A0274F /* Utilities */,
 				AC17204518B2DE6F00A0274F /* Models */,
@@ -623,6 +630,17 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		ACA9E7491BAA6D2000BDD092 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				ACA9E74B1BAA6D5200BDD092 /* CustomPresentationController.h */,
+				ACA9E74C1BAA6D5200BDD092 /* CustomPresentationController.m */,
+				ACA9E74E1BAA72D800BDD092 /* CustomDismissController.h */,
+				ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -835,6 +853,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA9E7501BAA72D800BDD092 /* CustomDismissController.m in Sources */,
+				ACA9E74D1BAA6D5200BDD092 /* CustomPresentationController.m in Sources */,
 				02E25B13168B74B0009CA089 /* main.m in Sources */,
 				ACA6C4D918BC4E1500091BE5 /* RiskEditViewController.m in Sources */,
 				AC1720BD18B572E200A0274F /* UIView+drawLines.m in Sources */,

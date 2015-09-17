@@ -3,7 +3,7 @@
 //  Waratahs
 //
 //  Created by Pruthvi on 17/02/14.
-//  Copyright (c) 2014 Bryce Redd. All rights reserved.
+ 
 //
 
 #import <UIKit/UIKit.h>
@@ -11,7 +11,7 @@
 
 @class Player, TabBarView, FitnessView, WellnessView, RiskView, ModelItems;
 
-@interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate>
 {
     CPTXYGraph * graph;
     NSMutableArray *dataForPlot;
