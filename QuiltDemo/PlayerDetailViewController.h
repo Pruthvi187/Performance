@@ -116,6 +116,7 @@
 @property(nonatomic, retain) IBOutlet UILabel * ageLabel;
 
 @property(nonatomic, retain) IBOutlet UILabel * riskRatingLabel;
+@property (weak, nonatomic) IBOutlet UIView *graphView;
 
 @property(nonatomic, retain) IBOutlet UILabel * positionLabel;
 
@@ -138,6 +139,9 @@
 @property(nonatomic, retain) IBOutlet UILabel * wellbeingTabLabel;
 
 @property(nonatomic, retain) IBOutlet UIScrollView * mainScrollView;
+@property (weak, nonatomic) IBOutlet UIView *injuryView;
+@property (weak, nonatomic) IBOutlet UIView *fitnessView;
+@property (weak, nonatomic) IBOutlet UIView *wellBeingView;
 
 -(IBAction)changeRiskButtonClicked:(id)sender;
 

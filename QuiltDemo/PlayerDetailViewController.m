@@ -25,6 +25,7 @@
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
+static CGFloat UNSELECTED_ALPHA = 0.6;
 
 typedef enum {
     FITNESS   = 1,
@@ -69,9 +70,10 @@ typedef enum {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBar"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Nav_Bar_Clear"] forBarMetrics:UIBarMetricsDefault];
+ 
+    UIFont * navBarFont = [UIFont fontWithName:@"ZurichCondensedBT" size:24];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: navBarFont}];
     
     UIBarButtonItem * leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButton"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
     self.navigationItem.leftBarButtonItem = leftBar;
@@ -104,6 +106,8 @@ typedef enum {
     
     [self setupView];
     
+    [self setUpTapGestures];
+    
     [self initializeData];
     
     [self setupGraph];
@@ -117,6 +121,28 @@ typedef enum {
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) setUpTapGestures {
+    
+    UITapGestureRecognizer * injuryViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(injuryViewTapped:)];
+    injuryViewTap.numberOfTouchesRequired = 1;
+    injuryViewTap.numberOfTapsRequired = 1;
+    [_injuryView setUserInteractionEnabled:YES];
+    [_injuryView addGestureRecognizer:injuryViewTap];
+    
+    UITapGestureRecognizer * fitnessViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fitnessViewTapped:)];
+    fitnessViewTap.numberOfTouchesRequired = 1;
+    fitnessViewTap.numberOfTapsRequired = 1;
+    [_fitnessView setUserInteractionEnabled:YES];
+    [_fitnessView addGestureRecognizer:fitnessViewTap];
+    
+    UITapGestureRecognizer * wellBeingViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(wellBeingViewTapped:)];
+    wellBeingViewTap.numberOfTouchesRequired = 1;
+    wellBeingViewTap.numberOfTapsRequired = 1;
+    [_wellBeingView setUserInteractionEnabled:YES];
+    [_wellBeingView addGestureRecognizer:wellBeingViewTap];
+
 }
 
 -(void) setupView
@@ -426,6 +452,8 @@ typedef enum {
     PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
+    [self.navigationController.navigationBar.topItem setTitle:self.player.Name];
+
     NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
     
     for ( NSUInteger i = 0; i < 15; i++ ) {
@@ -522,7 +550,7 @@ typedef enum {
 {
     [self.playerSearchBar resignFirstResponder];
     self.player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
-    [self.navigationController.navigationBar.topItem setTitle:self.player.Name];
+    [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
     [self initiateViewSetUp];
 }
 
@@ -581,14 +609,29 @@ typedef enum {
 
 #pragma Tab button click action events
 
--(IBAction)fitnessButtonClicked:(id)sender
+-(void) fitnessViewTapped:(id)sender
 {
     [self setupFitnessView];
     
 }
 
--(void) setupFitnessView
-{
+-(void) setupFitnessView {
+    
+    [_graphView setHidden:YES];
+    
+    
+    if (riskView) {
+        [riskView removeFromSuperview];
+    }
+    
+    if (wellnessView) {
+        [wellnessView removeFromSuperview];
+    }
+    
+    if (fitnessView) {
+        [fitnessView removeFromSuperview];
+    }
+    
     int overallFitnessCount = 0;
     
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
@@ -601,13 +644,15 @@ typedef enum {
 
     
     wellnessView.hidden = YES;
-    fitnessView.hidden = YES;
+    //fitnessView.hidden = YES;
     riskView.hidden = YES;
     
     fitnessView = [[[NSBundle mainBundle] loadNibNamed:@"FitnessView" owner:self options:nil] objectAtIndex:0];
     fitnessView.frame = CGRectMake(30, 100, 811, 315);
     [self.tabScrollView addSubview:fitnessView];
     [self.tabScrollView bringSubviewToFront:fitnessView];
+    
+    [self setSelectedTab:fitnessView];
     
     fitnessView.sitReachCurrent.text = [NSString stringWithFormat:@"%@",sitReach];
     fitnessView.avgssitReach.text = [NSString stringWithFormat:@"%d",avg_sitreach];
@@ -830,10 +875,26 @@ typedef enum {
 - (void) setUpRiskView {
     int overallRiskCount = 0;
     
+    [_graphView setHidden:NO];
+    
+    if (riskView) {
+        [riskView removeFromSuperview];
+    }
+    
+    if (wellnessView) {
+        [wellnessView removeFromSuperview];
+    }
+    
+    if (fitnessView) {
+        [fitnessView removeFromSuperview];
+    }
+    
     riskView = [[[NSBundle mainBundle] loadNibNamed:@"RiskView" owner:self options:nil] objectAtIndex:0];
     riskView.frame = CGRectMake(30, 100, 811, 315);
     [self.tabScrollView addSubview:riskView];
     [self.tabScrollView bringSubviewToFront:riskView];
+    
+    [self setSelectedTab:riskView];
     
     [self.riskLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
@@ -842,7 +903,7 @@ typedef enum {
     
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
-    
+   
     riskView.sumofVolLabel.text = [NSString stringWithFormat:@"%d",[SumofVol intValue]];
     riskView.avgsumofVolLabel.text = [NSString stringWithFormat:@"%d",avg_sumofvol];
     
@@ -990,7 +1051,7 @@ typedef enum {
     
     CGRect velChangeLoadFrame;
     
-    double velLoadPC = ([velChangeLoad intValue]/(double)avg_velChangeLoad);
+    float velLoadPC = ([velChangeLoad floatValue]/(float)avg_velChangeLoad);
     
     overallRiskCount = [self setViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
     
@@ -1057,9 +1118,6 @@ typedef enum {
     
     [self setViewChange:riskView.overallRiskView withPercentage:overallPC withCount:0];
     
-    overallRiskView.size.width = overallRiskView.size.width * overallPC;
-    overallRiskView.size.height = overallRiskView.size.height;
-    [riskView.overallRiskView setFrame:overallRiskView];
     
     [riskView.riskCountView setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:36 subTextFontSize:20]];
     [riskView.riskRatingChangeLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRatingChange, @"%"] mainTextFontSize:18 subTextFontSize:12]];
@@ -1081,16 +1139,27 @@ typedef enum {
     
 }
 
--(IBAction)riskButtonClicked:(id)sender {
+-(void) injuryViewTapped:(id)sender {
     
     [self setUpRiskView];
   
 }
 
--(IBAction)wellBeingButtonClicked:(id)sender
-{
-    fitnessView.hidden = YES;
-    riskView.hidden = YES;
+-(void) wellBeingViewTapped:(id)sender {
+    
+    [_graphView setHidden:YES];
+    
+    if (riskView) {
+        [riskView removeFromSuperview];
+    }
+    
+    if (wellnessView) {
+        [wellnessView removeFromSuperview];
+    }
+    
+    if (fitnessView) {
+        [fitnessView removeFromSuperview];
+    }
     
     int overallWellnessCount = 0;
     
@@ -1105,6 +1174,8 @@ typedef enum {
     [self.tabScrollView bringSubviewToFront:wellnessView];
     wellnessView.sleeplessLabel.text = [NSString stringWithFormat:@"%@",sleep_quality];
     wellnessView.avgSleepQualityLabel.text = [NSString stringWithFormat:@"%d",avg_sleep_quality];
+    
+    [self setSelectedTab:wellnessView];
     
     wellnessView.legHeavinessLabel.text = [NSString stringWithFormat:@"%@",leg_heaviness];
     wellnessView.avglegHeavinessLabel.text = [NSString stringWithFormat:@"%d",avg_leg_heaviness];
@@ -1491,6 +1562,29 @@ typedef enum {
 
 }
 
+
+#pragma mark - Set selected/unselected tabs
+
+- (void) setSelectedTab:(UIView*) selectedTab {
+  
+    if ([selectedTab isKindOfClass:[RiskView class]]) {
+        [_injuryView setAlpha:1.0];
+        [_fitnessView setAlpha:UNSELECTED_ALPHA];
+        [_wellBeingView setAlpha:UNSELECTED_ALPHA];
+        
+    } else if ([selectedTab isKindOfClass:[FitnessView class]]) {
+        
+        [_fitnessView setAlpha:1.0];
+        [_injuryView setAlpha:UNSELECTED_ALPHA];
+        [_wellBeingView setAlpha:UNSELECTED_ALPHA];
+    } else {
+        
+        [_wellBeingView setAlpha:1.0];
+        [_fitnessView setAlpha:UNSELECTED_ALPHA];
+        [_injuryView setAlpha:UNSELECTED_ALPHA];
+    }
+  
+}
 
 
 @end
