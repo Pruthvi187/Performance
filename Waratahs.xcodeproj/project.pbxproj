@@ -110,6 +110,7 @@
 		AC1720E318B7170200A0274F /* player-bg-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1720E018B7170200A0274F /* player-bg-bottom.png */; };
 		AC1720E418B7170200A0274F /* player-bg-top.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1720E118B7170200A0274F /* player-bg-top.png */; };
 		AC1720E518B7170200A0274F /* player-indicator-container.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1720E218B7170200A0274F /* player-indicator-container.png */; };
+		AC25E0591BABC53A00B504A7 /* CustomTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = AC25E0581BABC53A00B504A7 /* CustomTransitionAnimation.m */; };
 		AC29EF151BA7B4FA005406DA /* zurich-cn-bt-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF131BA7B4FA005406DA /* zurich-cn-bt-bold.ttf */; };
 		AC29EF161BA7B4FA005406DA /* Zurich__Condensed_BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF141BA7B4FA005406DA /* Zurich__Condensed_BT.ttf */; };
 		AC29EF181BA7DD59005406DA /* SoldierProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = AC29EF171BA7DD59005406DA /* SoldierProfile.json */; };
@@ -279,6 +280,8 @@
 		AC1720E018B7170200A0274F /* player-bg-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-bg-bottom.png"; sourceTree = "<group>"; };
 		AC1720E118B7170200A0274F /* player-bg-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-bg-top.png"; sourceTree = "<group>"; };
 		AC1720E218B7170200A0274F /* player-indicator-container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-indicator-container.png"; sourceTree = "<group>"; };
+		AC25E0571BABC53A00B504A7 /* CustomTransitionAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransitionAnimation.h; sourceTree = "<group>"; };
+		AC25E0581BABC53A00B504A7 /* CustomTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTransitionAnimation.m; sourceTree = "<group>"; };
 		AC29EF131BA7B4FA005406DA /* zurich-cn-bt-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zurich-cn-bt-bold.ttf"; sourceTree = "<group>"; };
 		AC29EF141BA7B4FA005406DA /* Zurich__Condensed_BT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zurich__Condensed_BT.ttf; sourceTree = "<group>"; };
 		AC29EF171BA7DD59005406DA /* SoldierProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SoldierProfile.json; sourceTree = "<group>"; };
@@ -642,6 +645,8 @@
 				ACA9E74F1BAA72D800BDD092 /* CustomDismissController.m */,
 				ACA9E7511BAA7F8000BDD092 /* DimmingPresentationController.h */,
 				ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */,
+				AC25E0571BABC53A00B504A7 /* CustomTransitionAnimation.h */,
+				AC25E0581BABC53A00B504A7 /* CustomTransitionAnimation.m */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACA9E7501BAA72D800BDD092 /* CustomDismissController.m in Sources */,
+				AC25E0591BABC53A00B504A7 /* CustomTransitionAnimation.m in Sources */,
 				ACA9E74D1BAA6D5200BDD092 /* CustomPresentationController.m in Sources */,
 				02E25B13168B74B0009CA089 /* main.m in Sources */,
 				ACA6C4D918BC4E1500091BE5 /* RiskEditViewController.m in Sources */,
@@ -938,7 +944,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "32600214-31ed-4eed-b4fe-a7b75a9ade08";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -962,7 +968,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "32600214-31ed-4eed-b4fe-a7b75a9ade08";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -979,7 +985,7 @@
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
-				PROVISIONING_PROFILE = "5ada02cf-5bed-4087-81cc-fe4b339916b7";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -996,7 +1002,7 @@
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Performance;
-				PROVISIONING_PROFILE = "5ada02cf-5bed-4087-81cc-fe4b339916b7";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

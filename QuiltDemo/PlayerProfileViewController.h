@@ -21,7 +21,7 @@ typedef enum PlayerPositions {
 
 @class Utilities, DataModel;
 
-@interface PlayerProfileViewController : UIViewController <RFQuiltLayoutDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface PlayerProfileViewController : UIViewController <RFQuiltLayoutDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate>
 {
     UIPopoverController * filterController;
     

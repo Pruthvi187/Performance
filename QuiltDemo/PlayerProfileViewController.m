@@ -17,6 +17,9 @@
 #import "Player.h"
 #import "Colours.h"
 #import "StatsVC.h"
+#import "CustomPresentationController.h"
+#import "DimmingPresentationController.h"
+#import "CustomTransitionAnimation.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -294,23 +297,31 @@ int num = 0;
     [self.collectionView reloadData];
 }
 
--(void)showTeamStats:(id)sender
+-(IBAction) showTeamStats:(id)sender
 {
     StatsVC *teamStatsViewController = [[StatsVC alloc] initWithNibName:@"StatsVC" bundle:nil];
-    teamStatsViewController.view.backgroundColor = UIColorFromHexWithAlpha(0x001A49, 0.9);
-   
-    self.providesPresentationContextTransitionStyle = YES;
-    self.definesPresentationContext = YES;
-    [teamStatsViewController setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    teamStatsViewController.transitioningDelegate = self;
+    teamStatsViewController.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:teamStatsViewController animated:YES completion:nil];
     
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate Methods
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                   presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    CustomPresentationController * customController = [CustomPresentationController new];
+    return customController;
     
-    teamStatsViewController.view.alpha = 0;
-    [UIView animateWithDuration:0.3 delay:0.2 options:UIModalTransitionStyleFlipHorizontal animations:^{
-     teamStatsViewController.view.alpha = 1.0;
-    } completion:nil];
-    teamStatsViewController.view.alpha = 1.0;
-     [self presentViewController:teamStatsViewController animated:NO completion:nil];
-    
+}
+/*
+ - (id <UIViewControllerAnimatedTransitioning>) animationControllerForDismissedController:(UIViewController *)dismissed {
+ CustomDismissController * dismissController = [CustomDismissController new];
+ return dismissController;
+ }*/
+
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    return [[DimmingPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
 }
 
 

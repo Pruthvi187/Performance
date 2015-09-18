@@ -52,7 +52,7 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    //self.contentScrollView.contentSize = CGSizeMake(1024, 2000);
+    self.contentScrollView.contentSize = CGSizeMake(320, 1200);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,6 +101,11 @@
     
     self.hostView.hostedGraph = graph;
     
+    graph.paddingBottom = 0.0f;
+    graph.paddingTop = 0.0f;
+    graph.paddingRight  = 0.0f;
+    graph.paddingLeft = 0.0f;
+    
 }
 
 -(void) setupAxes
@@ -148,7 +153,7 @@
     
     CPTMutableLineStyle *lineStyle = [dataSourceLinePlot.dataLineStyle mutableCopy];
     lineStyle.lineWidth              = 2.0;
-    lineStyle.lineColor              = UIColorFromHex(0x86BDE9);
+    lineStyle.lineColor              = [UIColor blackColor];
     dataSourceLinePlot.dataLineStyle = lineStyle;
     
     dataSourceLinePlot.dataSource = self;
@@ -160,7 +165,7 @@
     // dataSourceLinePlot.plotSymbolMarginForHitDetection = 5.0;
     
     // Create a plot for the selection marker
-    CPTScatterPlot *selectionPlot = [[CPTScatterPlot alloc] init];
+    /*CPTScatterPlot *selectionPlot = [[CPTScatterPlot alloc] init];
     selectionPlot.identifier     = BACK_ROW_PLOT;
     selectionPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     
@@ -170,7 +175,7 @@
     selectionPlot.dataLineStyle = lineStyle;
     
     selectionPlot.dataSource = self;
-    [graph addPlot:selectionPlot];
+    [graph addPlot:selectionPlot];*/
     
     // Auto scale the plot space to fit the plot data
     // Compress ranges so we can scroll
@@ -198,10 +203,10 @@
     
     NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
     
-    for ( NSUInteger i = 0; i < 15; i++ ) {
+    for ( NSUInteger i = 0; i < 12; i++ ) {
         id x = [NSNumber numberWithDouble:i * 0.5];
         id y;
-        if(i <14)
+        if(i <11)
         {
             float low_bound = [self.player.RiskRating intValue]  - 20;
             low_bound = low_bound > 0 ? low_bound : 0;
@@ -221,11 +226,10 @@
     NSMutableArray *contentArray2 = [NSMutableArray arrayWithCapacity:15];
     
     
-    for ( NSUInteger i = 0; i < 15; i++ ) {
+    for ( NSUInteger i = 0; i < 12; i++ ) {
         id x = [NSNumber numberWithDouble:i * 0.5];
         id y;
-        if(i <14)
-        {
+        if(i <11) {
             float low_bound = 20;
             low_bound = low_bound > 0 ? low_bound : 0;
             float high_bound = 55 ;
@@ -249,26 +253,20 @@
 
 #pragma mark - CPTPlotDataSource methods
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-    return 15;
+    return 12;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     
     NSNumber *num = nil;
     
-    
-    
-    
-    if ([plot.identifier isEqual:FRONT_ROW_PLOT]) {
+    //if ([plot.identifier isEqual:FRONT_ROW_PLOT]) {
         NSString *key = (fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y");
         num = [[dataForPlot objectAtIndex:index] valueForKey:key];
-    } else if ([plot.identifier isEqual:BACK_ROW_PLOT]) {
+    /*} else if ([plot.identifier isEqual:BACK_ROW_PLOT]) {
         NSString *key = (fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y");
         num = [[backsPlotArray objectAtIndex:index] valueForKey:key];
-    }
-    
-    
-    
+    }*/
     
     return num;
 }
@@ -281,7 +279,7 @@
     
     CPTPlotSymbol *symbol = (id)[NSNull null];
     
-    if ( [(NSString *)plot.identifier isEqualToString : BACK_ROW_PLOT] && index == 14) {
+    /*if ( [(NSString *)plot.identifier isEqualToString : BACK_ROW_PLOT] && index == 14) {
         if ( !redDot ) {
             redDot            = [[CPTPlotSymbol alloc] init];
             redDot.symbolType = CPTPlotSymbolTypeEllipse;
@@ -291,7 +289,7 @@
         symbol = redDot;
     }
     else if([(NSString *)plot.identifier isEqualToString : FRONT_ROW_PLOT] && index == 14)
-    {
+    {*/
         if ( !blueDot ) {
             blueDot            = [[CPTPlotSymbol alloc] init];
             blueDot.symbolType = CPTPlotSymbolTypeEllipse;
@@ -299,8 +297,7 @@
             blueDot.fill       = [CPTFill fillWithColor:UIColorFromHex(0x86BDE9)];
         }
         symbol = blueDot;
-    }
-    
+    //}
     
     return symbol;
 }
