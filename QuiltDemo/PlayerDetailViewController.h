@@ -142,6 +142,12 @@
 @property (weak, nonatomic) IBOutlet UIView *injuryView;
 @property (weak, nonatomic) IBOutlet UIView *fitnessView;
 @property (weak, nonatomic) IBOutlet UIView *wellBeingView;
+@property (weak, nonatomic) IBOutlet UILabel *injuryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *injuryRiskImage;
+@property (weak, nonatomic) IBOutlet UIImageView *fitnessIndicatorImage;
+@property (weak, nonatomic) IBOutlet UILabel *fitnessText;
+@property (weak, nonatomic) IBOutlet UILabel *wellBeingText;
+@property (weak, nonatomic) IBOutlet UIImageView *wellBeingIndicatorImage;
 
 -(IBAction)changeRiskButtonClicked:(id)sender;
 

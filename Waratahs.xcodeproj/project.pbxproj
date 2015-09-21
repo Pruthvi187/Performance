@@ -928,8 +928,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -958,8 +958,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (8XL4JQGG97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -978,8 +978,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
@@ -995,8 +995,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";

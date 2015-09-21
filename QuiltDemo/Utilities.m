@@ -45,7 +45,7 @@
     
     DataModel * dataModel = [DataModel sharedClient];
     
-    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
 
     
     NSArray *unsortedArray = [NSArray arrayWithArray:players];

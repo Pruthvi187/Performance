@@ -20,7 +20,7 @@
 
 @property NSString * FilterPosition;
 
-@property NSString * ProfileImage;
+@property NSString * HomeUnit;
 
 @property NSString * DOB;
 
@@ -30,7 +30,7 @@
 
 @property NSString * Weight;
 
-@property NSString * Debut;
+@property NSString * Enlisted;
 
 @property NSString * Caps;
 
@@ -43,5 +43,7 @@
 @property NSString * RiskRatingChange;
 
 @property NSString * RiskRatingValue;
+
+@property NSString * PMKeyS;
 
 @end

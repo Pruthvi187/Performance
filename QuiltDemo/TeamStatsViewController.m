@@ -199,7 +199,7 @@ static NSString *const BACK_ROW_PLOT = @"Back Row";
 {
     
     self.players = [@[] mutableCopy];
-    PlayerItems * playerItems = [dataModel getPlayerItems:nil forMainPosition:nil];
+    PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
     NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];

@@ -11,10 +11,14 @@
                 <outlet property="capsLabel" destination="9Ut-zI-I2K" id="HqD-6v-4Lf"/>
                 <outlet property="debutLabel" destination="zQ9-Ey-WdK" id="HWf-5s-4mW"/>
                 <outlet property="dobLabel" destination="FUl-XT-QPe" id="wyW-Ye-FT8"/>
+                <outlet property="fitnessIndicatorImage" destination="WN4-u1-o9n" id="Wnu-Tf-eKp"/>
+                <outlet property="fitnessText" destination="QKt-Pp-IDs" id="AkR-aG-Gho"/>
                 <outlet property="fitnessView" destination="dh3-Jr-LlT" id="Ogz-Kb-kmD"/>
                 <outlet property="graphView" destination="YgM-nX-uVV" id="BD5-rj-72S"/>
                 <outlet property="heightLabel" destination="X5O-1c-QNX" id="b4q-2X-9Oh"/>
                 <outlet property="hostView" destination="yxo-Z3-brC" id="q8n-nz-jpD"/>
+                <outlet property="injuryLabel" destination="67x-DM-M1j" id="3tQ-7z-no4"/>
+                <outlet property="injuryRiskImage" destination="DPe-IK-GT4" id="rT5-1m-7Lm"/>
                 <outlet property="injuryView" destination="6cI-GL-Jau" id="qbK-aL-OUH"/>
                 <outlet property="playerSearchBar" destination="DxX-sV-pal" id="7Vp-Id-tcL"/>
                 <outlet property="playerSearchView" destination="UuZ-ha-3kW" id="QlT-34-FoJ"/>
@@ -25,6 +29,8 @@
                 <outlet property="tabScrollView" destination="x3w-n5-K3O" id="u5B-qs-TeI"/>
                 <outlet property="view" destination="2" id="3"/>
                 <outlet property="weightLabel" destination="NWj-P3-MlY" id="pgw-ha-bMk"/>
+                <outlet property="wellBeingIndicatorImage" destination="Y36-uZ-Be1" id="7Bk-84-CuP"/>
+                <outlet property="wellBeingText" destination="8BX-oc-yce" id="lcg-n3-lOT"/>
                 <outlet property="wellBeingView" destination="4HF-31-Bpg" id="hXv-3D-iOR"/>
             </connections>
         </placeholder>
@@ -93,12 +99,17 @@
                         <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0v-YR-Lf5" customClass="TabBarView">
                             <rect key="frame" x="0.0" y="70" width="831" height="600"/>
                             <subviews>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
+                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
                                     <rect key="frame" x="393" y="1" width="428" height="172"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxo-Z3-brC" customClass="CPTGraphHostingView">
                                             <rect key="frame" x="48" y="49" width="360" height="100"/>
-                                            <color key="backgroundColor" red="0.22313844999999999" green="1" blue="0.2908798279" alpha="1" colorSpace="calibratedRGB"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="GraphBG" translatesAutoresizingMaskIntoConstraints="NO" id="o08-SW-g5f">
+                                                    <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="LAp-Cf-XNp"/>
                                                 <constraint firstAttribute="width" constant="360" id="i96-8f-sTy"/>
@@ -463,6 +474,7 @@
     </objects>
     <resources>
         <image name="Background" width="2048" height="1536"/>
+        <image name="GraphBG" width="620" height="100"/>
         <image name="Low_Risk_Med" width="46" height="46"/>
         <image name="Medium_Fit_Sml" width="36" height="36"/>
         <image name="Sad_Sml" width="36" height="36"/>

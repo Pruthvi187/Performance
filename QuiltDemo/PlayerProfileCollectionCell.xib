@@ -70,7 +70,7 @@
                         <rect key="frame" x="179" y="260" width="30" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="Dy2-ro-olV"/>
-                            <constraint firstAttribute="width" constant="30" id="mL1-dr-PLX"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="mL1-dr-PLX"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

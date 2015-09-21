@@ -283,7 +283,7 @@ typedef enum {
     
     self.ageLabel.text = self.player.Age;
     
-    self.debutLabel.text = self.player.Debut;
+    self.debutLabel.text = self.player.Enlisted;
     
     self.heightLabel.text = self.player.Height;
     
@@ -330,9 +330,9 @@ typedef enum {
     
     self.mainScrollView.scrollEnabled = YES;
     
-    [self setIcon:self.fitnessIcon withPercentage:[self.player.FitnessRating doubleValue]/5.0 withValue:FITNESS];
-    [self setIcon:self.riskIcon withPercentage:[self.player.RiskRatingValue doubleValue]/8.0 withValue:RISK];
-    [self setIcon:self.wellbeingIcon withPercentage:[self.player.Wellbeing doubleValue]/11.0 withValue:WELLBEING];
+    [self setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating doubleValue] withValue:FITNESS];
+    [self setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRatingValue doubleValue] withValue:RISK];
+    [self setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing doubleValue] withValue:WELLBEING];
     
     [self setUpRiskView];
 }
@@ -348,7 +348,6 @@ typedef enum {
 {
     // Create graph and apply a dark theme
     graph = [(CPTXYGraph *)[CPTXYGraph alloc] initWithFrame : self.hostView.bounds];
-    graph.backgroundColor = [[UIColor orangeColor] CGColor];
     graph.plotAreaFrame.backgroundColor = [[UIColor clearColor] CGColor];
     graph.plotAreaFrame.plotArea.backgroundColor = [[UIColor clearColor] CGColor];
     
@@ -478,8 +477,12 @@ typedef enum {
         [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
     }
     self.dataForPlot = contentArray;
+    
+    [self.injuryLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRating, @"% Risk of injury"]];
+    [self.fitnessText setText:[NSString stringWithFormat:@"%@%@",self.player.FitnessRating, @"% Fitness"]];
+    [self.wellBeingText setText:[NSString stringWithFormat:@"%@%@",self.player.Wellbeing, @"% Wellbeing"]];
 }
-
+                               
 
 #pragma mark - CPTPlotDataSource methods
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
@@ -862,7 +865,7 @@ typedef enum {
     
     [fitnessView.riskCountLabel setText:[NSString stringWithFormat:@"%d/5",overallFitnessCount]];
     
-    [self setIcon:self.fitnessIcon withPercentage:overallPC withValue:FITNESS];
+    [self setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating floatValue] withValue:FITNESS];
     
     [self.fitnessTabLabel setTextColor:[UIColor whiteColor]];
     [self.risTabkLabel setTextColor:UIColorFromHex(0x001B4A)];
@@ -1116,17 +1119,15 @@ typedef enum {
         [riskView.avgTotalSprintDistanceView setFrame:totalSprintDistFrame];
     }
     
-    CGRect overallRiskView = riskView.overallRiskView.frame;
-    
     double overallPC = overallRiskCount/8.0;
     
-    [self setViewChange:riskView.overallRiskView withPercentage:overallPC withCount:0];
+    [self setViewChange:riskView.overallRiskView withPercentage:[self.player.RiskRating floatValue] withCount:0];
     
     
     [riskView.riskCountView setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:36 subTextFontSize:20]];
     [riskView.riskRatingChangeLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRatingChange, @"%"] mainTextFontSize:18 subTextFontSize:12]];
     
-    [self setIcon:self.riskIcon withPercentage:overallPC withValue:RISK];
+    [self setIcon:self.riskchangeImage withPercentage:[self.player.RiskRating floatValue] withValue:RISK];
     
     self.wellBeingButton.enabled = YES;
     self.riskButton.enabled = NO;
@@ -1448,7 +1449,7 @@ typedef enum {
     
     [self setViewChange:wellnessView.overallWelnessView withPercentage:overallPC withCount:0];
     
-    [self setIcon:self.wellbeingIcon withPercentage:overallPC withValue:WELLBEING];
+    [self setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing floatValue] withValue:WELLBEING];
     
     overallwellnessView.size.width = overallwellnessView.size.width * overallPC;
     overallwellnessView.size.height = overallwellnessView.size.height;
@@ -1481,36 +1482,47 @@ typedef enum {
     [self presentViewController:riskEditViewController animated:YES completion:nil];
 }
 
--(int) setViewChange:(UIView*)view withPercentage:(float)percentageValue withCount:(int)count
+-(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count
 {
-    if(percentageValue < 0.8 && percentageValue >= 0.6)
-    {
-        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+//    if(percentageValue < 0.8 && percentageValue >= 0.6)
+//    {
+//        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+//        
+//    }
+//    else if (percentageValue < 0.6)
+//    {
+//        [view setBackgroundColor:[UIColor redColor]];
+//    }
+//    else if (percentageValue > 1.2 && percentageValue <= 1.6)
+//    {
+//        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
+//    }
+//    else if (percentageValue > 1.6)
+//    {
+//        [view setBackgroundColor:[UIColor redColor]];
+//    }
+//    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
+//    {
+//        [view setBackgroundColor:UIColorFromHex(0x53B61D)];
+//        count++;
+//    }
+    
+    if (percentageValue <= 30) {
         
-    }
-    else if (percentageValue < 0.6)
-    {
-        [view setBackgroundColor:[UIColor redColor]];
-    }
-    else if (percentageValue > 1.2 && percentageValue <= 1.6)
-    {
-        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
-    }
-    else if (percentageValue > 1.6)
-    {
-        [view setBackgroundColor:[UIColor redColor]];
-    }
-    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
-    {
-        [view setBackgroundColor:UIColorFromHex(0x53B61D)];
-        count++;
+        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+    } else if (percentageValue > 30 && percentageValue <= 70) {
+        
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else {
+        
+        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
     }
     
     return count;
 }
 
 
--(void) setIcon:(UIButton*)view withPercentage:(float)percentageValue withValue:(int)value
+-(void) setIcon:(UIImageView*)view withPercentage:(CGFloat)percentageValue withValue:(NSInteger)value
 {
     NSString * orangeIcon;
     NSString * redIcon;
@@ -1519,23 +1531,23 @@ typedef enum {
     switch (value) {
         case FITNESS:
         {
-            orangeIcon = @"icons-fit-orange";
-            redIcon = @"icons-fit-red";
-            greenIcon = @"icons-fit-green";
+            orangeIcon = @"Medium_Fit_Sml";
+            greenIcon = @"Bad_Fit_Sml";
+            redIcon = @"Good_Fit_Sml";
             break;
         }
         case RISK:
         {
-            orangeIcon = @"icons-risk-orange";
-            redIcon = @"icons-risk-red";
-            greenIcon = @"icons-risk-green";
+            orangeIcon = @"Medium_Risk_Sml";
+            redIcon = @"High_Risk_Sml";
+            greenIcon = @"Low_Risk_Sml";
             break;
         }
         case WELLBEING:
         {
-            orangeIcon = @"icons-well-orange";
-            redIcon = @"icons-well-red";
-            greenIcon = @"icons-well-green";
+            orangeIcon = @"Meh_Sml";
+            greenIcon = @"Sad_Sml";
+            redIcon = @"Happy_Sml";
             break;
         }
         default:
@@ -1543,26 +1555,18 @@ typedef enum {
     }
     
     
-    if(percentageValue < 0.8 && percentageValue >= 0.6)
+    if(percentageValue > 30 && percentageValue <= 70)
     {
-        [view setImage:[UIImage imageNamed:orangeIcon] forState:UIControlStateNormal];
+        [view setImage:[UIImage imageNamed:orangeIcon]];
         
     }
-    else if (percentageValue < 0.6)
+    else if (percentageValue > 70)
     {
-        [view setImage:[UIImage imageNamed:redIcon] forState:UIControlStateNormal];
+        [view setImage:[UIImage imageNamed:redIcon]];
     }
-    else if (percentageValue > 1.2 && percentageValue <= 1.6)
+    else
     {
-        [view setImage:[UIImage imageNamed:orangeIcon] forState:UIControlStateNormal];
-    }
-    else if (percentageValue > 1.6)
-    {
-       [view setImage:[UIImage imageNamed:redIcon] forState:UIControlStateNormal];
-    }
-    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
-    {
-        [view setImage:[UIImage imageNamed:greenIcon] forState:UIControlStateNormal];
+        [view setImage:[UIImage imageNamed:greenIcon]];
     }
 
 }
