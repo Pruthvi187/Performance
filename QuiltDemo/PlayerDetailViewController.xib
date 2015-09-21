@@ -100,13 +100,13 @@
                         <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0v-YR-Lf5" customClass="TabBarView">
                             <rect key="frame" x="0.0" y="70" width="831" height="600"/>
                             <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
                                     <rect key="frame" x="393" y="1" width="428" height="172"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxo-Z3-brC" customClass="CPTGraphHostingView">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxo-Z3-brC" customClass="CPTGraphHostingView">
                                             <rect key="frame" x="48" y="49" width="360" height="100"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="GraphBG" translatesAutoresizingMaskIntoConstraints="NO" id="o08-SW-g5f">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GraphBG" translatesAutoresizingMaskIntoConstraints="NO" id="o08-SW-g5f">
                                                     <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
                                                 </imageView>
                                             </subviews>
@@ -355,7 +355,7 @@
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="189cm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5O-1c-QNX">
                             <rect key="frame" x="20" y="88" width="62" height="19"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="62" id="Pbr-kJ-pFb"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="Pbr-kJ-pFb"/>
                                 <constraint firstAttribute="height" constant="19" id="Tg3-Of-tMD"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>

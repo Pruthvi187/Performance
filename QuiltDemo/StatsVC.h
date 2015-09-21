@@ -19,11 +19,11 @@ NSMutableArray *dataForPlot;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 
-@property(nonatomic, retain) IBOutlet CPTGraphHostingView* hostView;
+@property(nonatomic, weak) IBOutlet CPTGraphHostingView* hostView;
 
 @property(strong, nonatomic) Player * player;
 
-@property(nonatomic, retain) IBOutlet UICollectionView * graphCollectionView;
+@property(nonatomic, weak) IBOutlet UICollectionView * graphCollectionView;
 
 - (IBAction)backButtonClicked:(id)sender;
 

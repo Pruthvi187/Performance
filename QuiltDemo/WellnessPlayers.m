@@ -32,7 +32,7 @@
         
         [wellnes setValuesForKeysWithDictionary:item];
       
-        if([wellnes.Position isEqualToString:player.Position])
+        if([wellnes.ID integerValue] == [player.ID integerValue])
         {
             [items addObject: wellnes];
         }

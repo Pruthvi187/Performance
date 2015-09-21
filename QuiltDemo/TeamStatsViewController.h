@@ -19,15 +19,15 @@
     NSMutableArray *dataForPlot;
 }
 
-@property(nonatomic, retain) IBOutlet CPTGraphHostingView* hostView;
+@property(nonatomic, weak) IBOutlet CPTGraphHostingView* hostView;
 
-@property(nonatomic, retain) PlayerProfileViewController * playerProfileViewController;
+@property(nonatomic, weak) PlayerProfileViewController * playerProfileViewController;
 
-@property(nonatomic, retain) IBOutlet UIButton * backButton;
+@property(nonatomic, weak) IBOutlet UIButton * backButton;
 
-@property(nonatomic, retain) IBOutlet UIScrollView * contentScrollView;
+@property(nonatomic, weak) IBOutlet UIScrollView * contentScrollView;
 
-@property(nonatomic, retain) IBOutlet UICollectionView * graphCollectionView;
+@property(nonatomic, weak) IBOutlet UICollectionView * graphCollectionView;
 
 @property(strong, nonatomic) Player * player;
 

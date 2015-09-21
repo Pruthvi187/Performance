@@ -10,97 +10,99 @@
 
 @interface WellnessView : UIView
 
-@property(nonatomic, retain) IBOutlet UIView * sleeplessnessView;
+@property(nonatomic, weak) IBOutlet UIView * sleeplessnessView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgSleeplessnessView;
+@property(nonatomic, weak) IBOutlet UIView * avgSleeplessnessView;
 
-@property(nonatomic, retain) IBOutlet UILabel * sleeplessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * sleeplessLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgSleepQualityLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgSleepQualityLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * legHeavinessView;
+@property(nonatomic, weak) IBOutlet UIView * legHeavinessView;
 
-@property(nonatomic, retain) IBOutlet UIView * avglegHeavinessView;
+@property(nonatomic, weak) IBOutlet UIView * avglegHeavinessView;
 
-@property(nonatomic, retain) IBOutlet UILabel * legHeavinessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * legHeavinessLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avglegHeavinessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avglegHeavinessLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * backPainView;
+@property(nonatomic, weak) IBOutlet UIView * backPainView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgBackPainView;
+@property(nonatomic, weak) IBOutlet UIView * avgBackPainView;
 
-@property(nonatomic, retain) IBOutlet UILabel * backPainLabel;
+@property(nonatomic, weak) IBOutlet UILabel * backPainLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgbackPainLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgbackPainLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * calvesView;
+@property(nonatomic, weak) IBOutlet UIView * calvesView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgCalvesView;
+@property(nonatomic, weak) IBOutlet UIView * avgCalvesView;
 
-@property(nonatomic, retain) IBOutlet UILabel * calvesLabel;
+@property(nonatomic, weak) IBOutlet UILabel * calvesLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgcalvesLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgcalvesLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * recoveryIndexView;
+@property(nonatomic, weak) IBOutlet UIView * recoveryIndexView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgRecoveryIndexView;
+@property(nonatomic, weak) IBOutlet UIView * avgRecoveryIndexView;
 
-@property(nonatomic, retain) IBOutlet UILabel * recoveryIndexLabel;
+@property(nonatomic, weak) IBOutlet UILabel * recoveryIndexLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgrecoveryIndexLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgrecoveryIndexLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * muscleSorenessView;
+@property(nonatomic, weak) IBOutlet UIView * muscleSorenessView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgMuscleSorenessView;
+@property(nonatomic, weak) IBOutlet UIView * avgMuscleSorenessView;
 
-@property(nonatomic, retain) IBOutlet UILabel * muscleSorenessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * muscleSorenessLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgmuscleSorenessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgmuscleSorenessLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * trainingStateView;
+@property(nonatomic, weak) IBOutlet UIView * trainingStateView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgTrainingStateView;
+@property(nonatomic, weak) IBOutlet UIView * avgTrainingStateView;
 
-@property(nonatomic, retain) IBOutlet UILabel * trainingStateLabel;
+@property(nonatomic, weak) IBOutlet UILabel * trainingStateLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgtrainingStateLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgtrainingStateLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * romTightnessView;
+@property(nonatomic, weak) IBOutlet UIView * romTightnessView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgROMTightnessView;
+@property(nonatomic, weak) IBOutlet UIView * avgROMTightnessView;
 
-@property(nonatomic, retain) IBOutlet UILabel * romTightnessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * romTightnessLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgromTightnessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgromTightnessLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * hipflexorQuadView;
+@property(nonatomic, weak) IBOutlet UIView * hipflexorQuadView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgHipFlexorQuadView;
+@property(nonatomic, weak) IBOutlet UIView * avgHipFlexorQuadView;
 
-@property(nonatomic, retain) IBOutlet UILabel * hipflexorQuadLabel;
+@property(nonatomic, weak) IBOutlet UILabel * hipflexorQuadLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avghipflexorQuadLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avghipflexorQuadLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * groinView;
+@property(nonatomic, weak) IBOutlet UIView * groinView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgGroinView;
+@property(nonatomic, weak) IBOutlet UIView * avgGroinView;
 
-@property(nonatomic, retain) IBOutlet UILabel * groinLabel;
+@property(nonatomic, weak) IBOutlet UILabel * groinLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avgGroinLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avgGroinLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * hamstringView;
+@property(nonatomic, weak) IBOutlet UIView * hamstringView;
 
-@property(nonatomic, retain) IBOutlet UIView * avgHamstringView;
+@property(nonatomic, weak) IBOutlet UIView * avgHamstringView;
 
-@property(nonatomic, retain) IBOutlet UILabel * hamstringLabel;
+@property(nonatomic, weak) IBOutlet UILabel * hamstringLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * avghamstringLabel;
+@property(nonatomic, weak) IBOutlet UILabel * avghamstringLabel;
 
-@property(nonatomic, retain) IBOutlet UIView * overallWelnessView;
+@property(nonatomic, weak) IBOutlet UIView * overallWelnessView;
 
-@property(nonatomic, retain) IBOutlet UILabel * wellnessCountView;
+@property(nonatomic, weak) IBOutlet UILabel * wellnessCountView;
 
+@property (weak, nonatomic) IBOutlet UIView *wellnessView;
+@property (weak, nonatomic) IBOutlet UILabel *wellnessRatingView;
 
 @end

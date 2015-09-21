@@ -80,6 +80,8 @@ typedef enum {
     
     UIBarButtonItem * leftBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButton"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
     self.navigationItem.leftBarButtonItem = leftBar;
+    
+    [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
 
 }
 
@@ -342,7 +344,7 @@ typedef enum {
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tabScrollView.contentSize =CGSizeMake(320.0f, 650.0f);
+    self.tabScrollView.contentSize =CGSizeMake(320.0f, 1100.0f);
     self.mainScrollView.contentSize = CGSizeMake(1024.0f,2000.0f);
 }
 
@@ -456,7 +458,7 @@ typedef enum {
     PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
-    [self.navigationController.navigationBar.topItem setTitle:self.player.Name];
+    [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
 
     NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
     
@@ -622,16 +624,16 @@ typedef enum {
 
 #pragma Tab button click action events
 
--(void) fitnessViewTapped:(id)sender
-{
+-(void) fitnessViewTapped:(id)sender {
+    
+    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 950.0f)];
+    [self.tabScrollView setNeedsDisplay];
     [self setupFitnessView];
     
 }
 
 -(void) setupFitnessView {
-    
-    [_graphView setHidden:YES];
-    
+    [self.graphView setHidden:NO];
     
     if (riskView) {
         [riskView removeFromSuperview];
@@ -655,10 +657,6 @@ typedef enum {
     [self.riskLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
 
-    
-    wellnessView.hidden = YES;
-    //fitnessView.hidden = YES;
-    riskView.hidden = YES;
     
     fitnessView = [[[NSBundle mainBundle] loadNibNamed:@"FitnessView" owner:self options:nil] objectAtIndex:0];
     fitnessView.frame = CGRectMake(30, 100, 811, 315);
@@ -1155,8 +1153,6 @@ typedef enum {
 }
 
 -(void) wellBeingViewTapped:(id)sender {
-    
-    [_graphView setHidden:YES];
     
     if (riskView) {
         [riskView removeFromSuperview];

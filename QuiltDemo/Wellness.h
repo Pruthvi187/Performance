@@ -32,7 +32,7 @@
 
 @property NSString * Position_Group;
 
-@property NSString * Position_Number;
+@property NSString * ID;
 
 @property NSString * Sleep_Quality;
 
@@ -52,7 +52,7 @@
 
 @property NSString * GPS_ID;
 
-@property NSString * ID;
+@property NSString * Non_existent_Id;
 
 @property NSString * Perceived_Performance;
 

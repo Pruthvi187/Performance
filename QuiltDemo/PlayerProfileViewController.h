@@ -38,17 +38,17 @@ typedef enum PlayerPositions {
     DataModel * dataModel;
 }
 
-@property(nonatomic, retain) IBOutlet UIButton * filterButton;
+@property(nonatomic, weak) IBOutlet UIButton * filterButton;
 
-@property(nonatomic, retain) IBOutlet UILabel * filterLabel;
+@property(nonatomic, weak) IBOutlet UILabel * filterLabel;
 
-@property(nonatomic, retain) IBOutlet UIButton * sortButton;
+@property(nonatomic, weak) IBOutlet UIButton * sortButton;
 
-@property(nonatomic, retain) IBOutlet UILabel * sortLabel;
+@property(nonatomic, weak) IBOutlet UILabel * sortLabel;
 
-@property(nonatomic, retain) IBOutlet UIImageView * teamStatsOpenButton;
+@property(nonatomic, weak) IBOutlet UIImageView * teamStatsOpenButton;
 
-@property(nonatomic, retain) IBOutlet UIView * optionsPlaceHolderView;
+@property(nonatomic, weak) IBOutlet UIView * optionsPlaceHolderView;
 
 -(IBAction)showFilterOptions:(id)sender;
 
