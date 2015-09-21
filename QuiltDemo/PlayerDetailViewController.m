@@ -283,15 +283,17 @@ typedef enum {
     
     self.ageLabel.text = self.player.Age;
     
-    self.debutLabel.text = self.player.Enlisted;
+    self.enlistedLabel.text = self.player.Enlisted;
     
-    self.heightLabel.text = self.player.Height;
+    [self.heightLabel setText:[NSString stringWithFormat:@"%@",self.player.Height]];
     
-    self.weightLabel.text = self.player.Weight;
+    [self.weightLabel setText:[NSString stringWithFormat:@"%@",self.player.Weight]];
     
     self.positionLabel.text = self.player.Position;
     
-    self.capsLabel.text = self.player.Caps;
+    [self.PMKeySLabel setText:[NSString stringWithFormat:@"%@",self.player.PMKeyS]];
+    
+    self.HomeUnitLabel.text = self.player.HomeUnit;
     
     //self.yearsPlayingLabel.text = [NSString stringWithFormat:@"%@",model.Yrs_Playing];
     

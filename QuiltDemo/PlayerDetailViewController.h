@@ -69,76 +69,77 @@
     NSString * totalSprintDistance;
 }
 
-@property(nonatomic, retain) IBOutlet CPTGraphHostingView* hostView;
+@property(nonatomic, weak) IBOutlet CPTGraphHostingView* hostView;
 
-@property(nonatomic, retain) IBOutlet UITableView * playerTableView;
+@property(nonatomic, weak) IBOutlet UITableView * playerTableView;
 
-@property(nonatomic, retain) IBOutlet UISearchBar * playerSearchBar;
+@property(nonatomic, weak) IBOutlet UISearchBar * playerSearchBar;
 
 @property (nonatomic, readwrite, strong) NSMutableArray *dataForPlot;
 
-@property (nonatomic, retain) IBOutlet UIView * playerSearchView;
+@property (nonatomic, weak) IBOutlet UIView * playerSearchView;
 
-@property (nonatomic, retain) IBOutlet UIImageView * backButton;
+@property (nonatomic, weak) IBOutlet UIImageView * backButton;
 
-@property (nonatomic, retain) IBOutlet UIImageView * profileImage;
+@property (nonatomic, weak) IBOutlet UIImageView * profileImage;
 
-@property (nonatomic, retain) IBOutlet UILabel * playerName;
+@property (nonatomic, weak) IBOutlet UILabel * playerName;
 
 @property(strong, nonatomic) Player * player;
 
-@property(nonatomic, retain) IBOutlet TabBarView * tabBarView;
+@property(nonatomic, weak) IBOutlet TabBarView * tabBarView;
 
-@property(nonatomic, retain) IBOutlet UIButton * fitnessButton;
+@property(nonatomic, weak) IBOutlet UIButton * fitnessButton;
 
-@property(nonatomic, retain) IBOutlet UIButton * riskButton;
+@property(nonatomic, weak) IBOutlet UIButton * riskButton;
 
-@property(nonatomic, retain) IBOutlet UIButton * wellBeingButton;
+@property(nonatomic, weak) IBOutlet UIButton * wellBeingButton;
 
-@property(nonatomic, retain) IBOutlet UILabel * fitnessLabel;
+@property(nonatomic, weak) IBOutlet UILabel * fitnessLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * riskLabel;
+@property(nonatomic, weak) IBOutlet UILabel * riskLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * wellbeingLabel;
+@property(nonatomic, weak) IBOutlet UILabel * wellbeingLabel;
 
-@property(nonatomic, retain) IBOutlet UIScrollView * tabScrollView;
+@property(nonatomic, weak) IBOutlet UIScrollView * tabScrollView;
 
-@property(nonatomic, retain) IBOutlet UILabel * dobLabel;
+@property(nonatomic, weak) IBOutlet UILabel * dobLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel *weightLabel;
+@property(nonatomic, weak) IBOutlet UILabel *weightLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * heightLabel;
+@property(nonatomic, weak) IBOutlet UILabel * heightLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * capsLabel;
+@property(nonatomic, weak) IBOutlet UILabel * PMKeySLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * debutLabel;
+@property(nonatomic, weak) IBOutlet UILabel * HomeUnitLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * ageLabel;
+@property(nonatomic, weak) IBOutlet UILabel * ageLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * riskRatingLabel;
+@property(nonatomic, weak) IBOutlet UILabel * riskRatingLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphView;
 
-@property(nonatomic, retain) IBOutlet UILabel * positionLabel;
+@property(nonatomic, weak) IBOutlet UILabel * positionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *enlistedLabel;
 
-@property(nonatomic, retain) IBOutlet UIButton * changeRiskButton;
+@property(nonatomic, weak) IBOutlet UIButton * changeRiskButton;
 
-@property(nonatomic, retain) IBOutlet UIButton * fitnessIcon;
+@property(nonatomic, weak) IBOutlet UIButton * fitnessIcon;
 
-@property(nonatomic, retain) IBOutlet UIButton * riskIcon;
+@property(nonatomic, weak) IBOutlet UIButton * riskIcon;
 
-@property(nonatomic, retain) IBOutlet UIButton * wellbeingIcon;
+@property(nonatomic, weak) IBOutlet UIButton * wellbeingIcon;
 
-@property(nonatomic, retain) IBOutlet UILabel * riskChangeLabel;
+@property(nonatomic, weak) IBOutlet UILabel * riskChangeLabel;
 
-@property(nonatomic, retain) IBOutlet UIImageView * riskchangeImage;
+@property(nonatomic, weak) IBOutlet UIImageView * riskchangeImage;
 
-@property(nonatomic, retain) IBOutlet UILabel * fitnessTabLabel;
+@property(nonatomic, weak) IBOutlet UILabel * fitnessTabLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * risTabkLabel;
+@property(nonatomic, weak) IBOutlet UILabel * risTabkLabel;
 
-@property(nonatomic, retain) IBOutlet UILabel * wellbeingTabLabel;
+@property(nonatomic, weak) IBOutlet UILabel * wellbeingTabLabel;
 
-@property(nonatomic, retain) IBOutlet UIScrollView * mainScrollView;
+@property(nonatomic, weak) IBOutlet UIScrollView * mainScrollView;
 @property (weak, nonatomic) IBOutlet UIView *injuryView;
 @property (weak, nonatomic) IBOutlet UIView *fitnessView;
 @property (weak, nonatomic) IBOutlet UIView *wellBeingView;
