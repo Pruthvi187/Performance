@@ -48,13 +48,16 @@
     
     [self.currentriskPercentageLabel setAttributedText:[utilites getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:40 subTextFontSize:24]];
     
+    [utilites setMainViewChange:self.currentInjuryView withPercentage:[self.player.RiskRating floatValue] withCount:0];
+    [utilites setMainViewChange:self.changedInjuryView withPercentage:[self.player.RiskRating floatValue] withCount:0];
+    
     NSString * sumofVol = self.model.Sum_ofV2;
     
     int avgSumofVol = (int)floor([utilites getAverageSumofVolume:self.modelItems]);
     
     double sumofVolPC = ([sumofVol intValue]/(double)avgSumofVol);
     
-    [self setViewChange:self.currentSumofVolView withPercentage:sumofVolPC];
+    [utilites setViewChange:self.currentSumofVolView withPercentage:sumofVolPC withCount:0];
     
     CGRect sumofV1Frame;
     
@@ -103,7 +106,7 @@
     
     double  acclEventsPC = ([accEvent intValue]/(double)avgAcclEvents);
     
-    [self setViewChange:self.currentAcclEvents withPercentage:acclEventsPC];
+    [utilites setViewChange:self.currentAcclEvents withPercentage:acclEventsPC withCount:0];
     
     CGRect acclEventsFrame;
     
@@ -157,7 +160,7 @@
     
     double  sitReachPC = ([sitReach intValue]/(double)avgSitReach);
     
-    [self setViewChange:self.currentSitReachView withPercentage:sitReachPC];
+    [utilites setViewChange:self.currentSitReachView withPercentage:sitReachPC withCount:0];
     
     CGRect sitReachWidthFrame;
     
@@ -210,7 +213,7 @@
     
     double  totalSprDistPC = ([totalSprDist intValue]/(double)avgSprDist);
     
-    [self setViewChange:self.currentSprintDistView withPercentage:totalSprDistPC];
+    [utilites setViewChange:self.currentSprintDistView withPercentage:totalSprDistPC withCount:0];
     
     CGRect currentSprintDistFrame;
     
@@ -265,7 +268,7 @@
     
     double  hipRotationPC = ([hipRotation intValue]/(double)avgHipRotaion);
     
-    [self setViewChange:self.currentHipRotationView withPercentage:hipRotationPC];
+    [utilites setViewChange:self.currentHipRotationView withPercentage:hipRotationPC withCount:0];
     
     
     CGRect hipRotationFrame;
@@ -372,6 +375,8 @@
         
         NSString * riskPercentageString =[NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] + (newSumofSliderValue - currentSumofSliderValue)/10];
         
+        [utilites setMainViewChange:self.changedInjuryView withPercentage:[riskPercentageString floatValue] withCount:0];
+        
         self.riskPercentageLabel.attributedText = [utilites getAttributedString:[NSString stringWithFormat:@"%@%@", riskPercentageString, @"%"] mainTextFontSize:40 subTextFontSize:24];
         
         currentSumofSliderValue = newSumofSliderValue;
@@ -380,35 +385,14 @@
         
          NSString * riskPercentageString = [NSString stringWithFormat:@"%d",[self.riskPercentageLabel.text intValue] - (currentSumofSliderValue - newSumofSliderValue)/10];
         
+        [utilites setMainViewChange:self.changedInjuryView withPercentage:[riskPercentageString floatValue] withCount:0];
+        
         self.riskPercentageLabel.attributedText = [utilites getAttributedString:[NSString stringWithFormat:@"%@%@", riskPercentageString, @"%"] mainTextFontSize:40 subTextFontSize:24];
         currentSumofSliderValue = newSumofSliderValue;
     }
+    
+   
 }
 
-
--(void) setViewChange:(UIView*)view withPercentage:(float)percentageValue
-{
-    if(percentageValue < 0.8 && percentageValue >= 0.6)
-    {
-        [view setBackgroundColor:UIColorFromHex(0x1E8034)];
-    }
-    else if (percentageValue < 0.6)
-    {
-        [view setBackgroundColor:[UIColor redColor]];
-    }
-    else if (percentageValue > 1.2 && percentageValue <= 1.6)
-    {
-        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
-    }
-    else if (percentageValue > 1.6)
-    {
-        [view setBackgroundColor:[UIColor redColor]];
-    }
-    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
-    {
-        [view setBackgroundColor:UIColorFromHex(0x53B61D)];
-    }
-
-}
 
 @end

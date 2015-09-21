@@ -99,20 +99,24 @@
                         <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0v-YR-Lf5" customClass="TabBarView">
                             <rect key="frame" x="0.0" y="70" width="831" height="600"/>
                             <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgM-nX-uVV">
                                     <rect key="frame" x="393" y="1" width="428" height="172"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxo-Z3-brC" customClass="CPTGraphHostingView">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxo-Z3-brC" customClass="CPTGraphHostingView">
                                             <rect key="frame" x="48" y="49" width="360" height="100"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="GraphBG" translatesAutoresizingMaskIntoConstraints="NO" id="o08-SW-g5f">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GraphBG" translatesAutoresizingMaskIntoConstraints="NO" id="o08-SW-g5f">
                                                     <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="o08-SW-g5f" secondAttribute="bottom" id="G87-vv-tOP"/>
                                                 <constraint firstAttribute="height" constant="100" id="LAp-Cf-XNp"/>
+                                                <constraint firstItem="o08-SW-g5f" firstAttribute="top" secondItem="yxo-Z3-brC" secondAttribute="top" id="d8w-by-dm9"/>
+                                                <constraint firstAttribute="trailing" secondItem="o08-SW-g5f" secondAttribute="trailing" id="hoc-8P-2gm"/>
                                                 <constraint firstAttribute="width" constant="360" id="i96-8f-sTy"/>
+                                                <constraint firstItem="o08-SW-g5f" firstAttribute="leading" secondItem="yxo-Z3-brC" secondAttribute="leading" id="lUf-mm-fzq"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="75%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-9x-VWI">
@@ -143,12 +147,12 @@
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="8"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRJ-xd-Ytz">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRJ-xd-Ytz">
                                             <rect key="frame" x="20" y="48" width="25" height="15"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="8"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Risk of injury history" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yte-ia-SaZ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Risk of injury history" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yte-ia-SaZ">
                                             <rect key="frame" x="20" y="20" width="159" height="21"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -157,8 +161,12 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="yxo-Z3-brC" firstAttribute="leading" secondItem="VRJ-xd-Ytz" secondAttribute="trailing" constant="3" id="0Ud-tl-36N"/>
+                                        <constraint firstAttribute="trailing" secondItem="yxo-Z3-brC" secondAttribute="trailing" constant="20" id="GXu-Ca-N8H"/>
                                         <constraint firstAttribute="width" constant="428" id="Ypi-Ks-fp8"/>
+                                        <constraint firstItem="yxo-Z3-brC" firstAttribute="top" secondItem="Yte-ia-SaZ" secondAttribute="bottom" constant="8" id="cNX-Oz-TMa"/>
                                         <constraint firstAttribute="height" constant="172" id="iV0-AS-gmq"/>
+                                        <constraint firstAttribute="bottom" secondItem="yxo-Z3-brC" secondAttribute="bottom" constant="23" id="sGn-sq-P5D"/>
                                     </constraints>
                                 </view>
                             </subviews>

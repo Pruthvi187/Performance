@@ -330,9 +330,9 @@ typedef enum {
     
     self.mainScrollView.scrollEnabled = YES;
     
-    [self setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating doubleValue] withValue:FITNESS];
-    [self setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRatingValue doubleValue] withValue:RISK];
-    [self setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing doubleValue] withValue:WELLBEING];
+    [utilities setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating doubleValue] withValue:FITNESS];
+    [utilities setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRatingValue doubleValue] withValue:RISK];
+    [utilities setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing doubleValue] withValue:WELLBEING];
     
     [self setUpRiskView];
 }
@@ -540,10 +540,15 @@ typedef enum {
     cell.backgroundColor = [UIColor clearColor];
     cell.backgroundView = [UIView new];
     cell.selectedBackgroundView = [UIView new];
-
+    
     
     Player * player = [self.filteredPlayersArray objectAtIndex:indexPath.row];
     cell.playerImage.image = [UIImage imageNamed:player.Image];
+    
+    [utilities setIcon:cell.playerRiskIcon withPercentage:[player.RiskRating floatValue] withValue:RISK];
+    [utilities setIcon:cell.playerWellBeingIcon withPercentage:[player.Wellbeing floatValue] withValue:WELLBEING];
+    [utilities setIcon:cell.playerFitnessIcon withPercentage:[player.FitnessRating floatValue] withValue:FITNESS];
+    
     [cell.playerName setText:player.Name];
     [cell.playerRiskLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.RiskRating, @"%"] mainTextFontSize:12 subTextFontSize:10]];
     [cell.playerWellBeingLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.Wellbeing, @"%"] mainTextFontSize:12 subTextFontSize:10]];
@@ -721,7 +726,7 @@ typedef enum {
         sitReachFrame = fitnessView.avgSitReachView.frame;
     }
     
-    overallFitnessCount = [self setViewChange:fitnessView.sitReachView withPercentage:sitReachPC withCount:overallFitnessCount];
+    overallFitnessCount = [utilities setViewChange:fitnessView.sitReachView withPercentage:sitReachPC withCount:overallFitnessCount];
     
     if(sitReachPC < 1)
     {
@@ -753,7 +758,7 @@ typedef enum {
        groinSqueeze0Frame = fitnessView.avggroinSquuze0View.frame;
     }
     
-    overallFitnessCount = [self setViewChange:fitnessView.groinSquuze0View withPercentage:groinSqueeze0PC withCount:overallFitnessCount];
+    overallFitnessCount = [utilities setViewChange:fitnessView.groinSquuze0View withPercentage:groinSqueeze0PC withCount:overallFitnessCount];
     
     if(groinSqueeze0PC < 1)
     {
@@ -782,7 +787,7 @@ typedef enum {
         groinSqueeze60Frame = fitnessView.avgGroinSquuze60View.frame;;
     }
     
-    overallFitnessCount = [self setViewChange:fitnessView.groinSquuze60View withPercentage:groinSqueeze60PC withCount:overallFitnessCount];
+    overallFitnessCount = [utilities setViewChange:fitnessView.groinSquuze60View withPercentage:groinSqueeze60PC withCount:overallFitnessCount];
  
     if(groinSqueeze60PC < 1)
     {
@@ -810,7 +815,7 @@ typedef enum {
         hipRotationLFrame = fitnessView.avgHipRotationLView.frame;;
     }
     
-    overallFitnessCount = [self setViewChange:fitnessView.hipRotationL withPercentage:hipRotationLPC withCount:overallFitnessCount];
+    overallFitnessCount = [utilities setViewChange:fitnessView.hipRotationL withPercentage:hipRotationLPC withCount:overallFitnessCount];
     
     if(hipRotationLPC < 1)
     {
@@ -838,7 +843,7 @@ typedef enum {
         hipRotationRFrame =  fitnessView.avgHipRotationRView.frame;
     }
     
-    overallFitnessCount = [self setViewChange:fitnessView.hipRotationR withPercentage:hipRotationRPC withCount:overallFitnessCount];
+    overallFitnessCount = [utilities setViewChange:fitnessView.hipRotationR withPercentage:hipRotationRPC withCount:overallFitnessCount];
     
     if(hipRotationRPC < 1)
     {
@@ -857,7 +862,7 @@ typedef enum {
     
     double overallPC = overallFitnessCount/5.0;
     
-    [self setViewChange:fitnessView.progressView withPercentage:overallPC withCount:0];
+    [utilities setViewChange:fitnessView.progressView withPercentage:overallPC withCount:0];
     
     overallFitnessView.size.width = overallFitnessView.size.width * overallPC;
     overallFitnessView.size.height = overallFitnessView.size.height;
@@ -865,7 +870,7 @@ typedef enum {
     
     [fitnessView.riskCountLabel setText:[NSString stringWithFormat:@"%d/5",overallFitnessCount]];
     
-    [self setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating floatValue] withValue:FITNESS];
+    [utilities setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating floatValue] withValue:FITNESS];
     
     [self.fitnessTabLabel setTextColor:[UIColor whiteColor]];
     [self.risTabkLabel setTextColor:UIColorFromHex(0x001B4A)];
@@ -940,7 +945,7 @@ typedef enum {
     
     double sumofVolPC = ([SumofVol intValue]/(double)avg_sumofvol);
     
-    overallRiskCount = [self setViewChange:riskView.sumofVolView withPercentage:sumofVolPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.sumofVolView withPercentage:sumofVolPC withCount:overallRiskCount];
     
     if(sumofVolPC < 1)
     {
@@ -968,7 +973,7 @@ typedef enum {
     
     double acclEventsPC = ([AcclEvents intValue]/(double)avg_AcclEvents);
     
-    overallRiskCount = [self setViewChange:riskView.accEventsView withPercentage:acclEventsPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.accEventsView withPercentage:acclEventsPC withCount:overallRiskCount];
     
     if(acclEventsPC < 1)
     {
@@ -996,7 +1001,7 @@ typedef enum {
     
     double totalDistPC = ([TotalDistance intValue]/(double)avg_TotalDist);
     
-    overallRiskCount = [self setViewChange:riskView.totalDistView withPercentage:totalDistPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.totalDistView withPercentage:totalDistPC withCount:overallRiskCount];
     
     if(totalDistPC < 1)
     {
@@ -1018,7 +1023,7 @@ typedef enum {
     
     double forceLoadPC = ([forceLoadPM intValue]/(double)avg_forceLoadPM);
     
-    overallRiskCount = [self setViewChange:riskView.forceLoadView withPercentage:forceLoadPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.forceLoadView withPercentage:forceLoadPC withCount:overallRiskCount];
     
     if(forceLoadPC < 1)
     {
@@ -1039,7 +1044,7 @@ typedef enum {
     
     double rateofExertionPC = ([percievedExertion intValue]/(double)avg_percievedExertion);
     
-    overallRiskCount = [self setViewChange:riskView.rateofPercExertionView withPercentage:rateofExertionPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.rateofPercExertionView withPercentage:rateofExertionPC withCount:overallRiskCount];
     
     if(rateofExertionPC < 1)
     {
@@ -1060,7 +1065,7 @@ typedef enum {
     
     float velLoadPC = ([velChangeLoad floatValue]/(float)avg_velChangeLoad);
     
-    overallRiskCount = [self setViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
     
     if(velLoadPC < 1)
     {
@@ -1081,7 +1086,7 @@ typedef enum {
     
     double velLoadPMPC = ([velLoadPM intValue]/(double)avg_velLoadPM);
     
-    overallRiskCount = [self setViewChange:riskView.velLoadPerMinView withPercentage:velLoadPMPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.velLoadPerMinView withPercentage:velLoadPMPC withCount:overallRiskCount];
     
     if(velLoadPMPC < 1)
     {
@@ -1102,7 +1107,7 @@ typedef enum {
     
     double totalSprintPC = ([totalSprintDistance intValue]/(double)avg_TotalSprintDist);
     
-    overallRiskCount = [self setViewChange:riskView.totalSprintDistView withPercentage:totalSprintPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setViewChange:riskView.totalSprintDistView withPercentage:totalSprintPC withCount:overallRiskCount];
     
     if(totalSprintPC < 1)
     {
@@ -1119,15 +1124,12 @@ typedef enum {
         [riskView.avgTotalSprintDistanceView setFrame:totalSprintDistFrame];
     }
     
-    double overallPC = overallRiskCount/8.0;
-    
-    [self setViewChange:riskView.overallRiskView withPercentage:[self.player.RiskRating floatValue] withCount:0];
-    
+    [utilities setMainViewChange:riskView.overallRiskView withPercentage:[self.player.RiskRating floatValue] withCount:0];
     
     [riskView.riskCountView setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRating, @"%"] mainTextFontSize:36 subTextFontSize:20]];
     [riskView.riskRatingChangeLabel setAttributedText:[utilities getAttributedString:[NSString stringWithFormat:@"%@%@", self.player.RiskRatingChange, @"%"] mainTextFontSize:18 subTextFontSize:12]];
     
-    [self setIcon:self.riskchangeImage withPercentage:[self.player.RiskRating floatValue] withValue:RISK];
+    [utilities setIcon:self.riskchangeImage withPercentage:[self.player.RiskRating floatValue] withValue:RISK];
     
     self.wellBeingButton.enabled = YES;
     self.riskButton.enabled = NO;
@@ -1216,7 +1218,7 @@ typedef enum {
     
     double  sleepPC = ([sleep_quality intValue]/(double)avg_sleep_quality);
     
-    overallWellnessCount = [self setViewChange:wellnessView.sleeplessnessView withPercentage:sleepPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.sleeplessnessView withPercentage:sleepPC withCount:overallWellnessCount];
     
     if(sleepPC < 1)
     {
@@ -1237,7 +1239,7 @@ typedef enum {
     
     double  legHeavinessPC = ([leg_heaviness intValue]/(double)avg_leg_heaviness);
     
-    overallWellnessCount = [self setViewChange:wellnessView.legHeavinessView withPercentage:legHeavinessPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.legHeavinessView withPercentage:legHeavinessPC withCount:overallWellnessCount];
     
     if(legHeavinessPC < 1)
     {
@@ -1258,7 +1260,7 @@ typedef enum {
     
     double  backPainPC = ([back_pain intValue]/(double)avg_back_pain);
     
-    overallWellnessCount = [self setViewChange:wellnessView.backPainView withPercentage:backPainPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.backPainView withPercentage:backPainPC withCount:overallWellnessCount];
     
     if(backPainPC < 1)
     {
@@ -1279,7 +1281,7 @@ typedef enum {
     
     double calvesPC = ([calves intValue]/(double)avg_calves);
     
-    overallWellnessCount = [self setViewChange:wellnessView.calvesView withPercentage:calvesPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.calvesView withPercentage:calvesPC withCount:overallWellnessCount];
     
     if(calvesPC < 1)
     {
@@ -1300,7 +1302,7 @@ typedef enum {
     
     double recoveryIndexPC = ([recovery_index intValue]/(double)avg_recovery_index);
     
-    overallWellnessCount = [self setViewChange:wellnessView.recoveryIndexView withPercentage:recoveryIndexPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.recoveryIndexView withPercentage:recoveryIndexPC withCount:overallWellnessCount];
     
     if(recoveryIndexPC < 1)
     {
@@ -1321,7 +1323,7 @@ typedef enum {
     
     double muscleSorenessPC = ([muscle_soreness intValue]/(double)avg_muscle_soreness);
     
-    overallWellnessCount = [self setViewChange:wellnessView.muscleSorenessView withPercentage:muscleSorenessPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.muscleSorenessView withPercentage:muscleSorenessPC withCount:overallWellnessCount];
     
     if(muscleSorenessPC < 1)
     {
@@ -1342,7 +1344,7 @@ typedef enum {
     
     double trainingStatePC = ([training_state intValue]/(double)avg_training_state);
     
-    overallWellnessCount = [self setViewChange:wellnessView.trainingStateView withPercentage:trainingStatePC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.trainingStateView withPercentage:trainingStatePC withCount:overallWellnessCount];
     
     if(trainingStatePC < 1)
     {
@@ -1363,7 +1365,7 @@ typedef enum {
     
     double romTighnessPC = ([rom_tightness intValue]/(double)avg_rom_tightness);
     
-    overallWellnessCount = [self setViewChange:wellnessView.romTightnessView withPercentage:romTighnessPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.romTightnessView withPercentage:romTighnessPC withCount:overallWellnessCount];
     
     if(romTighnessPC < 1)
     {
@@ -1384,7 +1386,7 @@ typedef enum {
     
     double hipflexorPC = ([hipflexor_quads intValue]/(double)avg_hipflexor_quads);
     
-    overallWellnessCount = [self setViewChange:wellnessView.hipflexorQuadView withPercentage:hipflexorPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.hipflexorQuadView withPercentage:hipflexorPC withCount:overallWellnessCount];
     
     if(hipflexorPC < 1)
     {
@@ -1405,7 +1407,7 @@ typedef enum {
     
     double groinPC = ([groins intValue]/(double)avg_groins);
     
-    overallWellnessCount = [self setViewChange:wellnessView.groinView withPercentage:groinPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.groinView withPercentage:groinPC withCount:overallWellnessCount];
     
     if(groinPC < 1)
     {
@@ -1426,7 +1428,7 @@ typedef enum {
     
     double hamStringPC = ([hamstrings intValue]/(double)avg_hamstring);
     
-    overallWellnessCount = [self setViewChange:wellnessView.hamstringView withPercentage:hamStringPC withCount:overallWellnessCount];
+    overallWellnessCount = [utilities setViewChange:wellnessView.hamstringView withPercentage:hamStringPC withCount:overallWellnessCount];
     
     if(hamStringPC < 1)
     {
@@ -1447,9 +1449,9 @@ typedef enum {
     
     double overallPC = overallWellnessCount/11.0;
     
-    [self setViewChange:wellnessView.overallWelnessView withPercentage:overallPC withCount:0];
+    [utilities setViewChange:wellnessView.overallWelnessView withPercentage:overallPC withCount:0];
     
-    [self setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing floatValue] withValue:WELLBEING];
+    [utilities setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing floatValue] withValue:WELLBEING];
     
     overallwellnessView.size.width = overallwellnessView.size.width * overallPC;
     overallwellnessView.size.height = overallwellnessView.size.height;
@@ -1482,94 +1484,6 @@ typedef enum {
     [self presentViewController:riskEditViewController animated:YES completion:nil];
 }
 
--(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count
-{
-//    if(percentageValue < 0.8 && percentageValue >= 0.6)
-//    {
-//        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
-//        
-//    }
-//    else if (percentageValue < 0.6)
-//    {
-//        [view setBackgroundColor:[UIColor redColor]];
-//    }
-//    else if (percentageValue > 1.2 && percentageValue <= 1.6)
-//    {
-//        [view setBackgroundColor:UIColorFromHex(0xF6691B)];
-//    }
-//    else if (percentageValue > 1.6)
-//    {
-//        [view setBackgroundColor:[UIColor redColor]];
-//    }
-//    else if(percentageValue >= 0.8 && percentageValue <= 1.2)
-//    {
-//        [view setBackgroundColor:UIColorFromHex(0x53B61D)];
-//        count++;
-//    }
-    
-    if (percentageValue <= 30) {
-        
-        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
-    } else if (percentageValue > 30 && percentageValue <= 70) {
-        
-        [view setBackgroundColor:UIColorFromHex(0xf86600)];
-    } else {
-        
-        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
-    }
-    
-    return count;
-}
-
-
--(void) setIcon:(UIImageView*)view withPercentage:(CGFloat)percentageValue withValue:(NSInteger)value
-{
-    NSString * orangeIcon;
-    NSString * redIcon;
-    NSString * greenIcon;
-    
-    switch (value) {
-        case FITNESS:
-        {
-            orangeIcon = @"Medium_Fit_Sml";
-            greenIcon = @"Bad_Fit_Sml";
-            redIcon = @"Good_Fit_Sml";
-            break;
-        }
-        case RISK:
-        {
-            orangeIcon = @"Medium_Risk_Sml";
-            redIcon = @"High_Risk_Sml";
-            greenIcon = @"Low_Risk_Sml";
-            break;
-        }
-        case WELLBEING:
-        {
-            orangeIcon = @"Meh_Sml";
-            greenIcon = @"Sad_Sml";
-            redIcon = @"Happy_Sml";
-            break;
-        }
-        default:
-            break;
-    }
-    
-    
-    if(percentageValue > 30 && percentageValue <= 70)
-    {
-        [view setImage:[UIImage imageNamed:orangeIcon]];
-        
-    }
-    else if (percentageValue > 70)
-    {
-        [view setImage:[UIImage imageNamed:redIcon]];
-    }
-    else
-    {
-        [view setImage:[UIImage imageNamed:greenIcon]];
-    }
-
-}
 
 
 #pragma mark - Set selected/unselected tabs

@@ -39,6 +39,13 @@
 
 int num = 0;
 
+typedef enum {
+    FITNESS   = 1,
+    RISK      = 2,
+    WELLBEING = 3,
+} IconValues;
+
+
 @implementation PlayerProfileViewController
 
 
@@ -150,7 +157,9 @@ int num = 0;
     cell.playerImage.image = [UIImage imageNamed:player.Image];
     [cell.playerName setText:player.Name];
     
-    
+    [utilities setIcon:cell.riskImage withPercentage:[player.RiskRating floatValue] withValue:RISK];
+    [utilities setIcon:cell.wellBeingImage withPercentage:[player.Wellbeing floatValue] withValue:WELLBEING];
+    [utilities setIcon:cell.fitnessImage withPercentage:[player.FitnessRating floatValue] withValue:FITNESS];
     
     NSMutableAttributedString * riskText = [utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.RiskRating, @"%"]];
     NSMutableAttributedString * fitnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%@%@", player.FitnessRating, @"%"]];

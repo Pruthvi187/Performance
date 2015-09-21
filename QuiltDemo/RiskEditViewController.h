@@ -123,6 +123,8 @@
 @property(nonatomic, retain) IBOutlet UILabel * riskChangeLabel;
 
 @property(nonatomic, retain) IBOutlet UIImageView * riskchangeImage;
+@property (weak, nonatomic) IBOutlet UIView *currentInjuryView;
+@property (weak, nonatomic) IBOutlet UIView *changedInjuryView;
 
 @property(strong, nonatomic) Player * player;
 

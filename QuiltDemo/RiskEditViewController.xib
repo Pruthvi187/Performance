@@ -23,10 +23,12 @@
                 <outlet property="avgSprintDistView" destination="Slf-Oj-xwB" id="BQm-Ed-53Y"/>
                 <outlet property="avgSumofVolLabel" destination="DI9-UO-hf7" id="IBP-qj-u8q"/>
                 <outlet property="avgSumofVolView" destination="HEK-qo-vhY" id="CrQ-5I-RmR"/>
+                <outlet property="changedInjuryView" destination="GWi-se-AW2" id="U2Z-61-TnZ"/>
                 <outlet property="currentAcclEvents" destination="Iap-tr-1vM" id="2ah-DY-XLc"/>
                 <outlet property="currentAcclEventsLabel" destination="Q1p-iK-RdS" id="Z2S-b5-9cX"/>
                 <outlet property="currentHipRotationLabel" destination="eg9-Lf-cVz" id="B7t-1C-s19"/>
                 <outlet property="currentHipRotationView" destination="ys4-Yf-rCE" id="z26-ot-M3N"/>
+                <outlet property="currentInjuryView" destination="wcy-tO-0mQ" id="tWH-Pq-53A"/>
                 <outlet property="currentSitReachLabel" destination="XTv-hZ-2Wc" id="0IX-bU-wvK"/>
                 <outlet property="currentSitReachView" destination="725-i9-zuf" id="5z3-bE-ehR"/>
                 <outlet property="currentSprintDistLabel" destination="fON-Pp-kEm" id="K0T-gS-EZI"/>

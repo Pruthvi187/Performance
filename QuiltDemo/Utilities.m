@@ -13,6 +13,13 @@
 #import "Model.h"
 #import "PlayerItems.h"
 #import "DataModel.h"
+#import "Colours.h"
+
+typedef enum {
+    FITNESS   = 1,
+    RISK      = 2,
+    WELLBEING = 3,
+} IconValues;
 
 @implementation Utilities
 
@@ -409,6 +416,102 @@
     return attributedString;
     
 }
+
+-(void) setIcon:(UIImageView*)view withPercentage:(CGFloat)percentageValue withValue:(NSInteger)value
+{
+    NSString * orangeIcon;
+    NSString * redIcon;
+    NSString * greenIcon;
+    
+    switch (value) {
+        case FITNESS:
+        {
+            orangeIcon = @"Medium_Fit_Sml";
+            greenIcon = @"Bad_Fit_Sml";
+            redIcon = @"Good_Fit_Sml";
+            break;
+        }
+        case RISK:
+        {
+            orangeIcon = @"Medium_Risk_Sml";
+            redIcon = @"High_Risk_Sml";
+            greenIcon = @"Low_Risk_Sml";
+            break;
+        }
+        case WELLBEING:
+        {
+            orangeIcon = @"Meh_Sml";
+            greenIcon = @"Sad_Sml";
+            redIcon = @"Happy_Sml";
+            break;
+        }
+        default:
+            break;
+    }
+    
+    
+    if(percentageValue > 30 && percentageValue <= 70)
+    {
+        [view setImage:[UIImage imageNamed:orangeIcon]];
+        
+    }
+    else if (percentageValue > 70)
+    {
+        [view setImage:[UIImage imageNamed:redIcon]];
+    }
+    else
+    {
+        [view setImage:[UIImage imageNamed:greenIcon]];
+    }
+    
+}
+
+-(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count {
+        if(percentageValue < 0.8 && percentageValue >= 0.6)
+        {
+            [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    
+        }
+        else if (percentageValue < 0.6)
+        {
+            [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+        }
+        else if (percentageValue > 1.2 && percentageValue <= 1.6)
+        {
+            [view setBackgroundColor:UIColorFromHex(0xf86600)];
+        }
+        else if (percentageValue > 1.6)
+        {
+            [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+        }
+        else if(percentageValue >= 0.8 && percentageValue <= 1.2)
+        {
+            [view setBackgroundColor:UIColorFromHex(0xdc001a)];
+            count++;
+        }
+    
+
+    return count;
+}
+
+-(NSInteger) setMainViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count {
+
+    
+    if (percentageValue <= 30) {
+        
+        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+    } else if (percentageValue > 30 && percentageValue <= 70) {
+        
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else {
+        
+        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
+    }
+    
+    return count;
+}
+
+
 
 
 @end

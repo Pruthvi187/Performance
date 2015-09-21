@@ -10,6 +10,8 @@
 
 @class WellnessPlayers, ModelItems, PlayerItems;
 
+
+
 @interface Utilities : NSObject
 
 +(Utilities *) sharedClient;
@@ -69,5 +71,11 @@
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string;
 
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string mainTextFontSize:(NSInteger) fontsize subTextFontSize: (NSInteger) secondFontSize;
+
+-(void) setIcon:(UIImageView*)view withPercentage:(CGFloat)percentageValue withValue:(NSInteger)value;
+
+-(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count;
+
+-(NSInteger) setMainViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count;
 
 @end
