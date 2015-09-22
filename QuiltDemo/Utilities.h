@@ -68,6 +68,30 @@
 
 -(double) getAverageGroinSqueeze60:(ModelItems*)modelItems;
 
+-(CGFloat) getAverageLoadedMarch:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageFireAndMove:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageJerryCanWalk:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageBoxLift:(ModelItems*)modelItems;
+
+-(CGFloat) getAveragePushUps:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageSitUps:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageRunFiveKM:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageWalk:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageRunDodgeJump:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageEnduranceMarch:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageSwimTest:(ModelItems*)modelItems;
+
+-(CGFloat) getAverageTreadWater:(ModelItems*)modelItems;
+
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string;
 
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string mainTextFontSize:(NSInteger) fontsize subTextFontSize: (NSInteger) secondFontSize;
@@ -76,6 +100,10 @@
 
 -(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count;
 
+-(NSInteger) setFitnessViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count;
+
 -(NSInteger) setMainViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count;
+
+- (NSInteger) getSecondsFromTimeFormat: (NSString*) timeFormat;
 
 @end

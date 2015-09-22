@@ -152,6 +152,7 @@
 		ACA9E7531BAA7F8000BDD092 /* DimmingPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */; };
 		ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB116F81A15C2F700002A96 /* StatsVC.m */; };
 		ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB116F91A15C2F700002A96 /* StatsVC.xib */; };
+		ACBD58BE1BB0E63E00AFD118 /* SoldierData.json in Resources */ = {isa = PBXBuildFile; fileRef = ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -334,6 +335,8 @@
 		ACB116F71A15C2F700002A96 /* StatsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsVC.h; sourceTree = "<group>"; };
 		ACB116F81A15C2F700002A96 /* StatsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsVC.m; sourceTree = "<group>"; };
 		ACB116F91A15C2F700002A96 /* StatsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
+		ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SoldierData.json; sourceTree = "<group>"; };
+		ACBD58BF1BB10E0F00AFD118 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,6 +517,7 @@
 				AC17204E18B2E6AA00A0274F /* Utilities.m */,
 				ACA6C4CA18BACE5F00091BE5 /* Colours.h */,
 				ACA6C4CB18BACE5F00091BE5 /* Colours.m */,
+				ACBD58BF1BB10E0F00AFD118 /* Constants.h */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -607,6 +611,7 @@
 				AC1720E118B7170200A0274F /* player-bg-top.png */,
 				AC1720E218B7170200A0274F /* player-indicator-container.png */,
 				AC76770F18AC856800664E8C /* PlayerData.json */,
+				ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */,
 				AC1720D918B7026A00A0274F /* Wellness.json */,
 				AC76771318AC891E00664E8C /* PlayerProfile.json */,
 				AC29EF171BA7DD59005406DA /* SoldierProfile.json */,
@@ -711,6 +716,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70B46A19B9A26500FDA1E6 /* Tatafu_Polota_Nau.png in Resources */,
+				ACBD58BE1BB0E63E00AFD118 /* SoldierData.json in Resources */,
 				AC99E80E18C049FA009B9DBD /* profile_grass.jpg in Resources */,
 				AC17208418B41C2B00A0274F /* icons-fit-green.png in Resources */,
 				7F70B45119B9A26500FDA1E6 /* Jacques_Potgieter_profile.png in Resources */,

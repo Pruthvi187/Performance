@@ -25,6 +25,7 @@
 #import "CustomPresentationController.h"
 #import "CustomDismissController.h"
 #import "DimmingPresentationController.h"
+#import "Constants.h"
 
 static NSString *const MAIN_PLOT      = @"Scatter Plot";
 static NSString *const SELECTION_PLOT = @"Selection Plot";
@@ -46,6 +47,8 @@ typedef enum {
     Utilities * utilities;
     
     BOOL isInjured;
+    
+    NSInteger selectedView;
     
     NSString * playerStatus;
     NSString * playerInjuryArea;
@@ -103,6 +106,8 @@ typedef enum {
     [self.filteredPlayersArray setArray:self.players];
  
     [self initiateViewSetUp];
+    
+    [self setUpRiskView];
 }
 
 -(void) initiateViewSetUp
@@ -120,12 +125,32 @@ typedef enum {
     [self setupAxes];
     
     [self setupScatterPlots];
+    
+    [self updateSelectedView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) updateSelectedView {
+    
+    switch (selectedView) {
+        case RISK:
+            [self setUpRiskView];
+            break;
+        case FITNESS:
+            [self setupFitnessView];
+            break;
+        case WELLBEING:
+            [self setUpWellBeingView];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void) setUpTapGestures {
@@ -268,6 +293,54 @@ typedef enum {
     
     totalSprintDistance = model.SumofSpr;
     
+    avg_LoadedMarch = (NSInteger)floor([utilities getAverageLoadedMarch:modelItems]);
+    
+    loadedMarch = model.Loaded_March;
+    
+    avg_FireAndMove = (NSInteger)floor([utilities getAverageFireAndMove:modelItems]);
+    
+    fireAndMove = model.Fire_And_Move;
+    
+    avg_JerryCanWalk = (NSInteger)floor([utilities getAverageJerryCanWalk:modelItems]);
+    
+    jerryCanWalk = model.Jerry_Can_Walk;
+    
+    avg_BoxLift = (NSInteger)floor([utilities getAverageBoxLift:modelItems]);
+    
+    box_Lift = model.Box_Lift;
+    
+    avg_PushUps = (NSInteger)floor([utilities getAveragePushUps:modelItems]);
+    
+    pushUps = model.Push_Ups;
+    
+    avg_sitUps = (NSInteger)floor([utilities getAverageSitUps:modelItems]);
+    
+    sitUps = model.Sit_Ups;
+    
+    avg_Run = (NSInteger)floor([utilities getAverageRunFiveKM:modelItems]);
+    
+    run = model.Run;
+    
+    avg_Walk = (NSInteger)floor([utilities getAverageWalk:modelItems]);
+    
+    walk = model.Walk;
+    
+    avg_runDodgeJump = (NSInteger)floor([utilities getAverageRunDodgeJump:modelItems]);
+    
+    runDodgeJump = model.Run_Dodge_Jump;
+    
+    avg_EnduranceJump = (NSInteger)floor([utilities getAverageEnduranceMarch:modelItems]);
+    
+    enduranceJump = model.Endurance_March;
+    
+    avg_SwimTest = (NSInteger)floor([utilities getAverageSwimTest:modelItems]);
+    
+    swimTest = model.Swim_Test;
+    
+    avg_TreadWater = (NSInteger)floor([utilities getAverageTreadWater:modelItems]);
+    
+    treadWater = model.Tread_Water;
+    
     [self.riskChangeLabel setText:[NSString stringWithFormat:@"%@%@",self.player.RiskRatingChange,@"%"]];
     
     if([self.player.RiskRatingChange intValue] < 0)
@@ -338,7 +411,6 @@ typedef enum {
     [utilities setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRatingValue doubleValue] withValue:RISK];
     [utilities setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing doubleValue] withValue:WELLBEING];
     
-    [self setUpRiskView];
 }
 
 -(void)viewDidLayoutSubviews
@@ -633,7 +705,8 @@ typedef enum {
 }
 
 -(void) setupFitnessView {
-    [self.graphView setHidden:NO];
+    
+    selectedView = FITNESS;
     
     if (riskView) {
         [riskView removeFromSuperview];
@@ -679,6 +752,42 @@ typedef enum {
     
     fitnessView.hipRotationRCurrent.text = [NSString stringWithFormat:@"%@",hipRotationR];
     fitnessView.avghipRotationR.text = [NSString stringWithFormat:@"%d",avg_hiprotationr];
+    
+    [fitnessView.fiveKmReqlabel setText:[NSString stringWithFormat:@"%d", avg_LoadedMarch]];
+    [fitnessView.fiveKmCurrentMarchLabel setText:[NSString stringWithFormat:@"%@", loadedMarch]];
+    
+    [fitnessView.fireAndMoveReqLabel setText:[NSString stringWithFormat:@"%d", avg_FireAndMove]];
+    [fitnessView.fireAndMoveCurrentLabel setText:[NSString stringWithFormat:@"%@", fireAndMove]];
+    
+    [fitnessView.jerryCanWalkReqLabel setText:[NSString stringWithFormat:@"%d", avg_JerryCanWalk]];
+    [fitnessView.jerryCanWalkCurrentLabel setText:[NSString stringWithFormat:@"%@", jerryCanWalk]];
+    
+    [fitnessView.boxLiftReqLabel setText:[NSString stringWithFormat:@"%d", avg_BoxLift]];
+    [fitnessView.boxLiftCurrentLabel setText:[NSString stringWithFormat:@"%@", box_Lift]];
+    
+    [fitnessView.pushUpReqLabel setText:[NSString stringWithFormat:@"%d", avg_PushUps]];
+    [fitnessView.pushUpCurrentLabel setText:[NSString stringWithFormat:@"%@", pushUps]];
+    
+    [fitnessView.sitUpReqLabel setText:[NSString stringWithFormat:@"%d", avg_sitUps]];
+    [fitnessView.sitUpCurrentLabel setText:[NSString stringWithFormat:@"%@", sitUps]];
+    
+    [fitnessView.twoAndHalfKMReqLabel setText:RUN_REQ];
+    [fitnessView.twoAndHalfKMCurrentLabel setText:[NSString stringWithFormat:@"%@", run]];
+    
+    [fitnessView.fiveKMWalkReqLabel setText:WALK_REQ];
+    [fitnessView.fiveKMWalkCurrentLabel setText:[NSString stringWithFormat:@"%@", walk]];
+    
+    [fitnessView.runDodgeAndJumReqlabel setText:RUN_DODGE_JUMP_REQ];
+    [fitnessView.runDodgeAndJumCurrentLabel setText:[NSString stringWithFormat:@"%@", runDodgeJump]];
+    
+    [fitnessView.enduranceMarchReqLabel setText:ENDURANCE_MARCH_REQ];
+    [fitnessView.enduranceMarchCurrentLabel setText:[NSString stringWithFormat:@"%@", enduranceJump]];
+    
+    [fitnessView.swimCamoflageReqLabel setText:[NSString stringWithFormat:@"%d", avg_SwimTest]];
+    [fitnessView.swimCamoflageCurrentLabel setText:[NSString stringWithFormat:@"%@", swimTest]];
+    
+    [fitnessView.treadWaterReqLabel setText:TREAD_WATER_REQ];
+    [fitnessView.treadWaterCurrentLabel setText:[NSString stringWithFormat:@"%@", treadWater]];
     
     fitnessView.playerStatusLabel.text = model.Player_Status;
     
@@ -858,6 +967,29 @@ typedef enum {
         [fitnessView.avgHipRotationRView setFrame:hipRotationRFrame];
     }
     
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMLoadedMarchCurrent, fitnessView.fiveKMLoadedMarchReq, nil] withCurrentValue:loadedMarch withAverageValue:avg_LoadedMarch withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fireandMoveCurrent, fitnessView.fireAndMoveRequirement, nil] withCurrentValue:fireAndMove withAverageValue:avg_FireAndMove withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.jerryCanWalkCurrent, fitnessView.jerryCanWalkReq, nil] withCurrentValue:jerryCanWalk withAverageValue:avg_JerryCanWalk withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.boxLiftCurrent, fitnessView.boxLiftReq, nil] withCurrentValue:box_Lift withAverageValue:avg_BoxLift withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.pushupCurrentView, fitnessView.pushUpReqView, nil] withCurrentValue:pushUps withAverageValue:avg_PushUps withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.sitUpCurrentView, fitnessView.sitUpReqView, nil] withCurrentValue:sitUps withAverageValue:avg_sitUps withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.twoAndHalfKMCurrentRun, fitnessView.twoAndHalfKMRunReq, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:run]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_REQ] withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.runDodgeAndJumpCurrentView, fitnessView.runDodgeAndJumReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:runDodgeJump]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_DODGE_JUMP_REQ] withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.enduranceMarchCurrentView, fitnessView.enduranceMarchReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:enduranceJump]] withAverageValue:[utilities getSecondsFromTimeFormat:ENDURANCE_MARCH_REQ] withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.swimCamoflageCurrentView, fitnessView.swimCamoflageReqView, nil] withCurrentValue:swimTest withAverageValue:avg_SwimTest withFitnessCount:overallFitnessCount];
+    
+    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.treadWaterCurrentView, fitnessView.treadWaterReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:treadWater]] withAverageValue:[utilities getSecondsFromTimeFormat:TREAD_WATER_REQ] withFitnessCount:overallFitnessCount];
+    
     CGRect overallFitnessView = fitnessView.progressView.frame;
     
     double overallPC = overallFitnessCount/5.0;
@@ -884,6 +1016,9 @@ typedef enum {
 }
 
 - (void) setUpRiskView {
+    
+    selectedView = RISK;
+    
     int overallRiskCount = 0;
     
     [_graphView setHidden:NO];
@@ -1152,7 +1287,9 @@ typedef enum {
   
 }
 
--(void) wellBeingViewTapped:(id)sender {
+- (void) setUpWellBeingView {
+    
+    selectedView = WELLBEING;
     
     if (riskView) {
         [riskView removeFromSuperview];
@@ -1171,7 +1308,7 @@ typedef enum {
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     [self.riskLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
-
+    
     
     wellnessView = [[[NSBundle mainBundle] loadNibNamed:@"WellnessView" owner:self options:nil] objectAtIndex:0];
     wellnessView.frame = CGRectMake(30, 100, 811, 315);
@@ -1443,6 +1580,7 @@ typedef enum {
         [wellnessView.avgHamstringView setFrame:hamstringFrame];
     }
     
+    
     CGRect overallwellnessView = wellnessView.overallWelnessView.frame;
     
     double overallPC = overallWellnessCount/11.0;
@@ -1468,7 +1606,43 @@ typedef enum {
     self.wellBeingButton.enabled = NO;
     self.riskButton.enabled = YES;
     self.fitnessButton.enabled = YES;
+    
+}
+
+-(void) wellBeingViewTapped:(id)sender {
+    
+    [self setUpWellBeingView];
  
+}
+
+- (void) changeFrameForIndicatorView: (NSArray*) views withCurrentValue:(NSString*) currentValue withAverageValue:(NSInteger) averageValue withFitnessCount:(NSInteger) overallFitnessCount {
+    
+    CGRect loadedMarchFrame;
+    
+    CGFloat loadedMarchPC = ([currentValue intValue]/(CGFloat)averageValue);
+    
+    if(loadedMarchPC < 1) {
+        
+        loadedMarchFrame =  ((UIView*)[views objectAtIndex:0]).frame;
+    } else {
+        
+        loadedMarchFrame =  ((UIView*)[views objectAtIndex:1]).frame;
+    }
+    
+    overallFitnessCount = [utilities setFitnessViewChange:((UIView*)[views objectAtIndex:0]) withPercentage:loadedMarchPC withCount:overallFitnessCount];
+    
+    if(loadedMarchPC < 1) {
+        
+        loadedMarchFrame.size.width = loadedMarchFrame.size.width * loadedMarchPC;
+        loadedMarchFrame.size.height = loadedMarchFrame.size.height;
+        [((UIView*)[views objectAtIndex:0]) setFrame:loadedMarchFrame];
+    } else {
+        
+        loadedMarchFrame.size.width = loadedMarchFrame.size.width / loadedMarchPC;
+        loadedMarchFrame.size.height = loadedMarchFrame.size.height;
+        [((UIView*)[views objectAtIndex:1]) setFrame:loadedMarchFrame];
+    }
+    
 }
 
 -(void)changeRiskButtonClicked:(id)sender

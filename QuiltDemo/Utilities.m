@@ -400,6 +400,176 @@ typedef enum {
     return groinSqueeze60/count;
 }
 
+-(CGFloat) getAverageLoadedMarch:(ModelItems*)modelItems
+{
+    CGFloat loaded_March = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        loaded_March = loaded_March + [model.Loaded_March floatValue];
+        count++;
+    }
+    
+    return loaded_March/count;
+}
+
+-(CGFloat) getAverageFireAndMove:(ModelItems*)modelItems
+{
+    CGFloat fireAndMove = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        fireAndMove = fireAndMove + [model.Fire_And_Move floatValue];
+        count++;
+    }
+    
+    return fireAndMove/count;
+}
+
+-(CGFloat) getAverageJerryCanWalk:(ModelItems*)modelItems
+{
+    CGFloat jerryCanWalk = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        jerryCanWalk = jerryCanWalk + [model.Jerry_Can_Walk floatValue];
+        count++;
+    }
+    
+    return jerryCanWalk/count;
+}
+
+-(CGFloat) getAverageBoxLift:(ModelItems*)modelItems
+{
+    CGFloat boxLift = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        boxLift = boxLift + [model.Box_Lift floatValue];
+        count++;
+    }
+    
+    return boxLift/count;
+}
+
+-(CGFloat) getAveragePushUps:(ModelItems*)modelItems
+{
+    CGFloat pushUps = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        pushUps = pushUps + [model.Push_Ups floatValue];
+        count++;
+    }
+    
+    return pushUps/count;
+}
+
+
+-(CGFloat) getAverageSitUps:(ModelItems*)modelItems
+{
+    CGFloat sitUps = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        sitUps = sitUps + [model.Sit_Ups floatValue];
+        count++;
+    }
+    
+    return sitUps/count;
+}
+
+-(CGFloat) getAverageRunFiveKM:(ModelItems*)modelItems
+{
+    CGFloat runFiveKM = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        runFiveKM = runFiveKM + [model.Run floatValue];
+        count++;
+    }
+    
+    return runFiveKM/count;
+}
+
+-(CGFloat) getAverageWalk:(ModelItems*)modelItems
+{
+    CGFloat walk = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        walk = walk + [model.Walk floatValue];
+        count++;
+    }
+    
+    return walk/count;
+}
+
+-(CGFloat) getAverageRunDodgeJump:(ModelItems*)modelItems
+{
+    CGFloat runDodgeJump = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        runDodgeJump = runDodgeJump + [model.Run_Dodge_Jump floatValue];
+        count++;
+    }
+    
+    return runDodgeJump/count;
+}
+
+-(CGFloat) getAverageEnduranceMarch:(ModelItems*)modelItems
+{
+    CGFloat enduranceMarch = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        enduranceMarch = enduranceMarch + [model.Endurance_March floatValue];
+        count++;
+    }
+    
+    return enduranceMarch/count;
+}
+
+-(CGFloat) getAverageSwimTest:(ModelItems*)modelItems
+{
+    CGFloat swimTest = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        swimTest = swimTest + [model.Swim_Test floatValue];
+        count++;
+    }
+    
+    return swimTest/count;
+}
+
+-(CGFloat) getAverageTreadWater:(ModelItems*)modelItems
+{
+    CGFloat treadWater = 0;
+    int count = 0;
+    
+    for(Model * model in modelItems.models)
+    {
+        treadWater = treadWater + [model.Tread_Water floatValue];
+        count++;
+    }
+    
+    return treadWater/count;
+}
+
+
 - (NSMutableAttributedString*) getAttributedString:(NSString*) string  {
     
     return [self getAttributedString:string mainTextFontSize:14 subTextFontSize:10];
@@ -466,31 +636,48 @@ typedef enum {
     
 }
 
--(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count {
-        if(percentageValue < 0.8 && percentageValue >= 0.6)
-        {
-            [view setBackgroundColor:UIColorFromHex(0xf86600)];
+-(NSInteger) setFitnessViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count {
     
-        }
-        else if (percentageValue < 0.6)
-        {
-            [view setBackgroundColor:UIColorFromHex(0x1e8034)];
-        }
-        else if (percentageValue > 1.2 && percentageValue <= 1.6)
-        {
-            [view setBackgroundColor:UIColorFromHex(0xf86600)];
-        }
-        else if (percentageValue > 1.6)
-        {
-            [view setBackgroundColor:UIColorFromHex(0x1e8034)];
-        }
-        else if(percentageValue >= 0.8 && percentageValue <= 1.2)
-        {
-            [view setBackgroundColor:UIColorFromHex(0xdc001a)];
-            count++;
-        }
+    if(percentageValue < 0.8 && percentageValue >= 0.6)
+    {
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else if (percentageValue < 0.6) {
+        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
+        count++;
+    } else if (percentageValue > 1.2 && percentageValue <= 1.6) {
+        
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else if (percentageValue > 1.6) {
+        
+        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
+    } else if(percentageValue >= 0.8 && percentageValue <= 1.2) {
+        
+        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+        count++;
+    }
     
+    
+    return count;
+    
+}
 
+-(NSInteger) setViewChange:(UIView*)view withPercentage:(CGFloat)percentageValue withCount:(NSInteger)count {
+    
+    if(percentageValue < 0.8 && percentageValue >= 0.6) {
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else if (percentageValue < 0.6) {
+        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+        count++;
+    } else if (percentageValue > 1.2 && percentageValue <= 1.6) {
+        [view setBackgroundColor:UIColorFromHex(0xf86600)];
+    } else if (percentageValue > 1.6) {
+        [view setBackgroundColor:UIColorFromHex(0x1e8034)];
+        count++;
+    } else if(percentageValue >= 0.8 && percentageValue <= 1.2) {
+        [view setBackgroundColor:UIColorFromHex(0xdc001a)];
+    }
+    
+    
     return count;
 }
 
@@ -509,6 +696,18 @@ typedef enum {
     }
     
     return count;
+}
+
+- (NSInteger) getSecondsFromTimeFormat: (NSString*) timeFormat {
+    
+    NSArray * timePieces = [timeFormat componentsSeparatedByString:@":"];
+    
+    NSString * seconds =[timePieces objectAtIndex:1];
+    NSString * minutes = [timePieces objectAtIndex:0];
+    
+    NSInteger  actualMinutes = [minutes integerValue] * 60;
+    NSInteger  actualSeconds = [seconds integerValue];
+    return actualMinutes + actualSeconds;
 }
 
 

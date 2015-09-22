@@ -27,7 +27,7 @@
 -(ModelItems*) getModelItems:(Player*) player
 {
     
-    NSString * jsonString = [self getJSONString:@"PlayerData" ofType:@"json"];
+    NSString * jsonString = [self getJSONString:@"SoldierData" ofType:@"json"];
     
     NSMutableArray * playerData =  [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     

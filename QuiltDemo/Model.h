@@ -148,21 +148,29 @@
 
 @property NSString * GroinSqueeze_60;
 
-@property NSString * Player_ID;
+@property NSString * Loaded_March;
 
-@property NSString * DOB;
+@property NSString * Fire_And_Move;
 
-@property NSString * Height;
+@property NSString * Jerry_Can_Walk;
 
-@property NSString * Weight;
+@property NSString * Box_Lift;
 
-@property NSString * Caps;
+@property NSString * Push_Ups;
 
-@property NSString * Debut;
+@property NSString * Sit_Ups;
 
-@property NSString * Age;
+@property NSString * Run;
 
-@property NSString * Yrs_Playing;
+@property NSString * Walk;
+
+@property NSString * Run_Dodge_Jump;
+
+@property NSString * Endurance_March;
+
+@property NSString * Swim_Test;
+
+@property NSString * Tread_Water;
 
 
 @end

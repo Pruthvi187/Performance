@@ -67,6 +67,30 @@
     NSString * velLoadPM;
     int avg_TotalSprintDist;
     NSString * totalSprintDistance;
+    NSInteger avg_LoadedMarch;
+    NSString * loadedMarch;
+    NSInteger avg_FireAndMove;
+    NSString * fireAndMove;
+    NSInteger avg_JerryCanWalk;
+    NSString * jerryCanWalk;
+    NSInteger avg_BoxLift;
+    NSString * box_Lift;
+    NSInteger avg_PushUps;
+    NSString * pushUps;
+    NSInteger avg_sitUps;
+    NSString * sitUps;
+    NSInteger avg_Run;
+    NSString * run;
+    NSInteger avg_Walk;
+    NSString * walk;
+    NSInteger avg_runDodgeJump;
+    NSString * runDodgeJump;
+    NSInteger avg_EnduranceJump;
+    NSString * enduranceJump;
+    NSInteger avg_SwimTest;
+    NSString * swimTest;
+    NSInteger avg_TreadWater;
+    NSString * treadWater;
 }
 
 @property(nonatomic, weak) IBOutlet CPTGraphHostingView* hostView;
