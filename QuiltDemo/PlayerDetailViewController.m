@@ -118,7 +118,14 @@ typedef enum {
     
     [self setUpTapGestures];
     
-    [self initializeData];
+    [self graphItemSetupWithPoint:self.player.RiskRating];
+    
+    [self updateSelectedView];
+}
+
+- (void) graphItemSetupWithPoint: (NSInteger) point {
+    
+    [self initializeDataWithPoint:point];
     
     [self setupGraph];
     
@@ -126,7 +133,6 @@ typedef enum {
     
     [self setupScatterPlots];
     
-    [self updateSelectedView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -523,7 +529,7 @@ typedef enum {
     plotSpace.globalYRange = globalYRange;
 }
 
--(void)initializeData
+-(void)initializeDataWithPoint: (NSInteger) point
 {
     
     self.players = [@[] mutableCopy];
@@ -548,7 +554,7 @@ typedef enum {
         }
         else
         {
-            y = [NSNumber numberWithDouble:[self.player.RiskRating intValue]];
+            y = [NSNumber numberWithDouble:point];
         }
         [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
     }
@@ -708,6 +714,8 @@ typedef enum {
     
     selectedView = FITNESS;
     
+    [self graphItemSetupWithPoint:[self.player.FitnessRating integerValue]];
+    
     if (riskView) {
         [riskView removeFromSuperview];
     }
@@ -821,186 +829,58 @@ typedef enum {
     }
     
     
+    overallFitnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.sitReachView, fitnessView.avgSitReachView, nil] withCurrentValue:sitReach withAverageValue:avg_sitreach withFitnessCount:overallFitnessCount];
     
-    CGRect sitReachFrame;
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.groinSquuze0View, fitnessView.avggroinSquuze0View, nil] withCurrentValue:groinSqueeze0 withAverageValue:avg_groinSqueeze0 withFitnessCount:overallFitnessCount];
+
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.groinSquuze60View, fitnessView.avgGroinSquuze60View, nil] withCurrentValue:groinSqueeze60 withAverageValue:avg_groinSqueeze60 withFitnessCount:overallFitnessCount];
+
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.hipRotationL, fitnessView.avgHipRotationLView, nil] withCurrentValue:hipRotationL withAverageValue:avg_hiprotationl withFitnessCount:overallFitnessCount];
     
-    double sitReachPC = ([sitReach intValue]/(double)avg_sitreach);
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.hipRotationR, fitnessView.avgHipRotationRView, nil] withCurrentValue:hipRotationR withAverageValue:avg_hiprotationr withFitnessCount:overallFitnessCount];
     
-    if(sitReachPC < 1)
-    {
-        sitReachFrame  = fitnessView.sitReachView.frame;;
-    }
-    else
-    {
-        sitReachFrame = fitnessView.avgSitReachView.frame;
-    }
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMLoadedMarchCurrent, fitnessView.fiveKMLoadedMarchReq, nil] withCurrentValue:loadedMarch withAverageValue:avg_LoadedMarch withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [utilities setViewChange:fitnessView.sitReachView withPercentage:sitReachPC withCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fireandMoveCurrent, fitnessView.fireAndMoveRequirement, nil] withCurrentValue:fireAndMove withAverageValue:avg_FireAndMove withFitnessCount:overallFitnessCount];
     
-    if(sitReachPC < 1)
-    {
-        sitReachFrame.size.width = sitReachFrame.size.width * sitReachPC;
-        sitReachFrame.size.height = sitReachFrame.size.height;
-        [fitnessView.sitReachView setFrame:sitReachFrame];
-    }
-    else
-    {
-        sitReachFrame.size.width = sitReachFrame.size.width / sitReachPC;
-        sitReachFrame.size.height = sitReachFrame.size.height;
-        [fitnessView.avgSitReachView setFrame:sitReachFrame];
-    }
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.jerryCanWalkCurrent, fitnessView.jerryCanWalkReq, nil] withCurrentValue:jerryCanWalk withAverageValue:avg_JerryCanWalk withFitnessCount:overallFitnessCount];
     
-    /* NSLayoutConstraint * sitReachWidthConstaint = [NSLayoutConstraint constraintWithItem:fitnessView.sitReachView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:fitnessView.sitReachView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:200];
-     [fitnessView.sitReachView addConstraint:sitReachWidthConstaint];*/
-    // [self.view setNeedsLayout];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.boxLiftCurrent, fitnessView.boxLiftReq, nil] withCurrentValue:box_Lift withAverageValue:avg_BoxLift withFitnessCount:overallFitnessCount];
     
-    CGRect groinSqueeze0Frame;
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.pushupCurrentView, fitnessView.pushUpReqView, nil] withCurrentValue:pushUps withAverageValue:avg_PushUps withFitnessCount:overallFitnessCount];
     
-    double groinSqueeze0PC = ([groinSqueeze0 intValue]/(double)avg_groinSqueeze0);
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.sitUpCurrentView, fitnessView.sitUpReqView, nil] withCurrentValue:sitUps withAverageValue:avg_sitUps withFitnessCount:overallFitnessCount];
     
-    if(groinSqueeze0PC < 1)
-    {
-        groinSqueeze0Frame = fitnessView.groinSquuze0View.frame;
-    }
-    else
-    {
-       groinSqueeze0Frame = fitnessView.avggroinSquuze0View.frame;
-    }
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.twoAndHalfKMCurrentRun, fitnessView.twoAndHalfKMRunReq, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:run]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_REQ] withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [utilities setViewChange:fitnessView.groinSquuze0View withPercentage:groinSqueeze0PC withCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMWalkCurrentView, fitnessView.fiveKMWalkReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:walk]] withAverageValue:[utilities getSecondsFromTimeFormat:WALK_REQ] withFitnessCount:overallFitnessCount];
     
-    if(groinSqueeze0PC < 1)
-    {
-        groinSqueeze0Frame.size.width = groinSqueeze0Frame.size.width * groinSqueeze0PC;
-        groinSqueeze0Frame.size.height = groinSqueeze0Frame.size.height;
-        [fitnessView.groinSquuze0View setFrame:groinSqueeze0Frame];
-     }
-    else
-    {
-        groinSqueeze0Frame.size.width = groinSqueeze0Frame.size.width / groinSqueeze0PC;
-        groinSqueeze0Frame.size.height = groinSqueeze0Frame.size.height;
-        [fitnessView.avggroinSquuze0View setFrame:groinSqueeze0Frame];
-    }
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.runDodgeAndJumpCurrentView, fitnessView.runDodgeAndJumReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:runDodgeJump]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_DODGE_JUMP_REQ] withFitnessCount:overallFitnessCount];
     
-    CGRect groinSqueeze60Frame;
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.enduranceMarchCurrentView, fitnessView.enduranceMarchReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:enduranceJump]] withAverageValue:[utilities getSecondsFromTimeFormat:ENDURANCE_MARCH_REQ] withFitnessCount:overallFitnessCount];
     
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.swimCamoflageCurrentView, fitnessView.swimCamoflageReqView, nil] withCurrentValue:swimTest withAverageValue:avg_SwimTest withFitnessCount:overallFitnessCount];
     
-    double groinSqueeze60PC = ([groinSqueeze60 intValue]/(double)avg_groinSqueeze60);
-    
-    if(groinSqueeze60PC < 1)
-    {
-        groinSqueeze60Frame = fitnessView.groinSquuze60View.frame;;
-    }
-    else
-    {
-        groinSqueeze60Frame = fitnessView.avgGroinSquuze60View.frame;;
-    }
-    
-    overallFitnessCount = [utilities setViewChange:fitnessView.groinSquuze60View withPercentage:groinSqueeze60PC withCount:overallFitnessCount];
- 
-    if(groinSqueeze60PC < 1)
-    {
-        groinSqueeze60Frame.size.width = groinSqueeze60Frame.size.width * groinSqueeze60PC;
-        groinSqueeze60Frame.size.height = groinSqueeze60Frame.size.height;
-        [fitnessView.groinSquuze60View setFrame:groinSqueeze60Frame];
-    }
-    else
-    {
-        groinSqueeze60Frame.size.width = groinSqueeze60Frame.size.width / groinSqueeze60PC;
-        groinSqueeze60Frame.size.height = groinSqueeze60Frame.size.height;
-        [fitnessView.avgGroinSquuze60View setFrame:groinSqueeze60Frame];
-    }
-    
-    CGRect hipRotationLFrame;
-    
-    double hipRotationLPC = ([hipRotationL intValue]/(double)avg_hiprotationl);
-    
-    if(hipRotationLPC < 1)
-    {
-        hipRotationLFrame = fitnessView.hipRotationL.frame;
-    }
-    else
-    {
-        hipRotationLFrame = fitnessView.avgHipRotationLView.frame;;
-    }
-    
-    overallFitnessCount = [utilities setViewChange:fitnessView.hipRotationL withPercentage:hipRotationLPC withCount:overallFitnessCount];
-    
-    if(hipRotationLPC < 1)
-    {
-        hipRotationLFrame.size.width = hipRotationLFrame.size.width * hipRotationLPC;
-        hipRotationLFrame.size.height = hipRotationLFrame.size.height;
-        [fitnessView.hipRotationL setFrame:hipRotationLFrame];
-    }
-    else
-    {
-        hipRotationLFrame.size.width = hipRotationLFrame.size.width / hipRotationLPC;
-        hipRotationLFrame.size.height = hipRotationLFrame.size.height;
-        [fitnessView.avgHipRotationLView setFrame:hipRotationLFrame];
-    }
-    
-    CGRect hipRotationRFrame;
-    
-    double hipRotationRPC = ([hipRotationR intValue]/(double)avg_hiprotationr);
-    
-    if(hipRotationRPC < 1)
-    {
-        hipRotationRFrame =  fitnessView.hipRotationR.frame;
-    }
-    else
-    {
-        hipRotationRFrame =  fitnessView.avgHipRotationRView.frame;
-    }
-    
-    overallFitnessCount = [utilities setViewChange:fitnessView.hipRotationR withPercentage:hipRotationRPC withCount:overallFitnessCount];
-    
-    if(hipRotationRPC < 1)
-    {
-        hipRotationRFrame.size.width = hipRotationRFrame.size.width * hipRotationRPC;
-        hipRotationRFrame.size.height = hipRotationRFrame.size.height;
-        [fitnessView.hipRotationR setFrame:hipRotationRFrame];
-    }
-    else
-    {
-        hipRotationRFrame.size.width = hipRotationRFrame.size.width / hipRotationRPC;
-        hipRotationRFrame.size.height = hipRotationRFrame.size.height;
-        [fitnessView.avgHipRotationRView setFrame:hipRotationRFrame];
-    }
-    
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMLoadedMarchCurrent, fitnessView.fiveKMLoadedMarchReq, nil] withCurrentValue:loadedMarch withAverageValue:avg_LoadedMarch withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fireandMoveCurrent, fitnessView.fireAndMoveRequirement, nil] withCurrentValue:fireAndMove withAverageValue:avg_FireAndMove withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.jerryCanWalkCurrent, fitnessView.jerryCanWalkReq, nil] withCurrentValue:jerryCanWalk withAverageValue:avg_JerryCanWalk withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.boxLiftCurrent, fitnessView.boxLiftReq, nil] withCurrentValue:box_Lift withAverageValue:avg_BoxLift withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.pushupCurrentView, fitnessView.pushUpReqView, nil] withCurrentValue:pushUps withAverageValue:avg_PushUps withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.sitUpCurrentView, fitnessView.sitUpReqView, nil] withCurrentValue:sitUps withAverageValue:avg_sitUps withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.twoAndHalfKMCurrentRun, fitnessView.twoAndHalfKMRunReq, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:run]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_REQ] withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.runDodgeAndJumpCurrentView, fitnessView.runDodgeAndJumReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:runDodgeJump]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_DODGE_JUMP_REQ] withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.enduranceMarchCurrentView, fitnessView.enduranceMarchReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:enduranceJump]] withAverageValue:[utilities getSecondsFromTimeFormat:ENDURANCE_MARCH_REQ] withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.swimCamoflageCurrentView, fitnessView.swimCamoflageReqView, nil] withCurrentValue:swimTest withAverageValue:avg_SwimTest withFitnessCount:overallFitnessCount];
-    
-    [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.treadWaterCurrentView, fitnessView.treadWaterReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:treadWater]] withAverageValue:[utilities getSecondsFromTimeFormat:TREAD_WATER_REQ] withFitnessCount:overallFitnessCount];
+   overallFitnessCount =  [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.treadWaterCurrentView, fitnessView.treadWaterReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:treadWater]] withAverageValue:[utilities getSecondsFromTimeFormat:TREAD_WATER_REQ] withFitnessCount:overallFitnessCount];
     
     CGRect overallFitnessView = fitnessView.progressView.frame;
     
-    double overallPC = overallFitnessCount/5.0;
+    CGFloat overallPC = overallFitnessCount/17.0;
+
     
-    [utilities setViewChange:fitnessView.progressView withPercentage:overallPC withCount:0];
+    [utilities setFitnessViewChange:fitnessView.overallFitnessView withPercentage:overallPC withCount:0];
+    
+    overallPC = overallPC * 100;
+    
+    NSInteger fitnessPC = (int)overallPC;
+    
+     NSMutableAttributedString * fitnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%d%@", fitnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
+    
+    [fitnessView.overallFitnessPCLabel setAttributedText:fitnessText];
     
     overallFitnessView.size.width = overallFitnessView.size.width * overallPC;
     overallFitnessView.size.height = overallFitnessView.size.height;
     [fitnessView.progressView setFrame:overallFitnessView];
-    
-    [fitnessView.riskCountLabel setText:[NSString stringWithFormat:@"%d/5",overallFitnessCount]];
     
     [utilities setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating floatValue] withValue:FITNESS];
     
@@ -1018,6 +898,8 @@ typedef enum {
 - (void) setUpRiskView {
     
     selectedView = RISK;
+    
+    [self graphItemSetupWithPoint:[self.player.RiskRating integerValue]];
     
     int overallRiskCount = 0;
     
@@ -1080,7 +962,7 @@ typedef enum {
     
     double sumofVolPC = ([SumofVol intValue]/(double)avg_sumofvol);
     
-    overallRiskCount = [utilities setViewChange:riskView.sumofVolView withPercentage:sumofVolPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.sumofVolView withPercentage:sumofVolPC withCount:overallRiskCount];
     
     if(sumofVolPC < 1)
     {
@@ -1108,7 +990,7 @@ typedef enum {
     
     double acclEventsPC = ([AcclEvents intValue]/(double)avg_AcclEvents);
     
-    overallRiskCount = [utilities setViewChange:riskView.accEventsView withPercentage:acclEventsPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.accEventsView withPercentage:acclEventsPC withCount:overallRiskCount];
     
     if(acclEventsPC < 1)
     {
@@ -1136,7 +1018,7 @@ typedef enum {
     
     double totalDistPC = ([TotalDistance intValue]/(double)avg_TotalDist);
     
-    overallRiskCount = [utilities setViewChange:riskView.totalDistView withPercentage:totalDistPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.totalDistView withPercentage:totalDistPC withCount:overallRiskCount];
     
     if(totalDistPC < 1)
     {
@@ -1158,7 +1040,7 @@ typedef enum {
     
     double forceLoadPC = ([forceLoadPM intValue]/(double)avg_forceLoadPM);
     
-    overallRiskCount = [utilities setViewChange:riskView.forceLoadView withPercentage:forceLoadPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.forceLoadView withPercentage:forceLoadPC withCount:overallRiskCount];
     
     if(forceLoadPC < 1)
     {
@@ -1200,7 +1082,7 @@ typedef enum {
     
     float velLoadPC = ([velChangeLoad floatValue]/(float)avg_velChangeLoad);
     
-    overallRiskCount = [utilities setViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.velchangeLoadView withPercentage:velLoadPC withCount:overallRiskCount];
     
     if(velLoadPC < 1)
     {
@@ -1221,7 +1103,7 @@ typedef enum {
     
     double velLoadPMPC = ([velLoadPM intValue]/(double)avg_velLoadPM);
     
-    overallRiskCount = [utilities setViewChange:riskView.velLoadPerMinView withPercentage:velLoadPMPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.velLoadPerMinView withPercentage:velLoadPMPC withCount:overallRiskCount];
     
     if(velLoadPMPC < 1)
     {
@@ -1242,7 +1124,7 @@ typedef enum {
     
     double totalSprintPC = ([totalSprintDistance intValue]/(double)avg_TotalSprintDist);
     
-    overallRiskCount = [utilities setViewChange:riskView.totalSprintDistView withPercentage:totalSprintPC withCount:overallRiskCount];
+    overallRiskCount = [utilities setFitnessViewChange:riskView.totalSprintDistView withPercentage:totalSprintPC withCount:overallRiskCount];
     
     if(totalSprintPC < 1)
     {
@@ -1290,6 +1172,8 @@ typedef enum {
 - (void) setUpWellBeingView {
     
     selectedView = WELLBEING;
+    
+    [self graphItemSetupWithPoint:[self.player.Wellbeing integerValue]];
     
     if (riskView) {
         [riskView removeFromSuperview];
@@ -1349,249 +1233,49 @@ typedef enum {
     wellnessView.hamstringLabel.text = [NSString stringWithFormat:@"%@",hamstrings];
     wellnessView.avghamstringLabel.text = [NSString stringWithFormat:@"%d",avg_hamstring];
     
-    CGRect sleepQualFrame;
     
-    double  sleepPC = ([sleep_quality intValue]/(double)avg_sleep_quality);
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.sleeplessnessView, wellnessView.avgSleeplessnessView, nil] withCurrentValue:sleep_quality withAverageValue:avg_sleep_quality withFitnessCount:overallWellnessCount];
     
-    overallWellnessCount = [utilities setViewChange:wellnessView.sleeplessnessView withPercentage:sleepPC withCount:overallWellnessCount];
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.legHeavinessView, wellnessView.avglegHeavinessView, nil] withCurrentValue:leg_heaviness withAverageValue:avg_leg_heaviness withFitnessCount:overallWellnessCount];
     
-    if(sleepPC < 1)
-    {
-        sleepQualFrame = wellnessView.sleeplessnessView.frame;
-        sleepQualFrame.size.width = sleepQualFrame.size.width * sleepPC;
-        sleepQualFrame.size.height = sleepQualFrame.size.height;
-        [wellnessView.sleeplessnessView setFrame:sleepQualFrame];
-    }
-    else
-    {
-        sleepQualFrame = wellnessView.avgSleeplessnessView.frame;
-        sleepQualFrame.size.width = sleepQualFrame.size.width / sleepPC;
-        sleepQualFrame.size.height = sleepQualFrame.size.height;
-        [wellnessView.avgSleeplessnessView setFrame:sleepQualFrame];
-    }
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.backPainView, wellnessView.avgBackPainView, nil] withCurrentValue:back_pain withAverageValue:avg_back_pain withFitnessCount:overallWellnessCount];
     
-    CGRect legHeavinessFrame;
+   overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.calvesView, wellnessView.avgCalvesView, nil] withCurrentValue:calves withAverageValue:avg_calves withFitnessCount:overallWellnessCount];
     
-    double  legHeavinessPC = ([leg_heaviness intValue]/(double)avg_leg_heaviness);
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.recoveryIndexView, wellnessView.avgRecoveryIndexView, nil] withCurrentValue:recovery_index withAverageValue:avg_recovery_index withFitnessCount:overallWellnessCount];
     
-    overallWellnessCount = [utilities setViewChange:wellnessView.legHeavinessView withPercentage:legHeavinessPC withCount:overallWellnessCount];
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.muscleSorenessView, wellnessView.avgMuscleSorenessView, nil] withCurrentValue:muscle_soreness withAverageValue:avg_muscle_soreness withFitnessCount:overallWellnessCount];
     
-    if(legHeavinessPC < 1)
-    {
-        legHeavinessFrame = wellnessView.legHeavinessView.frame;
-        legHeavinessFrame.size.width = legHeavinessFrame.size.width * legHeavinessPC;
-        legHeavinessFrame.size.height = legHeavinessFrame.size.height;
-        [wellnessView.legHeavinessView setFrame:legHeavinessFrame];
-    }
-    else
-    {
-        legHeavinessFrame = wellnessView.avglegHeavinessView.frame;
-        legHeavinessFrame.size.width = legHeavinessFrame.size.width / legHeavinessPC;
-        legHeavinessFrame.size.height = legHeavinessFrame.size.height;
-        [wellnessView.avglegHeavinessView setFrame:legHeavinessFrame];
-    }
+   overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.trainingStateView, wellnessView.avgTrainingStateView, nil] withCurrentValue:training_state withAverageValue:avg_training_state withFitnessCount:overallWellnessCount];
     
-    CGRect backPainView;
+   overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.romTightnessView, wellnessView.avgROMTightnessView, nil] withCurrentValue:rom_tightness withAverageValue:avg_rom_tightness withFitnessCount:overallWellnessCount];
     
-    double  backPainPC = ([back_pain intValue]/(double)avg_back_pain);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.backPainView withPercentage:backPainPC withCount:overallWellnessCount];
-    
-    if(backPainPC < 1)
-    {
-        backPainView = wellnessView.backPainView.frame;
-        backPainView.size.width = backPainView.size.width * backPainPC;
-        backPainView.size.height = backPainView.size.height;
-        [wellnessView.backPainView setFrame:backPainView];
-    }
-    else
-    {
-        backPainView = wellnessView.avgBackPainView.frame;
-        backPainView.size.width = backPainView.size.width / backPainPC;
-        backPainView.size.height = backPainView.size.height;
-        [wellnessView.avgBackPainView setFrame:backPainView];
-    }
-    
-    CGRect calvesView;
-    
-    double calvesPC = ([calves intValue]/(double)avg_calves);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.calvesView withPercentage:calvesPC withCount:overallWellnessCount];
-    
-    if(calvesPC < 1)
-    {
-        calvesView = wellnessView.calvesView.frame;
-        calvesView.size.width = calvesView.size.width * calvesPC;
-        calvesView.size.height = calvesView.size.height;
-        [wellnessView.calvesView setFrame:calvesView];
-    }
-    else
-    {
-        calvesView = wellnessView.avgCalvesView.frame;
-        calvesView.size.width = calvesView.size.width / calvesPC;
-        calvesView.size.height = calvesView.size.height;
-        [wellnessView.avgCalvesView setFrame:calvesView];
-    }
-    
-    CGRect recoveryIndexView;
-    
-    double recoveryIndexPC = ([recovery_index intValue]/(double)avg_recovery_index);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.recoveryIndexView withPercentage:recoveryIndexPC withCount:overallWellnessCount];
-    
-    if(recoveryIndexPC < 1)
-    {
-        recoveryIndexView = wellnessView.recoveryIndexView.frame;
-        recoveryIndexView.size.width = recoveryIndexView.size.width * recoveryIndexPC;
-        recoveryIndexView.size.height = recoveryIndexView.size.height;
-        [wellnessView.recoveryIndexView setFrame:recoveryIndexView];
-    }
-    else
-    {
-        recoveryIndexView = wellnessView.avgRecoveryIndexView.frame;
-        recoveryIndexView.size.width = recoveryIndexView.size.width / recoveryIndexPC;
-        recoveryIndexView.size.height = recoveryIndexView.size.height;
-        [wellnessView.avgRecoveryIndexView setFrame:recoveryIndexView];
-    }
-    
-    CGRect muscleSorenessFrame;
-    
-    double muscleSorenessPC = ([muscle_soreness intValue]/(double)avg_muscle_soreness);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.muscleSorenessView withPercentage:muscleSorenessPC withCount:overallWellnessCount];
-    
-    if(muscleSorenessPC < 1)
-    {
-        muscleSorenessFrame = wellnessView.muscleSorenessView.frame;
-        muscleSorenessFrame.size.width = muscleSorenessFrame.size.width * muscleSorenessPC;
-        muscleSorenessFrame.size.height = muscleSorenessFrame.size.height;
-        [wellnessView.muscleSorenessView setFrame:muscleSorenessFrame];
-    }
-    else
-    {
-        muscleSorenessFrame = wellnessView.avgMuscleSorenessView.frame;
-        muscleSorenessFrame.size.width = muscleSorenessFrame.size.width / muscleSorenessPC;
-        muscleSorenessFrame.size.height = muscleSorenessFrame.size.height;
-        [wellnessView.avgMuscleSorenessView setFrame:muscleSorenessFrame];
-    }
-    
-    CGRect trainingStateFrame;
-    
-    double trainingStatePC = ([training_state intValue]/(double)avg_training_state);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.trainingStateView withPercentage:trainingStatePC withCount:overallWellnessCount];
-    
-    if(trainingStatePC < 1)
-    {
-        trainingStateFrame = wellnessView.trainingStateView.frame;
-        trainingStateFrame.size.width = trainingStateFrame.size.width * trainingStatePC;
-        trainingStateFrame.size.height = trainingStateFrame.size.height;
-        [wellnessView.trainingStateView setFrame:trainingStateFrame];
-    }
-    else
-    {
-        trainingStateFrame = wellnessView.avgTrainingStateView.frame;
-        trainingStateFrame.size.width = trainingStateFrame.size.width / trainingStatePC;
-        trainingStateFrame.size.height = trainingStateFrame.size.height;
-        [wellnessView.avgTrainingStateView setFrame:trainingStateFrame];
-    }
-    
-    CGRect romTightnessFrame;
-    
-    double romTighnessPC = ([rom_tightness intValue]/(double)avg_rom_tightness);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.romTightnessView withPercentage:romTighnessPC withCount:overallWellnessCount];
-    
-    if(romTighnessPC < 1)
-    {
-        romTightnessFrame = wellnessView.romTightnessView.frame;
-        romTightnessFrame.size.width = romTightnessFrame.size.width * romTighnessPC;
-        romTightnessFrame.size.height = romTightnessFrame.size.height;
-        [wellnessView.romTightnessView setFrame:romTightnessFrame];
-    }
-    else
-    {
-        romTightnessFrame = wellnessView.avgROMTightnessView.frame;
-        romTightnessFrame.size.width = romTightnessFrame.size.width / romTighnessPC;
-        romTightnessFrame.size.height = romTightnessFrame.size.height;
-        [wellnessView.avgROMTightnessView setFrame:romTightnessFrame];
-    }
-    
-    CGRect hipFlexorQuadFrame = wellnessView.hipflexorQuadView.frame;
-    
-    double hipflexorPC = ([hipflexor_quads intValue]/(double)avg_hipflexor_quads);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.hipflexorQuadView withPercentage:hipflexorPC withCount:overallWellnessCount];
-    
-    if(hipflexorPC < 1)
-    {
-        hipFlexorQuadFrame = wellnessView.hipflexorQuadView.frame;
-        hipFlexorQuadFrame.size.width = hipFlexorQuadFrame.size.width * hipflexorPC;
-        hipFlexorQuadFrame.size.height = hipFlexorQuadFrame.size.height;
-        [wellnessView.hipflexorQuadView setFrame:hipFlexorQuadFrame];
-    }
-    else
-    {
-        hipFlexorQuadFrame = wellnessView.avgHipFlexorQuadView.frame;
-        hipFlexorQuadFrame.size.width = hipFlexorQuadFrame.size.width / hipflexorPC;
-        hipFlexorQuadFrame.size.height = hipFlexorQuadFrame.size.height;
-        [wellnessView.avgHipFlexorQuadView setFrame:hipFlexorQuadFrame];
-    }
-    
-    CGRect groinFrame;
-    
-    double groinPC = ([groins intValue]/(double)avg_groins);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.groinView withPercentage:groinPC withCount:overallWellnessCount];
-    
-    if(groinPC < 1)
-    {
-        groinFrame = wellnessView.groinView.frame;
-        groinFrame.size.width = groinFrame.size.width * groinPC;
-        groinFrame.size.height = groinFrame.size.height;
-        [wellnessView.groinView setFrame:groinFrame];
-    }
-    else
-    {
-        groinFrame = wellnessView.avgGroinView.frame;
-        groinFrame.size.width = groinFrame.size.width / groinPC;
-        groinFrame.size.height = groinFrame.size.height;
-        [wellnessView.avgGroinView setFrame:groinFrame];
-    }
-    
-    CGRect hamstringFrame;
-    
-    double hamStringPC = ([hamstrings intValue]/(double)avg_hamstring);
-    
-    overallWellnessCount = [utilities setViewChange:wellnessView.hamstringView withPercentage:hamStringPC withCount:overallWellnessCount];
-    
-    if(hamStringPC < 1)
-    {
-        hamstringFrame = wellnessView.hamstringView.frame;
-        hamstringFrame.size.width = hamstringFrame.size.width * hamStringPC;
-        hamstringFrame.size.height = hamstringFrame.size.height;
-        [wellnessView.hamstringView setFrame:hamstringFrame];
-    }
-    else
-    {
-        hamstringFrame = wellnessView.avgHamstringView.frame;
-        hamstringFrame.size.width = hamstringFrame.size.width / hamStringPC;
-        hamstringFrame.size.height = hamstringFrame.size.height;
-        [wellnessView.avgHamstringView setFrame:hamstringFrame];
-    }
+   overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.hipflexorQuadView, wellnessView.avgHipFlexorQuadView, nil] withCurrentValue:hipflexor_quads withAverageValue:avg_hipflexor_quads withFitnessCount:overallWellnessCount];
+   
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.groinView, wellnessView.avgGroinView, nil] withCurrentValue:groins withAverageValue:avg_groins withFitnessCount:overallWellnessCount];
+   
+    overallWellnessCount =[self changeFrameForIndicatorView:[NSArray arrayWithObjects:wellnessView.hamstringView, wellnessView.avgHamstringView, nil] withCurrentValue:hamstrings withAverageValue:avg_hamstring withFitnessCount:overallWellnessCount];
     
     
     CGRect overallwellnessView = wellnessView.overallWelnessView.frame;
     
     double overallPC = overallWellnessCount/11.0;
     
-    [utilities setViewChange:wellnessView.overallWelnessView withPercentage:overallPC withCount:0];
+    [utilities setFitnessViewChange:wellnessView.wellnessView withPercentage:overallPC withCount:0];
     
     [utilities setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing floatValue] withValue:WELLBEING];
     
     overallwellnessView.size.width = overallwellnessView.size.width * overallPC;
     overallwellnessView.size.height = overallwellnessView.size.height;
     [wellnessView.overallWelnessView setFrame:overallwellnessView];
+    
+    overallPC = overallPC * 100;
+    
+    NSInteger wellnessPC = (int)overallPC;
+    
+    NSMutableAttributedString * wellnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%d%@", wellnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
+    
+    [wellnessView.wellnessRatingView setAttributedText:wellnessText];
     
     [wellnessView.wellnessCountView setText:[NSString stringWithFormat:@"%d/11",overallWellnessCount]];
     
@@ -1615,7 +1299,7 @@ typedef enum {
  
 }
 
-- (void) changeFrameForIndicatorView: (NSArray*) views withCurrentValue:(NSString*) currentValue withAverageValue:(NSInteger) averageValue withFitnessCount:(NSInteger) overallFitnessCount {
+- (NSInteger) changeFrameForIndicatorView: (NSArray*) views withCurrentValue:(NSString*) currentValue withAverageValue:(NSInteger) averageValue withFitnessCount:(NSInteger) overallFitnessCount {
     
     CGRect loadedMarchFrame;
     
@@ -1642,6 +1326,8 @@ typedef enum {
         loadedMarchFrame.size.height = loadedMarchFrame.size.height;
         [((UIView*)[views objectAtIndex:1]) setFrame:loadedMarchFrame];
     }
+    
+    return overallFitnessCount;
     
 }
 

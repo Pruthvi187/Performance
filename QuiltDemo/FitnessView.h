@@ -136,6 +136,8 @@
 @property (weak, nonatomic) IBOutlet UIView *fiveKMWalkCurrentView;
 @property (weak, nonatomic) IBOutlet UILabel *fiveKMWalkReqLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fiveKMWalkCurrentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *overallFitnessPCLabel;
+@property (weak, nonatomic) IBOutlet UIView *overallFitnessView;
 
 
 @end

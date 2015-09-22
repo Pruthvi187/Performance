@@ -55,7 +55,7 @@
     
     NSMutableArray * playerProfileData =  [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     
-    PlayerItems * playrItems = [PlayerItems playerItemsWithArray:playerProfileData ofPosition:position forMainPosition:(NSString*)mainPosition];
+    PlayerItems * playrItems = [PlayerItems playerItemsWithArray:playerProfileData ofPosition:position forMainPosition:mainPosition];
     
     return playrItems;
     

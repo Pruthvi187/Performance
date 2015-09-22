@@ -239,21 +239,16 @@ typedef enum {
 {
     if([menuTableView tag] == FILTER_TAG)
     {
-        if(indexPath.row == 0)
-        {
+        if(indexPath.row == 0) {
             [self updatePlayers:nil forMainPosition:nil];
-        }
-        else if(indexPath.row == 1)
-        {
-            [self updatePlayers:nil forMainPosition:@"Forwards"];
-        }
-        else if(indexPath.row == 2)
-        {
-            [self updatePlayers:nil forMainPosition:@"Backs"];
-        }
-        else
-        {
-        NSLog(@"Player is %@", [filterOptions objectAtIndex:indexPath.row]);
+        } else if(indexPath.row == 1) {
+            [self updatePlayers:nil forMainPosition:@"Trooper"];
+        } else if(indexPath.row == 2) {
+            [self updatePlayers:nil forMainPosition:@"Captain"];
+        }  else if(indexPath.row == 3) {
+            [self updatePlayers:nil forMainPosition:@"Sergeant"];
+        } else {
+            NSLog(@"Player is %@", [filterOptions objectAtIndex:indexPath.row]);
             [self updatePlayers:[filterOptions objectAtIndex:indexPath.row] forMainPosition:nil];
         }
         [self.filterLabel setText:[filterOptions objectAtIndex:indexPath.row]];

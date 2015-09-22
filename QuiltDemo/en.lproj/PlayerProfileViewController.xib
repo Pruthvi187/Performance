@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerProfileViewController">
@@ -46,15 +46,15 @@
                             <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All teams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-Yb-ww9">
-                            <rect key="frame" x="476" y="17" width="71" height="20.5"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="All ranks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-Yb-ww9">
+                            <rect key="frame" x="476" y="17" width="71" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="ocu-Hq-Rgb"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0b-Mg-X7K" userLabel="FilterButton">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0b-Mg-X7K" userLabel="FilterButton">
                             <rect key="frame" x="551" y="15" width="28" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="28" id="Z4b-Z2-7Zy"/>
@@ -109,35 +109,16 @@
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All ranks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svb-T6-VDW">
-                            <rect key="frame" x="597" y="17" width="69.5" height="21"/>
-                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPV-dn-E7h" userLabel="FilterButton">
-                            <rect key="frame" x="671" y="15" width="28" height="25"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="25" id="rQH-gT-xvY"/>
-                                <constraint firstAttribute="width" constant="28" id="z2r-YM-qau"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" image="Drop_Down">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="R4P-cw-uPO" secondAttribute="bottom" constant="17" id="4HP-dF-2kd"/>
                         <constraint firstAttribute="centerY" secondItem="ISw-On-GMm" secondAttribute="centerY" id="6Jw-L0-a9J"/>
-                        <constraint firstItem="mPV-dn-E7h" firstAttribute="leading" secondItem="Svb-T6-VDW" secondAttribute="trailing" constant="4" id="6Mn-ii-x7c"/>
                         <constraint firstAttribute="centerY" secondItem="zA3-Yb-ww9" secondAttribute="centerY" id="Cd5-lr-ZGq"/>
                         <constraint firstItem="e0b-Mg-X7K" firstAttribute="leading" secondItem="zA3-Yb-ww9" secondAttribute="trailing" constant="4" id="EFs-0E-gmr"/>
                         <constraint firstAttribute="centerY" secondItem="yqD-Lm-Jun" secondAttribute="centerY" id="Ebd-9A-neV"/>
                         <constraint firstAttribute="centerY" secondItem="e0b-Mg-X7K" secondAttribute="centerY" id="FJx-2D-7SE"/>
                         <constraint firstItem="qBz-yH-00G" firstAttribute="leading" secondItem="7lb-9H-HZL" secondAttribute="trailing" constant="16" id="JDX-Wv-k82"/>
-                        <constraint firstAttribute="centerY" secondItem="mPV-dn-E7h" secondAttribute="centerY" id="KPd-qz-fp1"/>
                         <constraint firstAttribute="centerY" secondItem="R4P-cw-uPO" secondAttribute="centerY" id="Kld-Aw-tdG"/>
                         <constraint firstAttribute="centerY" secondItem="yqD-Lm-Jun" secondAttribute="centerY" id="KtN-kp-zN9"/>
                         <constraint firstAttribute="trailing" secondItem="ISw-On-GMm" secondAttribute="trailing" constant="31" id="LYs-mC-H6t"/>
@@ -146,12 +127,10 @@
                         <constraint firstAttribute="centerY" secondItem="5uw-G1-L38" secondAttribute="centerY" id="Q2r-gj-sMC"/>
                         <constraint firstItem="7lb-9H-HZL" firstAttribute="leading" secondItem="q7j-9Z-yO4" secondAttribute="leading" constant="40" id="ZoK-BN-lm1"/>
                         <constraint firstAttribute="centerY" secondItem="7lb-9H-HZL" secondAttribute="centerY" id="aXP-LV-NVh"/>
-                        <constraint firstAttribute="centerY" secondItem="Svb-T6-VDW" secondAttribute="centerY" id="ows-Dh-Jig"/>
                         <constraint firstItem="R4P-cw-uPO" firstAttribute="top" secondItem="q7j-9Z-yO4" secondAttribute="top" constant="17" id="vBG-jK-Cfw"/>
                         <constraint firstItem="R4P-cw-uPO" firstAttribute="leading" secondItem="qBz-yH-00G" secondAttribute="trailing" constant="241" id="vZE-bV-yQa"/>
                         <constraint firstAttribute="centerY" secondItem="qBz-yH-00G" secondAttribute="centerY" id="xrP-4U-eog"/>
                         <constraint firstItem="zA3-Yb-ww9" firstAttribute="leading" secondItem="R4P-cw-uPO" secondAttribute="trailing" constant="3" id="ya3-oc-o1t"/>
-                        <constraint firstItem="Svb-T6-VDW" firstAttribute="leading" secondItem="e0b-Mg-X7K" secondAttribute="trailing" constant="18" id="yms-A7-cFx"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Prm-C5-oYa">
@@ -195,9 +174,4 @@
         <image name="Nav_Bar" width="2048" height="88"/>
         <image name="Statistics" width="44" height="44"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

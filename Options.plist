@@ -5,8 +5,9 @@
 	<key>Filter</key>
 	<array>
 		<string>All</string>
-		<string>Forwards</string>
-		<string>Backs</string>
+		<string>Trooper</string>
+		<string>Captain</string>
+		<string>Sergeant</string>
 	</array>
 	<key>Sort</key>
 	<array>
