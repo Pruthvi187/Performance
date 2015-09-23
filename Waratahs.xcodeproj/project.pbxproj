@@ -950,7 +950,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f0e0b910-f1cf-40af-9b9b-b1162d2a18d1";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -974,7 +974,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f0e0b910-f1cf-40af-9b9b-b1162d2a18d1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -984,7 +984,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
@@ -992,8 +992,9 @@
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.SpecialForces;
 				PRODUCT_NAME = "Special Forces";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f0e0b910-f1cf-40af-9b9b-b1162d2a18d1";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1003,7 +1004,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-3";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
@@ -1011,8 +1012,9 @@
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.SpecialForces;
 				PRODUCT_NAME = "Special Forces";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f0e0b910-f1cf-40af-9b9b-b1162d2a18d1";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
