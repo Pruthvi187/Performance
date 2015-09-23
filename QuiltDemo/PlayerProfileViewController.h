@@ -50,6 +50,8 @@ typedef enum PlayerPositions {
 
 @property(nonatomic, weak) IBOutlet UIView * optionsPlaceHolderView;
 @property (weak, nonatomic) IBOutlet UIView *statsView;
+@property (weak, nonatomic) IBOutlet UIView *sortView;
+@property (weak, nonatomic) IBOutlet UIView *filtersView;
 
 -(IBAction)showFilterOptions:(id)sender;
 

@@ -76,6 +76,7 @@ typedef enum {
     RFQuiltLayout* layout = (id)[self.collectionView collectionViewLayout];
     layout.direction = UICollectionViewScrollDirectionVertical;
     layout.blockPixels = CGSizeMake(221, 290);
+    [self.collectionView setContentInset:UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f)];
     
     [self sortPlayers:@"RiskRating" sortKind:NO];
     
@@ -83,6 +84,16 @@ typedef enum {
     [statsGesture setNumberOfTapsRequired:1];
     [_statsView setUserInteractionEnabled:YES];
     [_statsView addGestureRecognizer:statsGesture];
+    
+    UITapGestureRecognizer * filterGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showFilterOptions:)];
+    [filterGesture setNumberOfTapsRequired:1];
+    [_filtersView setUserInteractionEnabled:YES];
+    [_filtersView addGestureRecognizer:filterGesture];
+    
+    UITapGestureRecognizer * sortGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSortOptions:)];
+    [sortGesture setNumberOfTapsRequired:1];
+    [_sortView setUserInteractionEnabled:YES];
+    [_sortView addGestureRecognizer:sortGesture];
     
 }
 
@@ -107,18 +118,36 @@ typedef enum {
     sortOptions = [[NSMutableArray alloc] initWithArray:[dictionary objectForKey:SORT_KEY]];
 }
 
--(IBAction)showFilterOptions:(id)sender
-{
-     UIButton *button = (UIButton *)sender;
-    [sender setTag:FILTER_TAG];
-    [self showDropDown:button.currentTitle withId:sender];
+-(void)showFilterOptions:(UITapGestureRecognizer*)sender {
+    
+    UIButton * buttonView;
+    
+    for (UIView * view in sender.view.subviews) {
+        
+        if ([view isKindOfClass:[UIButton class]]) {
+            buttonView = (UIButton*)view;
+        }
+    }
+
+     UIButton *button = buttonView;
+    [button setTag:FILTER_TAG];
+    [self showDropDown:button.currentTitle withId:button];
 }
 
--(IBAction)showSortOptions:(id)sender
-{
-     UIButton *button = (UIButton *)sender;
-    [sender setTag:SORT_TAG];
-    [self showDropDown:button.currentTitle withId:sender];
+-(void)showSortOptions:(UITapGestureRecognizer*)sender {
+    
+    UIButton * buttonView;
+    
+    for (UIView * view in sender.view.subviews) {
+        
+        if ([view isKindOfClass:[UIButton class]]) {
+            buttonView = (UIButton*)view;
+        }
+    }
+    
+     UIButton *button = (UIButton *)buttonView;
+    [button setTag:SORT_TAG];
+    [self showDropDown:button.currentTitle withId:button];
 }
 
 -(void) showDropDown:(NSString *)title withId:(id)sender

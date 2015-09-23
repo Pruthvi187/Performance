@@ -159,7 +159,7 @@
 		0239B55A168BB0F4008B8AD6 /* RFQuiltLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFQuiltLayout.h; path = RFQuiltLayout/RFQuiltLayout.h; sourceTree = SOURCE_ROOT; };
 		0239B55B168BB0F4008B8AD6 /* RFQuiltLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFQuiltLayout.m; path = RFQuiltLayout/RFQuiltLayout.m; sourceTree = SOURCE_ROOT; };
 		026492D516D3628600992E42 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		02E25B02168B74B0009CA089 /* Performance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Performance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02E25B02168B74B0009CA089 /* Special Forces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Special Forces.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E25B06168B74B0009CA089 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02E25B08168B74B0009CA089 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02E25B0E168B74B0009CA089 /* Waratahs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Waratahs-Info.plist"; sourceTree = "<group>"; };
@@ -368,7 +368,7 @@
 		02E25B03168B74B0009CA089 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				02E25B02168B74B0009CA089 /* Performance.app */,
+				02E25B02168B74B0009CA089 /* Special Forces.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -675,7 +675,7 @@
 			);
 			name = Waratahs;
 			productName = QuiltDemo;
-			productReference = 02E25B02168B74B0009CA089 /* Performance.app */;
+			productReference = 02E25B02168B74B0009CA089 /* Special Forces.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -992,7 +992,7 @@
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Performance;
+				PRODUCT_NAME = "Special Forces";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -1011,7 +1011,7 @@
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Performance;
+				PRODUCT_NAME = "Special Forces";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;

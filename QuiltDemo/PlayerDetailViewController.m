@@ -94,6 +94,8 @@ typedef enum {
     
     [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
     
+    [self.navigationController.navigationBar setTintColor:[UIColor redColor]];
+    
 }
 
 
@@ -423,7 +425,7 @@ typedef enum {
     self.mainScrollView.scrollEnabled = YES;
     
     [utilities setIcon:self.fitnessIndicatorImage withPercentage:[self.player.FitnessRating doubleValue] withValue:FITNESS];
-    [utilities setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRatingValue doubleValue] withValue:RISK];
+    [utilities setIcon:self.injuryRiskImage withPercentage:[self.player.RiskRating doubleValue] withValue:RISK];
     [utilities setIcon:self.wellBeingIndicatorImage withPercentage:[self.player.Wellbeing doubleValue] withValue:WELLBEING];
     
 }

@@ -484,7 +484,7 @@
                     <color key="backgroundColor" red="0.96470588239999999" green="0.41176470590000003" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Risk of injury" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7I7-Kz-jtS">
-                    <rect key="frame" x="15" y="2" width="86" height="21"/>
+                    <rect key="frame" x="15" y="8" width="86" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                     <nil key="highlightedColor"/>
