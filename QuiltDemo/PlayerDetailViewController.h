@@ -173,6 +173,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fitnessText;
 @property (weak, nonatomic) IBOutlet UILabel *wellBeingText;
 @property (weak, nonatomic) IBOutlet UIImageView *wellBeingIndicatorImage;
+@property (weak, nonatomic) IBOutlet UILabel *graphHistoryLabel;
 
 -(IBAction)changeRiskButtonClicked:(id)sender;
 

@@ -49,6 +49,7 @@ typedef enum PlayerPositions {
 @property(nonatomic, weak) IBOutlet UIImageView * teamStatsOpenButton;
 
 @property(nonatomic, weak) IBOutlet UIView * optionsPlaceHolderView;
+@property (weak, nonatomic) IBOutlet UIView *statsView;
 
 -(IBAction)showFilterOptions:(id)sender;
 

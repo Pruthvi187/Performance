@@ -14,6 +14,7 @@
 #import "PlayerItems.h"
 #import "DataModel.h"
 #import "Colours.h"
+#import "Player.h"
 
 typedef enum {
     FITNESS   = 1,
@@ -741,6 +742,22 @@ typedef enum {
     
     return graphMonths;
 
+}
+
+- (NSInteger) getAverageRiskOfInjury {
+    
+    DataModel *dataModel = [DataModel sharedClient];
+    
+    PlayerItems * playerItems = nil;
+    playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
+    
+    NSInteger riskAverage = 0;
+    for (Player * player in playerItems.players) {
+        NSString * riskRating = player.RiskRating;
+        riskAverage = riskAverage + [riskRating integerValue];
+    }
+    
+    return (NSInteger)riskAverage/[playerItems.players count];
 }
 
 

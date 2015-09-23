@@ -108,4 +108,6 @@
 
 - (NSMutableArray*) getMonthsForGraphCoordinates;
 
+- (NSInteger) getAverageRiskOfInjury;
+
 @end

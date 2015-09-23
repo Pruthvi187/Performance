@@ -79,5 +79,6 @@
 
 @property(nonatomic, weak) IBOutlet UILabel * riskCountView;
 @property (weak, nonatomic) IBOutlet UIButton *manageRiskButton;
+@property (weak, nonatomic) IBOutlet UIView *manageRiskView;
 
 @end

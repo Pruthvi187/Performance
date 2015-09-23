@@ -84,7 +84,7 @@ typedef enum {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Nav_Bar_Clear"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Nav_clear"] forBarMetrics:UIBarMetricsDefault];
  
     UIFont * navBarFont = [UIFont fontWithName:@"ZurichCondensedBT" size:24];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: navBarFont}];
@@ -94,8 +94,6 @@ typedef enum {
     
     [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
     
-    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 650.0f)];
-
 }
 
 
@@ -118,6 +116,7 @@ typedef enum {
     [self initiateViewSetUp];
     
     [self setUpRiskView];
+    
 }
 
 -(void) initiateViewSetUp
@@ -716,7 +715,7 @@ typedef enum {
 
 -(void) fitnessViewTapped:(id)sender {
     
-    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 1100.0f)];
+    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 990.0f)];
     [self.tabScrollView setNeedsDisplay];
     [self setupFitnessView];
     
@@ -724,7 +723,7 @@ typedef enum {
 
 -(void) setupFitnessView {
     
-    
+    [_graphHistoryLabel setText:@"Fitness history"];
     
     selectedView = FITNESS;
     
@@ -754,7 +753,10 @@ typedef enum {
 
     
     fitnessView = [[[NSBundle mainBundle] loadNibNamed:@"FitnessView" owner:self options:nil] objectAtIndex:0];
-    fitnessView.frame = CGRectMake(30, 100, 811, 315);
+    
+    [self.tabScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    //fitnessView.frame = CGRectMake(30, 30, 811, 315);
     [self.tabScrollView addSubview:fitnessView];
     [self.tabScrollView bringSubviewToFront:fitnessView];
     
@@ -911,7 +913,9 @@ typedef enum {
 
 - (void) setUpRiskView {
     
-    self.tabScrollView.contentSize =CGSizeMake(320.0f, 650.0f);
+    [_graphHistoryLabel setText:@"Risk of injury history"];
+    
+    self.tabScrollView.contentSize =CGSizeMake(320.0f, 520.0f);
     
     selectedView = RISK;
     
@@ -934,7 +938,7 @@ typedef enum {
     }
     
     riskView = [[[NSBundle mainBundle] loadNibNamed:@"RiskView" owner:self options:nil] objectAtIndex:0];
-    riskView.frame = CGRectMake(30, 100, 811, 315);
+    //riskView.frame = CGRectMake(30, 30, 811, 315);
     [self.tabScrollView addSubview:riskView];
     [self.tabScrollView bringSubviewToFront:riskView];
     
@@ -944,7 +948,11 @@ typedef enum {
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
     
-    [riskView.manageRiskButton addTarget:self action:@selector(changeRiskButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer * riskEditTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeRiskButtonClicked:)];
+    [riskView.manageRiskView setUserInteractionEnabled:YES];
+    [riskEditTapGesture setNumberOfTapsRequired:1];
+    [riskView.manageRiskView addGestureRecognizer:riskEditTapGesture];
+    
     
     wellnessView.hidden = YES;
     fitnessView.hidden = YES;
@@ -1187,6 +1195,10 @@ typedef enum {
 
 - (void) setUpWellBeingView {
     
+    self.tabScrollView.contentSize = CGSizeMake(320, 520);
+    
+    [_graphHistoryLabel setText:@"Wellbeing history"];
+    
     selectedView = WELLBEING;
     
     [self graphItemSetupWithPoint:[self.player.Wellbeing integerValue]];
@@ -1211,7 +1223,7 @@ typedef enum {
     
     
     wellnessView = [[[NSBundle mainBundle] loadNibNamed:@"WellnessView" owner:self options:nil] objectAtIndex:0];
-    wellnessView.frame = CGRectMake(30, 100, 811, 315);
+    //wellnessView.frame = CGRectMake(30, 30, 811, 315);
     [self.tabScrollView addSubview:wellnessView];
     [self.tabScrollView bringSubviewToFront:wellnessView];
     wellnessView.sleeplessLabel.text = [NSString stringWithFormat:@"%@",sleep_quality];
@@ -1311,7 +1323,7 @@ typedef enum {
 
 -(void) wellBeingViewTapped:(id)sender {
     
-    self.tabScrollView.contentSize = CGSizeMake(320, 650);
+    //self.tabScrollView.contentSize = CGSizeMake(320, 580);
     
     [self setUpWellBeingView];
 }

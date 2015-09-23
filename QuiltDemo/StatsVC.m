@@ -24,6 +24,7 @@
     
     DataModel * dataModel;
     NSMutableArray * backsPlotArray;
+    Utilities * utilities;
 }
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
@@ -42,6 +43,16 @@
     [self.graphCollectionView registerNib:graphCellNib forCellWithReuseIdentifier:@"GraphCollectionCell"];
     self.statsGraphArray = [[NSMutableArray alloc] initWithObjects:@"Running", @"AccelerationsPerHour", @"sitAndReach", @"AverageForceLoad", @"SumofSprint",nil];
     
+   utilities = [Utilities sharedClient];
+    
+    NSInteger riskRating = [utilities getAverageRiskOfInjury];
+    
+    NSMutableAttributedString * riskText = [utilities getAttributedString:[NSString stringWithFormat:@"%ld%@", (long)riskRating, @"%"] mainTextFontSize:36 subTextFontSize:20];
+    
+    [_riskRatingLabel setAttributedText:riskText];
+    
+    [utilities setMainViewChange:_riskRatingView withPercentage:riskRating withCount:0];
+    
     [self initializeData];
     
     [self setupGraph];
@@ -53,7 +64,7 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    self.contentScrollView.contentSize = CGSizeMake(320, 1200);
+    //self.contentScrollView.contentSize = CGSizeMake(320, 1000);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -250,7 +261,7 @@
     backsPlotArray = contentArray2;
     dataForPlot = contentArray;
     
-    Utilities * utilities = [Utilities sharedClient];
+   
     
     NSMutableArray * array = [utilities getMonthsForGraphCoordinates];
     NSArray *graphArray = [[array reverseObjectEnumerator] allObjects];

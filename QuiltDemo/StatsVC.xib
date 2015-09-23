@@ -17,6 +17,8 @@
                 <outlet property="hostView" destination="it5-Ti-7fa" id="OzT-hi-de2"/>
                 <outlet property="lastMonth" destination="2sa-jw-1pe" id="BX5-gr-XhN"/>
                 <outlet property="pageControl" destination="hAP-RT-O2N" id="IhT-83-Uaz"/>
+                <outlet property="riskRatingLabel" destination="9yn-2n-UVK" id="n8Q-BQ-iLn"/>
+                <outlet property="riskRatingView" destination="jKm-E5-oAg" id="A7G-NJ-ofq"/>
                 <outlet property="secondMonth" destination="MOL-Yb-d4Q" id="Rbt-qO-mhv"/>
                 <outlet property="thirdMonth" destination="BSB-q2-NVK" id="QWf-Xt-ePJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

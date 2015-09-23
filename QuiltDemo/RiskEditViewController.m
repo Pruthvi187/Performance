@@ -57,7 +57,7 @@
     
     double sumofVolPC = ([sumofVol intValue]/(double)avgSumofVol);
     
-    [utilites setViewChange:self.currentSumofVolView withPercentage:sumofVolPC withCount:0];
+    [utilites setFitnessViewChange:self.currentSumofVolView withPercentage:sumofVolPC withCount:0];
     
     CGRect sumofV1Frame;
     
@@ -106,7 +106,7 @@
     
     double  acclEventsPC = ([accEvent intValue]/(double)avgAcclEvents);
     
-    [utilites setViewChange:self.currentAcclEvents withPercentage:acclEventsPC withCount:0];
+    [utilites setFitnessViewChange:self.currentAcclEvents withPercentage:acclEventsPC withCount:0];
     
     CGRect acclEventsFrame;
     
@@ -160,7 +160,7 @@
     
     double  sitReachPC = ([sitReach intValue]/(double)avgSitReach);
     
-    [utilites setViewChange:self.currentSitReachView withPercentage:sitReachPC withCount:0];
+    [utilites setFitnessViewChange:self.currentSitReachView withPercentage:sitReachPC withCount:0];
     
     CGRect sitReachWidthFrame;
     
@@ -213,7 +213,7 @@
     
     double  totalSprDistPC = ([totalSprDist intValue]/(double)avgSprDist);
     
-    [utilites setViewChange:self.currentSprintDistView withPercentage:totalSprDistPC withCount:0];
+    [utilites setFitnessViewChange:self.currentSprintDistView withPercentage:totalSprDistPC withCount:0];
     
     CGRect currentSprintDistFrame;
     
@@ -268,7 +268,7 @@
     
     double  hipRotationPC = ([hipRotation intValue]/(double)avgHipRotaion);
     
-    [utilites setViewChange:self.currentHipRotationView withPercentage:hipRotationPC withCount:0];
+    [utilites setFitnessViewChange:self.currentHipRotationView withPercentage:hipRotationPC withCount:0];
     
     
     CGRect hipRotationFrame;

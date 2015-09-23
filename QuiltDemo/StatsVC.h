@@ -28,6 +28,8 @@ NSMutableArray *dataForPlot;
 @property (weak, nonatomic) IBOutlet UILabel *fourthMonth;
 @property (weak, nonatomic) IBOutlet UILabel *fifthMonth;
 @property (weak, nonatomic) IBOutlet UILabel *lastMonth;
+@property (weak, nonatomic) IBOutlet UILabel *riskRatingLabel;
+@property (weak, nonatomic) IBOutlet UIView *riskRatingView;
 
 @property(nonatomic, weak) IBOutlet UICollectionView * graphCollectionView;
 

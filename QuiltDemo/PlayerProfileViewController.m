@@ -79,6 +79,11 @@ typedef enum {
     
     [self sortPlayers:@"RiskRating" sortKind:NO];
     
+    UITapGestureRecognizer * statsGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showTeamStats:)];
+    [statsGesture setNumberOfTapsRequired:1];
+    [_statsView setUserInteractionEnabled:YES];
+    [_statsView addGestureRecognizer:statsGesture];
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -301,7 +306,7 @@ typedef enum {
     [self.collectionView reloadData];
 }
 
--(IBAction) showTeamStats:(id)sender
+-(void) showTeamStats:(id)sender
 {
     StatsVC *teamStatsViewController = [[StatsVC alloc] initWithNibName:@"StatsVC" bundle:nil];
     teamStatsViewController.transitioningDelegate = self;
