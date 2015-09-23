@@ -106,4 +106,6 @@
 
 - (NSInteger) getSecondsFromTimeFormat: (NSString*) timeFormat;
 
+- (NSMutableArray*) getMonthsForGraphCoordinates;
+
 @end

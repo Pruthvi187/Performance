@@ -57,6 +57,14 @@ typedef enum {
     NSString * travelDuration;
     NSString * travelWeeks;
 }
+@property (weak, nonatomic) IBOutlet UILabel *firstMonth;
+@property (weak, nonatomic) IBOutlet UILabel *secondMonth;
+@property (weak, nonatomic) IBOutlet UILabel *thirdMonth;
+@property (weak, nonatomic) IBOutlet UILabel *fourthMonth;
+@property (weak, nonatomic) IBOutlet UILabel *fifthMonth;
+@property (weak, nonatomic) IBOutlet UILabel *lastMonth;
+
+
 @property (nonatomic) NSMutableArray * players;
 @property (strong,nonatomic) NSMutableArray *filteredPlayersArray;
 
@@ -85,6 +93,8 @@ typedef enum {
     self.navigationItem.leftBarButtonItem = leftBar;
     
     [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
+    
+    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 650.0f)];
 
 }
 
@@ -419,12 +429,6 @@ typedef enum {
     
 }
 
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.tabScrollView.contentSize =CGSizeMake(320.0f, 1100.0f);
-    self.mainScrollView.contentSize = CGSizeMake(1024.0f,2000.0f);
-}
 
 -(void) setupGraph
 {
@@ -440,6 +444,15 @@ typedef enum {
     graph.paddingRight  = 0.0f;
     graph.paddingLeft = 0.0f;
     
+    NSMutableArray * array = [utilities getMonthsForGraphCoordinates];
+    NSArray *graphArray = [[array reverseObjectEnumerator] allObjects];
+    
+    [_firstMonth setText:[graphArray objectAtIndex:0]];
+    [_secondMonth setText:[graphArray objectAtIndex:1]];
+    [_thirdMonth setText:[graphArray objectAtIndex:2]];
+    [_fourthMonth setText:[graphArray objectAtIndex:3]];
+    [_fifthMonth setText:[graphArray objectAtIndex:4]];
+    [_lastMonth setText:[graphArray objectAtIndex:5]];
 }
 
 -(void) setupAxes
@@ -538,22 +551,21 @@ typedef enum {
     
     [self.navigationController.navigationBar.topItem setTitle:[self.player.Name uppercaseString]];
 
-    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
+    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:6];
     
-    for ( NSUInteger i = 0; i < 15; i++ ) {
+    for ( NSUInteger i = 0; i < 6; i++ ) {
+        
         id x = [NSNumber numberWithDouble:i * 0.5];
         id y;
-        if(i <14)
-        {
-            float low_bound = [self.player.RiskRating intValue]  - 20;
+        if(i <5) {
+            
+            float low_bound = point  - 20;
             low_bound = low_bound > 0 ? low_bound : 0;
-            float high_bound = [self.player.RiskRating intValue] + 20 ;
+            float high_bound = point + 20 ;
             high_bound = high_bound > 100 ? 90 : high_bound;
             float rndValue = (((float)arc4random()/0x100000000)*(high_bound-low_bound)+low_bound);
             y = [NSNumber numberWithFloat:rndValue];
-        }
-        else
-        {
+        } else {
             y = [NSNumber numberWithDouble:point];
         }
         [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
@@ -568,7 +580,7 @@ typedef enum {
 
 #pragma mark - CPTPlotDataSource methods
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-    return 15;
+    return 6;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
@@ -704,13 +716,15 @@ typedef enum {
 
 -(void) fitnessViewTapped:(id)sender {
     
-    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 950.0f)];
+    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 1100.0f)];
     [self.tabScrollView setNeedsDisplay];
     [self setupFitnessView];
     
 }
 
 -(void) setupFitnessView {
+    
+    
     
     selectedView = FITNESS;
     
@@ -728,7 +742,7 @@ typedef enum {
         [fitnessView removeFromSuperview];
     }
     
-    int overallFitnessCount = 0;
+    NSInteger overallFitnessCount = 0;
     
     [self.fitnessButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
@@ -761,22 +775,22 @@ typedef enum {
     fitnessView.hipRotationRCurrent.text = [NSString stringWithFormat:@"%@",hipRotationR];
     fitnessView.avghipRotationR.text = [NSString stringWithFormat:@"%d",avg_hiprotationr];
     
-    [fitnessView.fiveKmReqlabel setText:[NSString stringWithFormat:@"%d", avg_LoadedMarch]];
+    [fitnessView.fiveKmReqlabel setText:[NSString stringWithFormat:@"%ld", avg_LoadedMarch]];
     [fitnessView.fiveKmCurrentMarchLabel setText:[NSString stringWithFormat:@"%@", loadedMarch]];
     
-    [fitnessView.fireAndMoveReqLabel setText:[NSString stringWithFormat:@"%d", avg_FireAndMove]];
+    [fitnessView.fireAndMoveReqLabel setText:[NSString stringWithFormat:@"%ld", avg_FireAndMove]];
     [fitnessView.fireAndMoveCurrentLabel setText:[NSString stringWithFormat:@"%@", fireAndMove]];
     
-    [fitnessView.jerryCanWalkReqLabel setText:[NSString stringWithFormat:@"%d", avg_JerryCanWalk]];
+    [fitnessView.jerryCanWalkReqLabel setText:[NSString stringWithFormat:@"%ld", avg_JerryCanWalk]];
     [fitnessView.jerryCanWalkCurrentLabel setText:[NSString stringWithFormat:@"%@", jerryCanWalk]];
     
-    [fitnessView.boxLiftReqLabel setText:[NSString stringWithFormat:@"%d", avg_BoxLift]];
+    [fitnessView.boxLiftReqLabel setText:[NSString stringWithFormat:@"%ld", avg_BoxLift]];
     [fitnessView.boxLiftCurrentLabel setText:[NSString stringWithFormat:@"%@", box_Lift]];
     
-    [fitnessView.pushUpReqLabel setText:[NSString stringWithFormat:@"%d", avg_PushUps]];
+    [fitnessView.pushUpReqLabel setText:[NSString stringWithFormat:@"%ld", avg_PushUps]];
     [fitnessView.pushUpCurrentLabel setText:[NSString stringWithFormat:@"%@", pushUps]];
     
-    [fitnessView.sitUpReqLabel setText:[NSString stringWithFormat:@"%d", avg_sitUps]];
+    [fitnessView.sitUpReqLabel setText:[NSString stringWithFormat:@"%ld", avg_sitUps]];
     [fitnessView.sitUpCurrentLabel setText:[NSString stringWithFormat:@"%@", sitUps]];
     
     [fitnessView.twoAndHalfKMReqLabel setText:RUN_REQ];
@@ -791,7 +805,7 @@ typedef enum {
     [fitnessView.enduranceMarchReqLabel setText:ENDURANCE_MARCH_REQ];
     [fitnessView.enduranceMarchCurrentLabel setText:[NSString stringWithFormat:@"%@", enduranceJump]];
     
-    [fitnessView.swimCamoflageReqLabel setText:[NSString stringWithFormat:@"%d", avg_SwimTest]];
+    [fitnessView.swimCamoflageReqLabel setText:[NSString stringWithFormat:@"%ld", avg_SwimTest]];
     [fitnessView.swimCamoflageCurrentLabel setText:[NSString stringWithFormat:@"%@", swimTest]];
     
     [fitnessView.treadWaterReqLabel setText:TREAD_WATER_REQ];
@@ -851,17 +865,17 @@ typedef enum {
     
     overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.sitUpCurrentView, fitnessView.sitUpReqView, nil] withCurrentValue:sitUps withAverageValue:avg_sitUps withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.twoAndHalfKMCurrentRun, fitnessView.twoAndHalfKMRunReq, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:run]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_REQ] withFitnessCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.twoAndHalfKMCurrentRun, fitnessView.twoAndHalfKMRunReq, nil] withCurrentValue:[NSString stringWithFormat:@"%ld",[utilities getSecondsFromTimeFormat:run]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_REQ] withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMWalkCurrentView, fitnessView.fiveKMWalkReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:walk]] withAverageValue:[utilities getSecondsFromTimeFormat:WALK_REQ] withFitnessCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.fiveKMWalkCurrentView, fitnessView.fiveKMWalkReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%ld",[utilities getSecondsFromTimeFormat:walk]] withAverageValue:[utilities getSecondsFromTimeFormat:WALK_REQ] withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.runDodgeAndJumpCurrentView, fitnessView.runDodgeAndJumReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:runDodgeJump]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_DODGE_JUMP_REQ] withFitnessCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.runDodgeAndJumpCurrentView, fitnessView.runDodgeAndJumReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%ld",[utilities getSecondsFromTimeFormat:runDodgeJump]] withAverageValue:[utilities getSecondsFromTimeFormat:RUN_DODGE_JUMP_REQ] withFitnessCount:overallFitnessCount];
     
-    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.enduranceMarchCurrentView, fitnessView.enduranceMarchReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:enduranceJump]] withAverageValue:[utilities getSecondsFromTimeFormat:ENDURANCE_MARCH_REQ] withFitnessCount:overallFitnessCount];
+    overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.enduranceMarchCurrentView, fitnessView.enduranceMarchReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%ld",[utilities getSecondsFromTimeFormat:enduranceJump]] withAverageValue:[utilities getSecondsFromTimeFormat:ENDURANCE_MARCH_REQ] withFitnessCount:overallFitnessCount];
     
     overallFitnessCount = [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.swimCamoflageCurrentView, fitnessView.swimCamoflageReqView, nil] withCurrentValue:swimTest withAverageValue:avg_SwimTest withFitnessCount:overallFitnessCount];
     
-   overallFitnessCount =  [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.treadWaterCurrentView, fitnessView.treadWaterReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%d",[utilities getSecondsFromTimeFormat:treadWater]] withAverageValue:[utilities getSecondsFromTimeFormat:TREAD_WATER_REQ] withFitnessCount:overallFitnessCount];
+   overallFitnessCount =  [self changeFrameForIndicatorView:[NSArray arrayWithObjects:fitnessView.treadWaterCurrentView, fitnessView.treadWaterReqView, nil] withCurrentValue:[NSString stringWithFormat:@"%ld",[utilities getSecondsFromTimeFormat:treadWater]] withAverageValue:[utilities getSecondsFromTimeFormat:TREAD_WATER_REQ] withFitnessCount:overallFitnessCount];
     
     CGRect overallFitnessView = fitnessView.progressView.frame;
     
@@ -874,7 +888,7 @@ typedef enum {
     
     NSInteger fitnessPC = (int)overallPC;
     
-     NSMutableAttributedString * fitnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%d%@", fitnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
+     NSMutableAttributedString * fitnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%ld%@", fitnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
     
     [fitnessView.overallFitnessPCLabel setAttributedText:fitnessText];
     
@@ -897,11 +911,13 @@ typedef enum {
 
 - (void) setUpRiskView {
     
+    self.tabScrollView.contentSize =CGSizeMake(320.0f, 650.0f);
+    
     selectedView = RISK;
     
     [self graphItemSetupWithPoint:[self.player.RiskRating integerValue]];
     
-    int overallRiskCount = 0;
+    NSInteger overallRiskCount = 0;
     
     [_graphView setHidden:NO];
     
@@ -1187,7 +1203,7 @@ typedef enum {
         [fitnessView removeFromSuperview];
     }
     
-    int overallWellnessCount = 0;
+    NSInteger overallWellnessCount = 0;
     
     [self.wellbeingLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]];
     [self.fitnessLabel setTextColor:[UIColor colorWithRed:0/255.0 green:27.0/255.0 blue:72.0/255.0 alpha:1]];
@@ -1273,11 +1289,11 @@ typedef enum {
     
     NSInteger wellnessPC = (int)overallPC;
     
-    NSMutableAttributedString * wellnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%d%@", wellnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
+    NSMutableAttributedString * wellnessText = [utilities getAttributedString:[NSString stringWithFormat:@"%ld%@", wellnessPC, @"%"] mainTextFontSize:36 subTextFontSize:20];
     
     [wellnessView.wellnessRatingView setAttributedText:wellnessText];
     
-    [wellnessView.wellnessCountView setText:[NSString stringWithFormat:@"%d/11",overallWellnessCount]];
+    [wellnessView.wellnessCountView setText:[NSString stringWithFormat:@"%ld/11",overallWellnessCount]];
     
     [self.wellBeingButton setImage:[UIImage imageNamed:@"tab-selected"] forState:UIControlStateNormal];
     [self.riskButton setImage:[UIImage imageNamed:@"tab-unselected"] forState:UIControlStateNormal];
@@ -1295,8 +1311,9 @@ typedef enum {
 
 -(void) wellBeingViewTapped:(id)sender {
     
+    self.tabScrollView.contentSize = CGSizeMake(320, 650);
+    
     [self setUpWellBeingView];
- 
 }
 
 - (NSInteger) changeFrameForIndicatorView: (NSArray*) views withCurrentValue:(NSString*) currentValue withAverageValue:(NSInteger) averageValue withFitnessCount:(NSInteger) overallFitnessCount {

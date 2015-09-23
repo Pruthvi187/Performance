@@ -13,6 +13,7 @@
 #import "Player.h"
 #import "DataModel.h"
 #import "Colours.h"
+#import "Utilities.h"
 
 #define FRONT_ROW_PLOT    @"Front Row"
 #define BACK_ROW_PLOT  @"Back Row"
@@ -39,7 +40,7 @@
     
     UINib * graphCellNib = [UINib nibWithNibName:@"GraphCollectionCell" bundle:nil];
     [self.graphCollectionView registerNib:graphCellNib forCellWithReuseIdentifier:@"GraphCollectionCell"];
-    self.statsGraphArray = [[NSMutableArray alloc] initWithObjects:@"charts_1", @"charts_2", @"charts_3", @"charts_4", @"charts_5",nil];
+    self.statsGraphArray = [[NSMutableArray alloc] initWithObjects:@"Running", @"AccelerationsPerHour", @"sitAndReach", @"AverageForceLoad", @"SumofSprint",nil];
     
     [self initializeData];
     
@@ -201,12 +202,12 @@
     PlayerItems * playerItems = [dataModel getSoldierItems:nil forMainPosition:nil];
     self.players = playerItems.players;
     
-    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:15];
+    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:6];
     
-    for ( NSUInteger i = 0; i < 12; i++ ) {
+    for ( NSUInteger i = 0; i < 6; i++ ) {
         id x = [NSNumber numberWithDouble:i * 0.5];
         id y;
-        if(i <11)
+        if(i <5)
         {
             float low_bound = [self.player.RiskRating intValue]  - 20;
             low_bound = low_bound > 0 ? low_bound : 0;
@@ -226,7 +227,7 @@
     NSMutableArray *contentArray2 = [NSMutableArray arrayWithCapacity:15];
     
     
-    for ( NSUInteger i = 0; i < 12; i++ ) {
+    for ( NSUInteger i = 0; i < 6; i++ ) {
         id x = [NSNumber numberWithDouble:i * 0.5];
         id y;
         if(i <11) {
@@ -248,12 +249,24 @@
     
     backsPlotArray = contentArray2;
     dataForPlot = contentArray;
+    
+    Utilities * utilities = [Utilities sharedClient];
+    
+    NSMutableArray * array = [utilities getMonthsForGraphCoordinates];
+    NSArray *graphArray = [[array reverseObjectEnumerator] allObjects];
+    
+    [_firstMonth setText:[graphArray objectAtIndex:0]];
+    [_secondMonth setText:[graphArray objectAtIndex:1]];
+    [_thirdMonth setText:[graphArray objectAtIndex:2]];
+    [_fourthMonth setText:[graphArray objectAtIndex:3]];
+    [_fifthMonth setText:[graphArray objectAtIndex:4]];
+    [_lastMonth setText:[graphArray objectAtIndex:5]];
 }
 
 
 #pragma mark - CPTPlotDataSource methods
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-    return 12;
+    return 6;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {

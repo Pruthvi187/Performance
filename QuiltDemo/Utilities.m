@@ -21,6 +21,12 @@ typedef enum {
     WELLBEING = 3,
 } IconValues;
 
+@interface Utilities() {
+    NSMutableArray * calendarMonths;
+}
+
+@end
+
 @implementation Utilities
 
 + (Utilities *) sharedClient
@@ -710,7 +716,32 @@ typedef enum {
     return actualMinutes + actualSeconds;
 }
 
+- (NSMutableArray*) getMonthsForGraphCoordinates {
+    
+    NSDateComponents * components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    
+    NSInteger month = [components month];
+    
+    calendarMonths = [[NSMutableArray alloc] initWithObjects:@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul",
+                      @"Aug", @"Sep", @"Oct", @"Nov", @"Dec", nil];
+    
+    NSMutableArray * graphMonths = [NSMutableArray new];
+    
+    NSInteger index = month - 1;
+    while(index >= 0) {
+       
+        [graphMonths addObject:[calendarMonths objectAtIndex:index]];
+         index = index - 2;
+    }
+         
+    if ([graphMonths count] < 6) {
+        
+        [graphMonths addObject:[calendarMonths objectAtIndex:month + 2]];
+    }
+    
+    return graphMonths;
 
+}
 
 
 @end

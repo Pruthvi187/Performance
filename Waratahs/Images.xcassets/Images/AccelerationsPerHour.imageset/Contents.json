@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "InjuryMechanism.png"
+      "filename" : "AccelerationsPerHour.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

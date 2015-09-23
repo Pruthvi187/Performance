@@ -22,6 +22,12 @@ NSMutableArray *dataForPlot;
 @property(nonatomic, weak) IBOutlet CPTGraphHostingView* hostView;
 
 @property(strong, nonatomic) Player * player;
+@property (weak, nonatomic) IBOutlet UILabel *firstMonth;
+@property (weak, nonatomic) IBOutlet UILabel *secondMonth;
+@property (weak, nonatomic) IBOutlet UILabel *thirdMonth;
+@property (weak, nonatomic) IBOutlet UILabel *fourthMonth;
+@property (weak, nonatomic) IBOutlet UILabel *fifthMonth;
+@property (weak, nonatomic) IBOutlet UILabel *lastMonth;
 
 @property(nonatomic, weak) IBOutlet UICollectionView * graphCollectionView;
 

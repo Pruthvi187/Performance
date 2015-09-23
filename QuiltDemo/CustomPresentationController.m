@@ -10,7 +10,7 @@
 @implementation CustomPresentationController
 
 - (NSTimeInterval) transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return  2.0f;
+    return  1.2f;
 }
 
 - (void) animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
