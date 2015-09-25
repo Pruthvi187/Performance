@@ -64,7 +64,7 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    //self.contentScrollView.contentSize = CGSizeMake(320, 1000);
+    self.contentScrollView.contentSize = CGSizeMake(320, 1250);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -100,7 +100,7 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(400, 200);
+    return CGSizeMake(373, 260);
 }
 
 -(void) setupGraph
