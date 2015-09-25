@@ -59,8 +59,7 @@ typedef enum {
     [self.view addSubview:backImageView];
     [self.view sendSubviewToBack:backImageView];
     
-   // self.optionsPlaceHolderView.backgroundColor = UIColorFromHexWithAlpha(0x001B4A, 0.75);
- 
+    self.optionsPlaceHolderView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
     
     UINib *industryNib = [UINib nibWithNibName:@"PlayerProfileCollectionCell" bundle:nil];
     [self.collectionView registerNib:industryNib forCellWithReuseIdentifier:@"PlayerProfileCollectionCell"];
@@ -76,7 +75,7 @@ typedef enum {
     RFQuiltLayout* layout = (id)[self.collectionView collectionViewLayout];
     layout.direction = UICollectionViewScrollDirectionVertical;
     layout.blockPixels = CGSizeMake(221, 290);
-    [self.collectionView setContentInset:UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(40.0f, 0.0f, 0.0f, 0.0f)];
     
     [self sortPlayers:@"RiskRating" sortKind:NO];
     
@@ -235,7 +234,7 @@ typedef enum {
 }
 
 - (UIEdgeInsets)insetsForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return UIEdgeInsetsMake(2, 2, 5, 5);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 #pragma TableView Delegate methods
