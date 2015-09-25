@@ -81,18 +81,20 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="LkB-CF-hbk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="e3m-1v-XAs" secondAttribute="trailing" constant="5" id="5N9-tm-eAl"/>
                 <constraint firstItem="bzK-FR-Jxx" firstAttribute="top" secondItem="Rp5-rs-oKD" secondAttribute="bottom" constant="8" id="B4x-b1-gxa"/>
                 <constraint firstAttribute="bottom" secondItem="xaD-B7-LBe" secondAttribute="bottom" constant="10" id="B5I-PK-GH7"/>
                 <constraint firstItem="Rp5-rs-oKD" firstAttribute="leading" secondItem="rUz-tt-3FM" secondAttribute="leading" id="Ip5-mt-df8"/>
                 <constraint firstItem="xaD-B7-LBe" firstAttribute="centerY" secondItem="LkB-CF-hbk" secondAttribute="centerY" id="Ksc-Uu-oxE"/>
                 <constraint firstItem="KT1-c5-rUz" firstAttribute="leading" relation="lessThanOrEqual" secondItem="0Jf-zH-XnE" secondAttribute="trailing" constant="14" id="M4u-Kd-QQa"/>
                 <constraint firstItem="xaD-B7-LBe" firstAttribute="top" secondItem="bzK-FR-Jxx" secondAttribute="bottom" constant="7" id="MK0-HN-bOa"/>
-                <constraint firstItem="LkB-CF-hbk" firstAttribute="leading" secondItem="e3m-1v-XAs" secondAttribute="trailing" constant="13" id="MWr-Sk-xbr"/>
+                <constraint firstItem="LkB-CF-hbk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="e3m-1v-XAs" secondAttribute="trailing" constant="13" id="MWr-Sk-xbr"/>
                 <constraint firstItem="e3m-1v-XAs" firstAttribute="top" secondItem="bzK-FR-Jxx" secondAttribute="bottom" constant="10" id="OZi-gx-ncg"/>
                 <constraint firstItem="xaD-B7-LBe" firstAttribute="centerY" secondItem="KT1-c5-rUz" secondAttribute="centerY" id="Rfh-HI-Wr3"/>
                 <constraint firstItem="e3m-1v-XAs" firstAttribute="leading" secondItem="xaD-B7-LBe" secondAttribute="trailing" constant="5" id="RjX-5P-z9t"/>
                 <constraint firstItem="xaD-B7-LBe" firstAttribute="leading" secondItem="rUz-tt-3FM" secondAttribute="leading" constant="8" id="XMi-6T-W06"/>
                 <constraint firstItem="e3m-1v-XAs" firstAttribute="centerY" secondItem="0Jf-zH-XnE" secondAttribute="centerY" id="Z1W-bw-Mxs"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N9a-m9-E6N" secondAttribute="trailing" constant="3" id="aIa-Pz-GlY"/>
                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="N9a-m9-E6N" secondAttribute="trailing" constant="12" id="dnU-Zp-B6L"/>
                 <constraint firstAttribute="trailing" secondItem="Rp5-rs-oKD" secondAttribute="trailing" id="esS-f4-C81"/>
                 <constraint firstItem="xaD-B7-LBe" firstAttribute="leading" secondItem="bzK-FR-Jxx" secondAttribute="leading" id="iAI-md-73F"/>

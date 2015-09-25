@@ -5,6 +5,7 @@
 //
 
 #import "DimmingPresentationController.h"
+#import "Colours.h"
 
 @interface DimmingPresentationController()
 
@@ -18,17 +19,12 @@
     static UIView *instance = nil;
     if (instance == nil) {
         instance = [[UIView alloc] initWithFrame:self.containerView.bounds];
-        instance.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+        instance.backgroundColor = UIColorFromHexWithAlpha(0xf2e6d5, 0.30);
     }
     return instance;
 }
 
 - (void) presentationTransitionWillBegin {
-    
-    UIView * presentedView = self.presentedViewController.view;
-    presentedView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    presentedView.layer.shadowOffset = CGSizeMake(0, 10);
-    presentedView.layer.shadowOpacity = 0.5;
     
     self.dimmingView.frame = self.containerView.bounds;
     self.dimmingView.alpha = 0;

@@ -50,18 +50,17 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="pha-Qt-sNL">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                 </imageView>
-                <view alpha="0.40000000000000002" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBo-a1-gIJ" userLabel="DimView">
-                    <rect key="frame" x="219" y="0.0" width="804" height="768"/>
+                <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IBo-a1-gIJ" userLabel="DimView">
+                    <rect key="frame" x="219" y="0.0" width="805" height="768"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UuZ-ha-3kW" userLabel="Soliders View">
-                    <rect key="frame" x="0.0" y="0.0" width="225" height="768"/>
+                    <rect key="frame" x="0.0" y="75" width="225" height="693"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DaW-pA-A4g">
-                            <rect key="frame" x="30" y="135" width="164" height="633"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="DaW-pA-A4g">
+                            <rect key="frame" x="30" y="50" width="164" height="643"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="633" id="U3O-0B-wU9"/>
                                 <constraint firstAttribute="width" constant="164" id="dwV-xE-pBR"/>
                             </constraints>
                             <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -73,9 +72,10 @@
                             </connections>
                         </tableView>
                         <searchBar alpha="0.84999999999999987" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-sV-pal">
-                            <rect key="frame" x="40" y="71" width="145" height="44"/>
+                            <rect key="frame" x="40" y="0.0" width="145" height="40"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="height" constant="40" id="Pwd-Gw-ra6"/>
                                 <constraint firstAttribute="width" constant="145" id="Vid-VR-HDQ"/>
                             </constraints>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,15 +88,16 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="DaW-pA-A4g" firstAttribute="top" secondItem="DxX-sV-pal" secondAttribute="bottom" constant="20" id="ITZ-Iz-acC"/>
+                        <constraint firstItem="DaW-pA-A4g" firstAttribute="top" secondItem="DxX-sV-pal" secondAttribute="bottom" constant="10" id="ITZ-Iz-acC"/>
                         <constraint firstItem="DxX-sV-pal" firstAttribute="leading" secondItem="UuZ-ha-3kW" secondAttribute="leading" constant="40" id="S3w-wG-OoH"/>
                         <constraint firstItem="DaW-pA-A4g" firstAttribute="centerX" secondItem="DxX-sV-pal" secondAttribute="centerX" id="V5Y-yP-4mG"/>
+                        <constraint firstItem="DxX-sV-pal" firstAttribute="top" secondItem="UuZ-ha-3kW" secondAttribute="top" id="f6z-lp-T9A"/>
                         <constraint firstAttribute="centerX" secondItem="DxX-sV-pal" secondAttribute="centerX" id="pQ7-oP-S4P"/>
                         <constraint firstAttribute="bottom" secondItem="DaW-pA-A4g" secondAttribute="bottom" id="zbg-oc-tvl"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Soldier_1" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-sX-Qtc">
-                    <rect key="frame" x="214" y="71" width="260" height="260"/>
+                    <rect key="frame" x="214" y="75" width="260" height="260"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="5tV-r9-maT"/>
                         <constraint firstAttribute="height" constant="260" id="Py1-Gq-lm1"/>
@@ -272,7 +273,7 @@
                     </connections>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cI-GL-Jau" userLabel="Injury View">
-                    <rect key="frame" x="219" y="371" width="225" height="50"/>
+                    <rect key="frame" x="219" y="375" width="225" height="50"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Low_Risk_Med" translatesAutoresizingMaskIntoConstraints="NO" id="DPe-IK-GT4">
                             <rect key="frame" x="10" y="10" width="30" height="30"/>
@@ -281,8 +282,8 @@
                                 <constraint firstAttribute="height" constant="30" id="E1t-59-z7q"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="65% Risk of injury" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67x-DM-M1j">
-                            <rect key="frame" x="50" y="16" width="136" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="65% Risk of injury" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67x-DM-M1j">
+                            <rect key="frame" x="50" y="15" width="136" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -298,8 +299,8 @@
                         <constraint firstItem="DPe-IK-GT4" firstAttribute="leading" secondItem="6cI-GL-Jau" secondAttribute="leading" constant="10" id="wGk-JH-vTy"/>
                     </constraints>
                 </view>
-                <view alpha="0.59999999999999964" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-Jr-LlT" userLabel="Fitness View">
-                    <rect key="frame" x="460" y="371" width="225" height="50"/>
+                <view alpha="0.59999999999999964" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-Jr-LlT" userLabel="Fitness View">
+                    <rect key="frame" x="459" y="375" width="225" height="50"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Medium_Fit_Sml" translatesAutoresizingMaskIntoConstraints="NO" id="WN4-u1-o9n">
                             <rect key="frame" x="10" y="10" width="30" height="30"/>
@@ -325,8 +326,8 @@
                         <constraint firstAttribute="width" constant="225" id="ySl-1v-86Z"/>
                     </constraints>
                 </view>
-                <view alpha="0.59999999999999998" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4HF-31-Bpg" userLabel="WellBeingTab">
-                    <rect key="frame" x="700" y="371" width="225" height="50"/>
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4HF-31-Bpg" userLabel="WellBeingTab">
+                    <rect key="frame" x="699" y="375" width="225" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2% Wellbeing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BX-oc-yce">
                             <rect key="frame" x="50" y="15" width="153" height="20.5"/>
@@ -356,7 +357,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWK-Rz-xlX" userLabel="Profile View">
-                    <rect key="frame" x="474" y="84" width="500" height="220"/>
+                    <rect key="frame" x="474" y="95" width="500" height="220"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PMKeyS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdk-AN-zou">
                             <rect key="frame" x="20" y="20" width="50" height="21"/>
@@ -554,8 +555,8 @@
                 <constraint firstAttribute="bottom" secondItem="UuZ-ha-3kW" secondAttribute="bottom" id="vWm-ZS-lV7"/>
                 <constraint firstItem="IBo-a1-gIJ" firstAttribute="top" secondItem="2" secondAttribute="top" id="vX8-yv-21Q"/>
                 <constraint firstAttribute="trailing" secondItem="pha-Qt-sNL" secondAttribute="trailing" id="wMU-QF-gcZ"/>
-                <constraint firstItem="UuZ-ha-3kW" firstAttribute="top" secondItem="2" secondAttribute="top" id="xmc-ct-5Jw"/>
-                <constraint firstItem="uWK-Rz-xlX" firstAttribute="top" secondItem="2" secondAttribute="top" constant="84" id="zTy-F6-XpA"/>
+                <constraint firstItem="UuZ-ha-3kW" firstAttribute="top" secondItem="2" secondAttribute="top" constant="75" id="xmc-ct-5Jw"/>
+                <constraint firstItem="uWK-Rz-xlX" firstAttribute="top" secondItem="2" secondAttribute="top" constant="95" id="zTy-F6-XpA"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

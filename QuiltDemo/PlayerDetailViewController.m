@@ -661,7 +661,7 @@ typedef enum {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 215;
+    return 235;
 }
 
 
