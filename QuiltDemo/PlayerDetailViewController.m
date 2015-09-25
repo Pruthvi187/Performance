@@ -717,7 +717,7 @@ typedef enum {
 
 -(void) fitnessViewTapped:(id)sender {
     
-    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 990.0f)];
+    [self.tabScrollView setContentSize:CGSizeMake(320.0f, 1030.0f)];
     [self.tabScrollView setNeedsDisplay];
     [self setupFitnessView];
     
@@ -1197,7 +1197,7 @@ typedef enum {
 
 - (void) setUpWellBeingView {
     
-    self.tabScrollView.contentSize = CGSizeMake(320, 520);
+    self.tabScrollView.contentSize = CGSizeMake(320, 580);
     
     [_graphHistoryLabel setText:@"Wellbeing history"];
     
