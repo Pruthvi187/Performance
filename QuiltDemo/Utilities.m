@@ -737,7 +737,7 @@ typedef enum {
          
     if ([graphMonths count] < 6) {
         
-        [graphMonths addObject:[calendarMonths objectAtIndex:month + 2]];
+        [graphMonths addObject:[calendarMonths objectAtIndex:month]];
     }
     
     return graphMonths;
