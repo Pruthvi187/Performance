@@ -1,13 +1,15 @@
 PODS:
-  - CorePlot (1.4)
-  - iOS-blur (0.0.4)
+  - CorePlot (2.2)
+  - iOS-blur (0.0.5)
 
 DEPENDENCIES:
-  - CorePlot (~> 1.4)
+  - CorePlot (~> 2.2)
   - iOS-blur
 
 SPEC CHECKSUMS:
-  CorePlot: 0c6cfe42f4cc458062dfd765d5b8f59a0d0fdddf
-  iOS-blur: 88a6776951beba2aa47be68ee037dc757781a8af
+  CorePlot: cbe0c6e14220705e32e06a89c7d6a5a908b7d7d8
+  iOS-blur: 8e4a4a2202b881e940869eca0c957808cbdf0a19
 
-COCOAPODS: 0.29.0
+PODFILE CHECKSUM: d7e8cba9726e692588cb2f41378362d106612673
+
+COCOAPODS: 1.0.0

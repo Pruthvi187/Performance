@@ -3,15 +3,16 @@
 #import "CPTDefinitions.h"
 #import "CPTFill.h"
 #import "CPTLineStyle.h"
+#import "CPTPlatformSpecificFunctions.h"
 #import "NSCoderExtensions.h"
 #import <tgmath.h>
 
 /// @cond
 @interface CPTLineCap()
 
-@property (nonatomic, readwrite, assign) CGPathRef cachedLineCapPath;
+@property (nonatomic, readwrite, assign, nullable) CGPathRef cachedLineCapPath;
 
--(CGPathRef)newLineCapPath;
+-(nonnull CGPathRef)newLineCapPath;
 
 @end
 
@@ -34,19 +35,19 @@
  **/
 @synthesize lineCapType;
 
-/** @property CPTLineStyle *lineStyle
+/** @property nullable CPTLineStyle *lineStyle
  *  @brief The line style for the border of the line cap.
  *  If @nil, the border is not drawn.
  **/
 @synthesize lineStyle;
 
-/** @property CPTFill *fill
+/** @property nullable CPTFill *fill
  *  @brief The fill for the interior of the line cap.
  *  If @nil, the symbol is not filled.
  **/
 @synthesize fill;
 
-/** @property CGPathRef customLineCapPath
+/** @property nullable CGPathRef customLineCapPath
  *  @brief The drawing path for a custom line cap. It will be scaled to size before being drawn.
  **/
 @synthesize customLineCapPath;
@@ -57,7 +58,7 @@
  **/
 @synthesize usesEvenOddClipRule;
 
-@dynamic cachedLineCapPath;
+@synthesize cachedLineCapPath;
 
 #pragma mark -
 #pragma mark Init/Dealloc
@@ -77,7 +78,7 @@
  *
  *  @return The initialized object.
  **/
--(id)init
+-(nonnull instancetype)init
 {
     if ( (self = [super init]) ) {
         size                = CPTSizeMake(5.0, 5.0);
@@ -97,19 +98,8 @@
 
 -(void)dealloc
 {
-    [lineStyle release];
-    [fill release];
     CGPathRelease(cachedLineCapPath);
     CGPathRelease(customLineCapPath);
-
-    [super dealloc];
-}
-
--(void)finalize
-{
-    CGPathRelease(cachedLineCapPath);
-    CGPathRelease(customLineCapPath);
-    [super finalize];
 }
 
 /// @endcond
@@ -119,10 +109,10 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [coder encodeCPTSize:self.size forKey:@"CPTLineCap.size"];
-    [coder encodeInt:self.lineCapType forKey:@"CPTLineCap.lineCapType"];
+    [coder encodeInteger:self.lineCapType forKey:@"CPTLineCap.lineCapType"];
     [coder encodeObject:self.lineStyle forKey:@"CPTLineCap.lineStyle"];
     [coder encodeObject:self.fill forKey:@"CPTLineCap.fill"];
     [coder encodeCGPath:self.customLineCapPath forKey:@"CPTLineCap.customLineCapPath"];
@@ -132,19 +122,33 @@
     // cachedLineCapPath
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        size                = [coder decodeCPTSizeForKey:@"CPTLineCap.size"];
-        lineCapType         = (CPTLineCapType)[coder decodeIntForKey : @"CPTLineCap.lineCapType"];
-        lineStyle           = [[coder decodeObjectForKey:@"CPTLineCap.lineStyle"] retain];
-        fill                = [[coder decodeObjectForKey:@"CPTLineCap.fill"] retain];
+        size        = [coder decodeCPTSizeForKey:@"CPTLineCap.size"];
+        lineCapType = (CPTLineCapType)[coder decodeIntegerForKey:@"CPTLineCap.lineCapType"];
+        lineStyle   = [coder decodeObjectOfClass:[CPTLineStyle class]
+                                          forKey:@"CPTLineCap.lineStyle"];
+        fill = [coder decodeObjectOfClass:[CPTFill class]
+                                   forKey:@"CPTLineCap.fill"];
         customLineCapPath   = [coder newCGPathDecodeForKey:@"CPTLineCap.customLineCapPath"];
         usesEvenOddClipRule = [coder decodeBoolForKey:@"CPTLineCap.usesEvenOddClipRule"];
 
         cachedLineCapPath = NULL;
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -170,7 +174,7 @@
     }
 }
 
--(void)setCustomLineCapPath:(CGPathRef)newPath
+-(void)setCustomLineCapPath:(nullable CGPathRef)newPath
 {
     if ( customLineCapPath != newPath ) {
         CGPathRelease(customLineCapPath);
@@ -179,7 +183,7 @@
     }
 }
 
--(CGPathRef)cachedLineCapPath
+-(nullable CGPathRef)cachedLineCapPath
 {
     if ( !cachedLineCapPath ) {
         cachedLineCapPath = [self newLineCapPath];
@@ -187,7 +191,7 @@
     return cachedLineCapPath;
 }
 
--(void)setCachedLineCapPath:(CGPathRef)newPath
+-(void)setCachedLineCapPath:(nullable CGPathRef)newPath
 {
     if ( cachedLineCapPath != newPath ) {
         CGPathRelease(cachedLineCapPath);
@@ -203,159 +207,159 @@
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeNone.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeNone.
  **/
-+(CPTLineCap *)lineCap
++(nonnull instancetype)lineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeNone;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeOpenArrow.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeOpenArrow.
  **/
-+(CPTLineCap *)openArrowPlotLineCap
++(nonnull instancetype)openArrowPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeOpenArrow;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSolidArrow.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSolidArrow.
  **/
-+(CPTLineCap *)solidArrowPlotLineCap
++(nonnull instancetype)solidArrowPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeSolidArrow;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSweptArrow.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSweptArrow.
  **/
-+(CPTLineCap *)sweptArrowPlotLineCap
++(nonnull instancetype)sweptArrowPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeSweptArrow;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeRectangle.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeRectangle.
  **/
-+(CPTLineCap *)rectanglePlotLineCap
++(nonnull instancetype)rectanglePlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeRectangle;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeEllipse.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeEllipse.
  **/
-+(CPTLineCap *)ellipsePlotLineCap
++(nonnull instancetype)ellipsePlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeEllipse;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeDiamond.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeDiamond.
  **/
-+(CPTLineCap *)diamondPlotLineCap
++(nonnull instancetype)diamondPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeDiamond;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypePentagon.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypePentagon.
  **/
-+(CPTLineCap *)pentagonPlotLineCap
++(nonnull instancetype)pentagonPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypePentagon;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeHexagon.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeHexagon.
  **/
-+(CPTLineCap *)hexagonPlotLineCap
++(nonnull instancetype)hexagonPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeHexagon;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeBar.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeBar.
  **/
-+(CPTLineCap *)barPlotLineCap
++(nonnull instancetype)barPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeBar;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeCross.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeCross.
  **/
-+(CPTLineCap *)crossPlotLineCap
++(nonnull instancetype)crossPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeCross;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSnow.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeSnow.
  **/
-+(CPTLineCap *)snowPlotLineCap
++(nonnull instancetype)snowPlotLineCap
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType = CPTLineCapTypeSnow;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 /** @brief Creates and returns a new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeCustom.
  *  @param aPath The bounding path for the custom line cap.
  *  @return A new CPTLineCap instance initialized with a line cap type of #CPTLineCapTypeCustom.
  **/
-+(CPTLineCap *)customLineCapWithPath:(CGPathRef)aPath
++(nonnull instancetype)customLineCapWithPath:(nullable CGPathRef)aPath
 {
     CPTLineCap *lineCap = [[self alloc] init];
 
     lineCap.lineCapType       = CPTLineCapTypeCustom;
     lineCap.customLineCapPath = aPath;
 
-    return [lineCap autorelease];
+    return lineCap;
 }
 
 #pragma mark -
@@ -363,15 +367,15 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     CPTLineCap *copy = [[[self class] allocWithZone:zone] init];
 
     copy.size                = self.size;
     copy.lineCapType         = self.lineCapType;
     copy.usesEvenOddClipRule = self.usesEvenOddClipRule;
-    copy.lineStyle           = [[self.lineStyle copy] autorelease];
-    copy.fill                = [[self.fill copy] autorelease];
+    copy.lineStyle           = [self.lineStyle copy];
+    copy.fill                = [self.fill copy];
 
     if ( self.customLineCapPath ) {
         CGPathRef pathCopy = CGPathCreateCopy(self.customLineCapPath);
@@ -392,7 +396,7 @@
  *  @param center The center point of the line cap.
  *  @param direction The direction the line is pointing.
  **/
--(void)renderAsVectorInContext:(CGContextRef)context atPoint:(CGPoint)center inDirection:(CGPoint)direction
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context atPoint:(CGPoint)center inDirection:(CGPoint)direction
 {
     CGPathRef theLineCapPath = self.cachedLineCapPath;
 
@@ -472,7 +476,7 @@
  *  The path is standardized for a line direction of @quote{up}.
  *  @return A path describing the outline of the current line cap type.
  **/
--(CGPathRef)newLineCapPath
+-(nonnull CGPathRef)newLineCapPath
 {
     CGFloat dx, dy;
     CGSize lineCapSize = self.size;
@@ -585,6 +589,25 @@
         break;
     }
     return lineCapPath;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark Debugging
+
+/// @cond
+
+-(nullable id)debugQuickLookObject
+{
+    const CGSize symbolSize   = self.size;
+    const CGSize halfSize     = CPTSizeMake( symbolSize.width * CPTFloat(0.5), symbolSize.height * CPTFloat(0.5) );
+    const CGRect rect         = CGRectMake(-halfSize.width, -halfSize.height, symbolSize.width, symbolSize.height);
+    const CGPoint centerPoint = CGPointMake(halfSize.width, halfSize.height);
+
+    return CPTQuickLookImage(rect, ^(CGContextRef context, CGFloat scale, CGRect bounds) {
+        [self renderAsVectorInContext:context atPoint:centerPoint inDirection:CGPointMake(1.0, 0.0)];
+    });
 }
 
 /// @endcond

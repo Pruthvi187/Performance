@@ -4,35 +4,35 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-CorePlot.xcscheme</key>
+		<key>CorePlot.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods-iOS-blur.xcscheme</key>
+		<key>Pods-Waratahs.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>iOS-blur.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2ABCDD408ECC44139B37F2FE</key>
+		<key>0FEFCED0DFD9044B714F80F336070127</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>91FDEB822477460CA4CD45DA</key>
+		<key>89F756EF8A1750AC728C1B02A60CF865</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D632C68228B946549A1A500D</key>
+		<key>DB13226D6ECFBC448201812C45CA1BC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

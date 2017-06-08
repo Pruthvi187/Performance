@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CorePlot/CorePlot-CocoaTouch.h>
-
+#import <CorePlot-CocoaTouch.h>
 @class Player, TabBarView, FitnessView, WellnessView, RiskView, ModelItems;
 
 @interface PlayerDetailViewController : UIViewController<CPTPlotDataSource, CPTPlotDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate>

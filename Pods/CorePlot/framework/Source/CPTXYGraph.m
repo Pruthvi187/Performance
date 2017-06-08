@@ -21,12 +21,14 @@
  **/
 @implementation CPTXYGraph
 
-/** @property CPTScaleType xScaleType
+/** @internal
+ *  @property CPTScaleType xScaleType
  *  @brief The scale type for the x-axis.
  **/
 @synthesize xScaleType;
 
-/** @property CPTScaleType yScaleType
+/** @internal
+ *  @property CPTScaleType yScaleType
  *  @brief The scale type for the y-axis.
  **/
 @synthesize yScaleType;
@@ -43,7 +45,7 @@
  *  @param newYScaleType The scale type for the y-axis.
  *  @return The initialized CPTXYGraph object.
  **/
--(id)initWithFrame:(CGRect)newFrame xScaleType:(CPTScaleType)newXScaleType yScaleType:(CPTScaleType)newYScaleType
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame xScaleType:(CPTScaleType)newXScaleType yScaleType:(CPTScaleType)newYScaleType
 {
     if ( (self = [super initWithFrame:newFrame]) ) {
         xScaleType = newXScaleType;
@@ -65,7 +67,7 @@
  *  @return The initialized CPTXYGraph object.
  *  @see @link CPTXYGraph::initWithFrame:xScaleType:yScaleType: -initWithFrame:xScaleType:yScaleType: @endlink
  **/
--(id)initWithFrame:(CGRect)newFrame
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
     return [self initWithFrame:newFrame xScaleType:CPTScaleTypeLinear yScaleType:CPTScaleTypeLinear];
 }
@@ -74,7 +76,7 @@
 
 /// @cond
 
--(id)initWithLayer:(id)layer
+-(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
     if ( (self = [super initWithLayer:layer]) ) {
         CPTXYGraph *theLayer = (CPTXYGraph *)layer;
@@ -92,21 +94,33 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
-    [coder encodeInt:self.xScaleType forKey:@"CPTXYGraph.xScaleType"];
-    [coder encodeInt:self.yScaleType forKey:@"CPTXYGraph.yScaleType"];
+    [coder encodeInteger:self.xScaleType forKey:@"CPTXYGraph.xScaleType"];
+    [coder encodeInteger:self.yScaleType forKey:@"CPTXYGraph.yScaleType"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        xScaleType = (CPTScaleType)[coder decodeIntForKey : @"CPTXYGraph.xScaleType"];
-        yScaleType = (CPTScaleType)[coder decodeIntForKey : @"CPTXYGraph.yScaleType"];
+        xScaleType = (CPTScaleType)[coder decodeIntegerForKey:@"CPTXYGraph.xScaleType"];
+        yScaleType = (CPTScaleType)[coder decodeIntegerForKey:@"CPTXYGraph.yScaleType"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -116,7 +130,7 @@
 
 /// @cond
 
--(CPTPlotSpace *)newPlotSpace
+-(nullable CPTPlotSpace *)newPlotSpace
 {
     CPTXYPlotSpace *space = [[CPTXYPlotSpace alloc] init];
 
@@ -125,9 +139,9 @@
     return space;
 }
 
--(CPTAxisSet *)newAxisSet
+-(nullable CPTAxisSet *)newAxisSet
 {
-    CPTXYAxisSet *newAxisSet = [(CPTXYAxisSet *)[CPTXYAxisSet alloc] initWithFrame : self.bounds];
+    CPTXYAxisSet *newAxisSet = [[CPTXYAxisSet alloc] initWithFrame:self.bounds];
 
     newAxisSet.xAxis.plotSpace = self.defaultPlotSpace;
     newAxisSet.yAxis.plotSpace = self.defaultPlotSpace;

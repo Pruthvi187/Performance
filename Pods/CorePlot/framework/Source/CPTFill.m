@@ -1,7 +1,9 @@
 #import "CPTFill.h"
 
 #import "CPTColor.h"
+#import "CPTGradient.h"
 #import "CPTImage.h"
+#import "CPTPlatformSpecificFunctions.h"
 #import "_CPTFillColor.h"
 #import "_CPTFillGradient.h"
 #import "_CPTFillImage.h"
@@ -22,38 +24,36 @@
  *  @param aColor The color.
  *  @return A new CPTFill instance initialized with the given color.
  **/
-+(CPTFill *)fillWithColor:(CPTColor *)aColor
++(nonnull instancetype)fillWithColor:(nonnull CPTColor *)aColor
 {
-    return [[(_CPTFillColor *)[_CPTFillColor alloc] initWithColor : aColor] autorelease];
+    return [[_CPTFillColor alloc] initWithColor:aColor];
 }
 
 /** @brief Creates and returns a new CPTFill instance initialized with a given gradient.
  *  @param aGradient The gradient.
  *  @return A new CPTFill instance initialized with the given gradient.
  **/
-+(CPTFill *)fillWithGradient:(CPTGradient *)aGradient
++(nonnull instancetype)fillWithGradient:(nonnull CPTGradient *)aGradient
 {
-    return [[[_CPTFillGradient alloc] initWithGradient:aGradient] autorelease];
+    return [[_CPTFillGradient alloc] initWithGradient:aGradient];
 }
 
 /** @brief Creates and returns a new CPTFill instance initialized with a given image.
  *  @param anImage The image.
  *  @return A new CPTFill instance initialized with the given image.
  **/
-+(CPTFill *)fillWithImage:(CPTImage *)anImage
++(nonnull instancetype)fillWithImage:(nonnull CPTImage *)anImage
 {
-    return [[(_CPTFillImage *)[_CPTFillImage alloc] initWithImage : anImage] autorelease];
+    return [[_CPTFillImage alloc] initWithImage:anImage];
 }
 
 /** @brief Initializes a newly allocated CPTFill object with the provided color.
  *  @param aColor The color.
  *  @return The initialized CPTFill object.
  **/
--(id)initWithColor:(CPTColor *)aColor
+-(nonnull instancetype)initWithColor:(nonnull CPTColor *)aColor
 {
-    [self release];
-
-    self = [(_CPTFillColor *)[_CPTFillColor alloc] initWithColor : aColor];
+    self = [[_CPTFillColor alloc] initWithColor:aColor];
 
     return self;
 }
@@ -62,10 +62,8 @@
  *  @param aGradient The gradient.
  *  @return The initialized CPTFill object.
  **/
--(id)initWithGradient:(CPTGradient *)aGradient
+-(nonnull instancetype)initWithGradient:(nonnull CPTGradient *)aGradient
 {
-    [self release];
-
     self = [[_CPTFillGradient alloc] initWithGradient:aGradient];
 
     return self;
@@ -75,11 +73,9 @@
  *  @param anImage The image.
  *  @return The initialized CPTFill object.
  **/
--(id)initWithImage:(CPTImage *)anImage
+-(nonnull instancetype)initWithImage:(nonnull CPTImage *)anImage
 {
-    [self release];
-
-    self = [(_CPTFillImage *)[_CPTFillImage alloc] initWithImage : anImage];
+    self = [[_CPTFillImage alloc] initWithImage:anImage];
 
     return self;
 }
@@ -89,7 +85,7 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     // do nothing--implemented in subclasses
     return nil;
@@ -102,30 +98,45 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     // do nothing--implemented in subclasses
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    id fill = [coder decodeObjectForKey:@"_CPTFillColor.fillColor"];
+    id fill = [coder decodeObjectOfClass:[CPTColor class]
+                                  forKey:@"_CPTFillColor.fillColor"];
 
     if ( fill ) {
         return [self initWithColor:fill];
     }
 
-    fill = [coder decodeObjectForKey:@"_CPTFillGradient.fillGradient"];
-    if ( fill ) {
-        return [self initWithGradient:fill];
+    id gradient = [coder decodeObjectOfClass:[CPTGradient class]
+                                      forKey:@"_CPTFillGradient.fillGradient"];
+    if ( gradient ) {
+        return [self initWithGradient:gradient];
     }
 
-    fill = [coder decodeObjectForKey:@"_CPTFillImage.fillImage"];
-    if ( fill ) {
-        return [self initWithImage:fill];
+    id image = [coder decodeObjectOfClass:[CPTImage class]
+                                   forKey:@"_CPTFillImage.fillImage"];
+    if ( image ) {
+        return [self initWithImage:image];
     }
 
-    return self;
+    return nil;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -141,13 +152,31 @@
  */
 @dynamic opaque;
 
+/** @property nullable CGColorRef cgColor
+ *  @brief Returns a @ref CGColorRef describing the fill if the fill can be represented as a color, @NULL otherwise.
+ */
+@dynamic cgColor;
+
 #pragma mark -
 #pragma mark Opacity
+
+/// @cond
 
 -(BOOL)isOpaque
 {
     // do nothing--subclasses override to describe the fill opacity
     return NO;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark Color
+
+-(nullable CGColorRef)cgColor
+{
+    // do nothing--subclasses override to describe the color
+    return NULL;
 }
 
 #pragma mark -
@@ -157,7 +186,7 @@
  *  @param rect The rectangle to draw into.
  *  @param context The graphics context to draw into.
  **/
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context
+-(void)fillRect:(CGRect)rect inContext:(nonnull CGContextRef)context
 {
     // do nothing--subclasses override to do drawing here
 }
@@ -165,9 +194,25 @@
 /** @brief Draws the gradient into the given graphics context clipped to the current drawing path.
  *  @param context The graphics context to draw into.
  **/
--(void)fillPathInContext:(CGContextRef)context
+-(void)fillPathInContext:(nonnull CGContextRef)context
 {
     // do nothing--subclasses override to do drawing here
 }
+
+#pragma mark -
+#pragma mark Debugging
+
+/// @cond
+
+-(nullable id)debugQuickLookObject
+{
+    const CGRect rect = CGRectMake(0.0, 0.0, 100.0, 100.0);
+
+    return CPTQuickLookImage(rect, ^(CGContextRef context, CGFloat scale, CGRect bounds) {
+        [self fillRect:bounds inContext:context];
+    });
+}
+
+/// @endcond
 
 @end

@@ -5,9 +5,9 @@
 /** @brief Returns the value of the receiver as an NSDecimalNumber.
  *  @return The value of the receiver as an NSDecimalNumber.
  **/
--(NSDecimalNumber *)decimalNumber
+-(nonnull NSDecimalNumber *)decimalNumber
 {
-    return [[self copy] autorelease];
+    return [self copy];
 }
 
 @end

@@ -13,7 +13,7 @@
 /// @name Initialization
 /// @{
 
--(id)init
+-(nonnull instancetype)init
 {
     if ( (self = [super init]) ) {
         self.graphClass = [CPTXYGraph class];
@@ -23,15 +23,15 @@
 
 /// @}
 
--(id)newGraph
+-(nullable id)newGraph
 {
     CPTXYGraph *graph;
 
     if ( self.graphClass ) {
-        graph = [(CPTXYGraph *)[self.graphClass alloc] initWithFrame : CPTRectMake(0.0, 0.0, 200.0, 200.0)];
+        graph = [[self.graphClass alloc] initWithFrame:CPTRectMake(0.0, 0.0, 200.0, 200.0)];
     }
     else {
-        graph = [(CPTXYGraph *)[CPTXYGraph alloc] initWithFrame : CPTRectMake(0.0, 0.0, 200.0, 200.0)];
+        graph = [[CPTXYGraph alloc] initWithFrame:CPTRectMake(0.0, 0.0, 200.0, 200.0)];
     }
     graph.paddingLeft   = CPTFloat(60.0);
     graph.paddingTop    = CPTFloat(60.0);
@@ -39,8 +39,8 @@
     graph.paddingBottom = CPTFloat(60.0);
 
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(-1.0) length:CPTDecimalFromDouble(1.0)];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(-1.0) length:CPTDecimalFromDouble(1.0)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:@(-1.0) length:@1.0];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:@(-1.0) length:@1.0];
 
     [self applyThemeToGraph:graph];
 
@@ -50,7 +50,7 @@
 #pragma mark -
 #pragma mark NSCoding Methods
 
--(Class)classForCoder
+-(nonnull Class)classForCoder
 {
     return [CPTTheme class];
 }

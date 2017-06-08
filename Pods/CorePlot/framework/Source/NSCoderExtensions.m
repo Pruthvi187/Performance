@@ -3,7 +3,7 @@
 #import "CPTUtilities.h"
 #import "NSNumberExtensions.h"
 
-void MyCGPathApplierFunc(void *info, const CGPathElement *element);
+void CPTPathApplierFunc(void *info, const CGPathElement *element);
 
 #pragma mark -
 
@@ -16,7 +16,7 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element);
  *  @param number The number to encode.
  *  @param key The key to associate with the number.
  **/
--(void)encodeCGFloat:(CGFloat)number forKey:(NSString *)key
+-(void)encodeCGFloat:(CGFloat)number forKey:(nonnull NSString *)key
 {
 #if CGFLOAT_IS_DOUBLE
     [self encodeDouble:number forKey:key];
@@ -29,48 +29,42 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element);
  *  @param point The point to encode.
  *  @param key The key to associate with the point.
  **/
--(void)encodeCPTPoint:(CGPoint)point forKey:(NSString *)key
+-(void)encodeCPTPoint:(CGPoint)point forKey:(nonnull NSString *)key
 {
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.x", key];
 
     [self encodeCGFloat:point.x forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.y", key];
     [self encodeCGFloat:point.y forKey:newKey];
-    [newKey release];
 }
 
 /** @brief Encodes a @ref CGSize and associates it with the string @par{key}.
  *  @param size The size to encode.
  *  @param key The key to associate with the size.
  **/
--(void)encodeCPTSize:(CGSize)size forKey:(NSString *)key
+-(void)encodeCPTSize:(CGSize)size forKey:(nonnull NSString *)key
 {
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.width", key];
 
     [self encodeCGFloat:size.width forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.height", key];
     [self encodeCGFloat:size.height forKey:newKey];
-    [newKey release];
 }
 
 /** @brief Encodes a @ref CGRect and associates it with the string @par{key}.
  *  @param rect The rectangle to encode.
  *  @param key The key to associate with the rectangle.
  **/
--(void)encodeCPTRect:(CGRect)rect forKey:(NSString *)key
+-(void)encodeCPTRect:(CGRect)rect forKey:(nonnull NSString *)key
 {
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.origin", key];
 
     [self encodeCPTPoint:rect.origin forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.size", key];
     [self encodeCPTSize:rect.size forKey:newKey];
-    [newKey release];
 }
 
 /** @brief Encodes a color space and associates it with the string @par{key}.
@@ -78,14 +72,14 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element);
  *  @param key The key to associate with the color space.
  *  @note The current implementation only works with named color spaces.
  **/
--(void)encodeCGColorSpace:(CGColorSpaceRef)colorSpace forKey:(NSString *)key
+-(void)encodeCGColorSpace:(nullable CGColorSpaceRef)colorSpace forKey:(nonnull NSString *)key
 {
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
     NSLog(@"Color space encoding is not supported on iOS. Decoding will return a generic RGB color space.");
 #else
     if ( colorSpace ) {
         CFDataRef iccProfile = CGColorSpaceCopyICCProfile(colorSpace);
-        [self encodeObject:(NSData *)iccProfile forKey:key];
+        [self encodeObject:(__bridge NSData *)iccProfile forKey:key];
         CFRelease(iccProfile);
     }
 #endif
@@ -93,39 +87,33 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element);
 
 /// @cond
 
-void MyCGPathApplierFunc(void *info, const CGPathElement *element)
+void CPTPathApplierFunc(void *__nullable info, const CGPathElement *__nonnull element)
 {
-    NSMutableDictionary *elementData = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary<NSString *, NSNumber *> *elementData = [[NSMutableDictionary alloc] init];
 
-    [elementData setObject:[NSNumber numberWithInt:element->type] forKey:@"type"];
+    elementData[@"type"] = @(element->type);
 
     switch ( element->type ) {
         case kCGPathElementAddCurveToPoint: // 3 points
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[2].x] forKey:@"point3.x"];
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[2].y] forKey:@"point3.y"];
+            elementData[@"point3.x"] = @(element->points[2].x);
+            elementData[@"point3.y"] = @(element->points[2].y);
 
         case kCGPathElementAddQuadCurveToPoint: // 2 points
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[1].x] forKey:@"point2.x"];
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[1].y] forKey:@"point2.y"];
+            elementData[@"point2.x"] = @(element->points[1].x);
+            elementData[@"point2.y"] = @(element->points[1].y);
 
         case kCGPathElementMoveToPoint:    // 1 point
         case kCGPathElementAddLineToPoint: // 1 point
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[0].x] forKey:@"point1.x"];
-            [elementData setObject:[NSNumber numberWithCGFloat:element->points[0].y] forKey:@"point1.y"];
+            elementData[@"point1.x"] = @(element->points[0].x);
+            elementData[@"point1.y"] = @(element->points[0].y);
             break;
 
         case kCGPathElementCloseSubpath: // 0 points
             break;
-
-        default:
-            // unknown element type
-            break;
     }
 
-    NSMutableArray *pathData = (NSMutableArray *)info;
+    NSMutableArray<NSMutableDictionary<NSString *, NSNumber *> *> *pathData = (__bridge NSMutableArray<NSMutableDictionary<NSString *, NSNumber *> *> *)info;
     [pathData addObject:elementData];
-
-    [elementData release];
 }
 
 /// @endcond
@@ -134,139 +122,120 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param path The @ref CGPathRef to encode.
  *  @param key The key to associate with the path.
  **/
--(void)encodeCGPath:(CGPathRef)path forKey:(NSString *)key
+-(void)encodeCGPath:(nullable CGPathRef)path forKey:(nonnull NSString *)key
 {
-    NSMutableArray *pathData = [[NSMutableArray alloc] init];
+    NSMutableArray<NSMutableDictionary<NSString *, NSNumber *> *> *pathData = [[NSMutableArray alloc] init];
 
     // walk the path and gather data for each element
-    CGPathApply(path, pathData, &MyCGPathApplierFunc);
+    CGPathApply(path, (__bridge void *)(pathData), &CPTPathApplierFunc);
 
     // encode data count
     NSUInteger dataCount = pathData.count;
     NSString *newKey     = [[NSString alloc] initWithFormat:@"%@.count", key];
     [self encodeInteger:(NSInteger)dataCount forKey:newKey];
-    [newKey release];
 
     // encode data elements
     for ( NSUInteger i = 0; i < dataCount; i++ ) {
-        NSDictionary *elementData = [pathData objectAtIndex:i];
+        NSDictionary<NSString *, NSNumber *> *elementData = pathData[i];
 
-        CGPathElementType type = (CGPathElementType)[[elementData objectForKey:@"type"] intValue];
+        CGPathElementType type = (CGPathElementType)elementData[@"type"].intValue;
         newKey = [[NSString alloc] initWithFormat:@"%@[%lu].type", key, (unsigned long)i];
         [self encodeInt:type forKey:newKey];
-        [newKey release];
 
         CGPoint point;
 
         switch ( type ) {
             case kCGPathElementAddCurveToPoint: // 3 points
-                point.x = [[elementData objectForKey:@"point3.x"] cgFloatValue];
-                point.y = [[elementData objectForKey:@"point3.y"] cgFloatValue];
+                point.x = [elementData[@"point3.x"] cgFloatValue];
+                point.y = [elementData[@"point3.y"] cgFloatValue];
                 newKey  = [[NSString alloc] initWithFormat:@"%@[%lu].point3", key, (unsigned long)i];
                 [self encodeCPTPoint:point forKey:newKey];
-                [newKey release];
 
             case kCGPathElementAddQuadCurveToPoint: // 2 points
-                point.x = [[elementData objectForKey:@"point2.x"] cgFloatValue];
-                point.y = [[elementData objectForKey:@"point2.y"] cgFloatValue];
+                point.x = [elementData[@"point2.x"] cgFloatValue];
+                point.y = [elementData[@"point2.y"] cgFloatValue];
                 newKey  = [[NSString alloc] initWithFormat:@"%@[%lu].point2", key, (unsigned long)i];
                 [self encodeCPTPoint:point forKey:newKey];
-                [newKey release];
 
             case kCGPathElementMoveToPoint:    // 1 point
             case kCGPathElementAddLineToPoint: // 1 point
-                point.x = [[elementData objectForKey:@"point1.x"] cgFloatValue];
-                point.y = [[elementData objectForKey:@"point1.y"] cgFloatValue];
+                point.x = [elementData[@"point1.x"] cgFloatValue];
+                point.y = [elementData[@"point1.y"] cgFloatValue];
                 newKey  = [[NSString alloc] initWithFormat:@"%@[%lu].point1", key, (unsigned long)i];
                 [self encodeCPTPoint:point forKey:newKey];
-                [newKey release];
                 break;
 
             case kCGPathElementCloseSubpath: // 0 points
                 break;
         }
     }
-
-    [pathData release];
 }
 
 /** @brief Encodes an image and associates it with the string @par{key}.
  *  @param image The @ref CGImageRef to encode.
  *  @param key The key to associate with the image.
  **/
--(void)encodeCGImage:(CGImageRef)image forKey:(NSString *)key
+-(void)encodeCGImage:(nullable CGImageRef)image forKey:(nonnull NSString *)key
 {
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.width", key];
 
     [self encodeInt64:(int64_t)CGImageGetWidth(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.height", key];
     [self encodeInt64:(int64_t)CGImageGetHeight(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitsPerComponent", key];
     [self encodeInt64:(int64_t)CGImageGetBitsPerComponent(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitsPerPixel", key];
     [self encodeInt64:(int64_t)CGImageGetBitsPerPixel(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bytesPerRow", key];
     [self encodeInt64:(int64_t)CGImageGetBytesPerRow(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.colorSpace", key];
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image);
     [self encodeCGColorSpace:colorSpace forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitmapInfo", key];
-    [self encodeInt32:(int32_t)CGImageGetBitmapInfo(image) forKey:newKey];
-    [newKey release];
+    const CGBitmapInfo info = CGImageGetBitmapInfo(image);
+    [self encodeBytes:(const void *)(&info) length:sizeof(CGBitmapInfo) forKey:newKey];
 
     CGDataProviderRef provider = CGImageGetDataProvider(image);
     CFDataRef providerData     = CGDataProviderCopyData(provider);
     newKey = [[NSString alloc] initWithFormat:@"%@.provider", key];
-    [self encodeObject:(NSData *)providerData forKey:newKey];
+    [self encodeObject:(__bridge NSData *)providerData forKey:newKey];
     if ( providerData ) {
         CFRelease(providerData);
     }
-    [newKey release];
 
     const CGFloat *decodeArray = CGImageGetDecode(image);
     if ( decodeArray ) {
         size_t numberOfComponents = CGColorSpaceGetNumberOfComponents(colorSpace);
         newKey = [[NSString alloc] initWithFormat:@"%@.numberOfComponents", key];
         [self encodeInt64:(int64_t)numberOfComponents forKey:newKey];
-        [newKey release];
 
         for ( size_t i = 0; i < numberOfComponents; i++ ) {
             newKey = [[NSString alloc] initWithFormat:@"%@.decode[%zu].lower", key, i];
             [self encodeCGFloat:decodeArray[i * 2] forKey:newKey];
-            [newKey release];
 
             newKey = [[NSString alloc] initWithFormat:@"%@.decode[%zu].upper", key, i];
             [self encodeCGFloat:decodeArray[i * 2 + 1] forKey:newKey];
-            [newKey release];
         }
     }
 
     newKey = [[NSString alloc] initWithFormat:@"%@.shouldInterpolate", key];
     [self encodeBool:CGImageGetShouldInterpolate(image) forKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.renderingIntent", key];
     [self encodeInt:CGImageGetRenderingIntent(image) forKey:newKey];
-    [newKey release];
 }
 
 /** @brief Encodes an @ref NSDecimal and associates it with the string @par{key}.
  *  @param number The number to encode.
  *  @param key The key to associate with the number.
  **/
--(void)encodeDecimal:(NSDecimal)number forKey:(NSString *)key
+-(void)encodeDecimal:(NSDecimal)number forKey:(nonnull NSString *)key
 {
     [self encodeObject:[NSDecimalNumber decimalNumberWithDecimal:number] forKey:key];
 }
@@ -280,7 +249,7 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the number.
  *  @return The number as a @ref CGFloat.
  **/
--(CGFloat)decodeCGFloatForKey:(NSString *)key
+-(CGFloat)decodeCGFloatForKey:(nonnull NSString *)key
 {
 #if CGFLOAT_IS_DOUBLE
     return [self decodeDoubleForKey:key];
@@ -296,18 +265,16 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the point.
  *  @return The point.
  **/
--(CGPoint)decodeCPTPointForKey:(NSString *)key
+-(CGPoint)decodeCPTPointForKey:(nonnull NSString *)key
 {
     CGPoint point;
 
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.x", key];
 
     point.x = [self decodeCGFloatForKey:newKey];
-    [newKey release];
 
     newKey  = [[NSString alloc] initWithFormat:@"%@.y", key];
     point.y = [self decodeCGFloatForKey:newKey];
-    [newKey release];
 
     return point;
 }
@@ -318,18 +285,16 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the size.
  *  @return The size.
  **/
--(CGSize)decodeCPTSizeForKey:(NSString *)key
+-(CGSize)decodeCPTSizeForKey:(nonnull NSString *)key
 {
     CGSize size;
 
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.width", key];
 
     size.width = [self decodeCGFloatForKey:newKey];
-    [newKey release];
 
     newKey      = [[NSString alloc] initWithFormat:@"%@.height", key];
     size.height = [self decodeCGFloatForKey:newKey];
-    [newKey release];
 
     return size;
 }
@@ -340,18 +305,16 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the rectangle.
  *  @return The rectangle.
  **/
--(CGRect)decodeCPTRectForKey:(NSString *)key
+-(CGRect)decodeCPTRectForKey:(nonnull NSString *)key
 {
     CGRect rect;
 
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.origin", key];
 
     rect.origin = [self decodeCPTPointForKey:newKey];
-    [newKey release];
 
     newKey    = [[NSString alloc] initWithFormat:@"%@.size", key];
     rect.size = [self decodeCPTSizeForKey:newKey];
-    [newKey release];
 
     return rect;
 }
@@ -363,17 +326,18 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @return The new path.
  *  @note The current implementation only works with named color spaces.
  **/
--(CGColorSpaceRef)newCGColorSpaceDecodeForKey:(NSString *)key
+-(nullable CGColorSpaceRef)newCGColorSpaceDecodeForKey:(nonnull NSString *)key
 {
     CGColorSpaceRef colorSpace = NULL;
 
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
     NSLog(@"Color space decoding is not supported on iOS. Using generic RGB color space.");
     colorSpace = CGColorSpaceCreateDeviceRGB();
 #else
-    NSData *iccProfile = [self decodeObjectForKey:key];
+    NSData *iccProfile = [self decodeObjectOfClass:[NSData class]
+                                            forKey:key];
     if ( iccProfile ) {
-        colorSpace = CGColorSpaceCreateWithICCProfile( (CFDataRef)iccProfile );
+        colorSpace = CGColorSpaceCreateWithICCProfile( (__bridge CFDataRef)iccProfile );
     }
     else {
         NSLog(@"Color space not available for key '%@'. Using generic RGB color space.", key);
@@ -390,47 +354,39 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the path.
  *  @return The new path.
  **/
--(CGPathRef)newCGPathDecodeForKey:(NSString *)key
+-(nullable CGPathRef)newCGPathDecodeForKey:(nonnull NSString *)key
 {
     CGMutablePathRef newPath = CGPathCreateMutable();
 
     // decode count
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.count", key];
-    NSUInteger count = (NSUInteger)[self decodeIntegerForKey : newKey];
-
-    [newKey release];
+    NSUInteger count = (NSUInteger)[self decodeIntegerForKey:newKey];
 
     // decode elements
     for ( NSUInteger i = 0; i < count; i++ ) {
         newKey = [[NSString alloc] initWithFormat:@"%@[%lu].type", key, (unsigned long)i];
-        CGPathElementType type = (CGPathElementType)[self decodeIntForKey : newKey];
-        [newKey release];
+        CGPathElementType type = (CGPathElementType)[self decodeIntForKey:newKey];
 
-        CGPoint point1, point2, point3;
+        CGPoint point1 = CGPointZero;
+        CGPoint point2 = CGPointZero;
+        CGPoint point3 = CGPointZero;
 
         switch ( type ) {
             case kCGPathElementAddCurveToPoint: // 3 points
                 newKey = [[NSString alloc] initWithFormat:@"%@[%lu].point3", key, (unsigned long)i];
                 point3 = [self decodeCPTPointForKey:newKey];
-                [newKey release];
 
             case kCGPathElementAddQuadCurveToPoint: // 2 points
                 newKey = [[NSString alloc] initWithFormat:@"%@[%lu].point2", key, (unsigned long)i];
                 point2 = [self decodeCPTPointForKey:newKey];
-                [newKey release];
 
             case kCGPathElementMoveToPoint:    // 1 point
             case kCGPathElementAddLineToPoint: // 1 point
                 newKey = [[NSString alloc] initWithFormat:@"%@[%lu].point1", key, (unsigned long)i];
                 point1 = [self decodeCPTPointForKey:newKey];
-                [newKey release];
                 break;
 
             case kCGPathElementCloseSubpath: // 0 points
-                break;
-
-            default:
-                // unknown element type
                 break;
         }
 
@@ -454,10 +410,6 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
             case kCGPathElementCloseSubpath:
                 CGPathCloseSubpath(newPath);
                 break;
-
-            default:
-                // unknown element type
-                break;
         }
     }
 
@@ -470,44 +422,36 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the image.
  *  @return The new image.
  **/
--(CGImageRef)newCGImageDecodeForKey:(NSString *)key
+-(nullable CGImageRef)newCGImageDecodeForKey:(nonnull NSString *)key
 {
     NSString *newKey = [[NSString alloc] initWithFormat:@"%@.width", key];
-    size_t width     = (size_t)[self decodeInt64ForKey : newKey];
-
-    [newKey release];
+    size_t width     = (size_t)[self decodeInt64ForKey:newKey];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.height", key];
-    size_t height = (size_t)[self decodeInt64ForKey : newKey];
-    [newKey release];
+    size_t height = (size_t)[self decodeInt64ForKey:newKey];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitsPerComponent", key];
-    size_t bitsPerComponent = (size_t)[self decodeInt64ForKey : newKey];
-    [newKey release];
+    size_t bitsPerComponent = (size_t)[self decodeInt64ForKey:newKey];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitsPerPixel", key];
-    size_t bitsPerPixel = (size_t)[self decodeInt64ForKey : newKey];
-    [newKey release];
+    size_t bitsPerPixel = (size_t)[self decodeInt64ForKey:newKey];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bytesPerRow", key];
-    size_t bytesPerRow = (size_t)[self decodeInt64ForKey : newKey];
-    [newKey release];
+    size_t bytesPerRow = (size_t)[self decodeInt64ForKey:newKey];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.colorSpace", key];
     CGColorSpaceRef colorSpace = [self newCGColorSpaceDecodeForKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.bitmapInfo", key];
-    CGBitmapInfo bitmapInfo = (CGBitmapInfo)[self decodeInt32ForKey : newKey];
-    [newKey release];
+    NSUInteger length;
+    const CGBitmapInfo *bitmapInfo = (const void *)[self decodeBytesForKey:newKey returnedLength:&length];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.provider", key];
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData( (CFDataRef)[self decodeObjectForKey: newKey] );
-    [newKey release];
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData( (__bridge CFDataRef)[self decodeObjectOfClass:[NSData class]
+                                                                                                        forKey:newKey] );
 
     newKey = [[NSString alloc] initWithFormat:@"%@.numberOfComponents", key];
-    size_t numberOfComponents = (size_t)[self decodeInt64ForKey : newKey];
-    [newKey release];
+    size_t numberOfComponents = (size_t)[self decodeInt64ForKey:newKey];
 
     CGFloat *decodeArray = NULL;
     if ( numberOfComponents ) {
@@ -516,21 +460,17 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
         for ( size_t i = 0; i < numberOfComponents; i++ ) {
             newKey             = [[NSString alloc] initWithFormat:@"%@.decode[%zu].lower", key, i];
             decodeArray[i * 2] = [self decodeCGFloatForKey:newKey];
-            [newKey release];
 
             newKey                 = [[NSString alloc] initWithFormat:@"%@.decode[%zu].upper", key, i];
             decodeArray[i * 2 + 1] = [self decodeCGFloatForKey:newKey];
-            [newKey release];
         }
     }
 
     newKey = [[NSString alloc] initWithFormat:@"%@.shouldInterpolate", key];
     bool shouldInterpolate = [self decodeBoolForKey:newKey];
-    [newKey release];
 
     newKey = [[NSString alloc] initWithFormat:@"%@.renderingIntent", key];
-    CGColorRenderingIntent intent = (CGColorRenderingIntent)[self decodeIntForKey : newKey];
-    [newKey release];
+    CGColorRenderingIntent intent = (CGColorRenderingIntent)[self decodeIntForKey:newKey];
 
     CGImageRef newImage = CGImageCreate(width,
                                         height,
@@ -538,7 +478,7 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
                                         bitsPerPixel,
                                         bytesPerRow,
                                         colorSpace,
-                                        bitmapInfo,
+                                        *bitmapInfo,
                                         provider,
                                         decodeArray,
                                         shouldInterpolate,
@@ -559,14 +499,15 @@ void MyCGPathApplierFunc(void *info, const CGPathElement *element)
  *  @param key The key associated with the number.
  *  @return The number as an @ref NSDecimal.
  **/
--(NSDecimal)decodeDecimalForKey:(NSString *)key
+-(NSDecimal)decodeDecimalForKey:(nonnull NSString *)key
 {
     NSDecimal result;
 
-    NSNumber *number = [self decodeObjectForKey:key];
+    NSNumber *number = [self decodeObjectOfClass:[NSDecimalNumber class]
+                                          forKey:key];
 
     if ( [number respondsToSelector:@selector(decimalValue)] ) {
-        result = [number decimalValue];
+        result = number.decimalValue;
     }
     else {
         result = CPTDecimalNaN();

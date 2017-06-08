@@ -3,6 +3,7 @@
 #import "CPTDefinitions.h"
 #import "CPTFill.h"
 #import "CPTLineStyle.h"
+#import "CPTPlatformSpecificFunctions.h"
 #import "CPTShadow.h"
 #import "NSCoderExtensions.h"
 #import <tgmath.h>
@@ -10,11 +11,12 @@
 /// @cond
 @interface CPTPlotSymbol()
 
-@property (nonatomic, readwrite, assign) CGPathRef cachedSymbolPath;
-@property (nonatomic, readwrite, assign) CGLayerRef cachedLayer;
+@property (nonatomic, readwrite, assign, nullable) CGPathRef cachedSymbolPath;
+@property (nonatomic, readwrite, assign, nullable) CGLayerRef cachedLayer;
 @property (nonatomic, readwrite, assign) CGFloat cachedScale;
 
--(CGPathRef)newSymbolPath;
+-(nonnull CGPathRef)newSymbolPath;
+-(CGSize)layerSizeForScale:(CGFloat)scale;
 
 @end
 
@@ -41,24 +43,24 @@
  **/
 @synthesize symbolType;
 
-/** @property CPTLineStyle *lineStyle
+/** @property nullable CPTLineStyle *lineStyle
  *  @brief The line style for the border of the symbol.
  *  If @nil, the border is not drawn.
  **/
 @synthesize lineStyle;
 
-/** @property CPTFill *fill
+/** @property nullable CPTFill *fill
  *  @brief The fill for the interior of the symbol.
  *  If @nil, the symbol is not filled.
  **/
 @synthesize fill;
 
-/** @property CPTShadow *shadow
+/** @property nullable CPTShadow *shadow
  *  @brief The shadow applied to each plot symbol.
  **/
 @synthesize shadow;
 
-/** @property CGPathRef customSymbolPath
+/** @property nullable CGPathRef customSymbolPath
  *  @brief The drawing path for a custom plot symbol. It will be scaled to @ref size before being drawn.
  **/
 @synthesize customSymbolPath;
@@ -69,7 +71,7 @@
  **/
 @synthesize usesEvenOddClipRule;
 
-@dynamic cachedSymbolPath;
+@synthesize cachedSymbolPath;
 
 @synthesize cachedLayer;
 @synthesize cachedScale;
@@ -94,7 +96,7 @@
  *
  *  @return The initialized object.
  **/
--(id)init
+-(nonnull instancetype)init
 {
     if ( (self = [super init]) ) {
         anchorPoint         = CPTPointMake(0.5, 0.5);
@@ -118,22 +120,9 @@
 
 -(void)dealloc
 {
-    [lineStyle release];
-    [fill release];
-    [shadow release];
     CGPathRelease(cachedSymbolPath);
     CGPathRelease(customSymbolPath);
     CGLayerRelease(cachedLayer);
-
-    [super dealloc];
-}
-
--(void)finalize
-{
-    CGPathRelease(cachedSymbolPath);
-    CGPathRelease(customSymbolPath);
-    CGLayerRelease(cachedLayer);
-    [super finalize];
 }
 
 /// @endcond
@@ -143,11 +132,11 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [coder encodeCPTPoint:self.anchorPoint forKey:@"CPTPlotSymbol.anchorPoint"];
     [coder encodeCPTSize:self.size forKey:@"CPTPlotSymbol.size"];
-    [coder encodeInt:self.symbolType forKey:@"CPTPlotSymbol.symbolType"];
+    [coder encodeInteger:self.symbolType forKey:@"CPTPlotSymbol.symbolType"];
     [coder encodeObject:self.lineStyle forKey:@"CPTPlotSymbol.lineStyle"];
     [coder encodeObject:self.fill forKey:@"CPTPlotSymbol.fill"];
     [coder encodeObject:self.shadow forKey:@"CPTPlotSymbol.shadow"];
@@ -160,15 +149,18 @@
     // cachedScale
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        anchorPoint         = [coder decodeCPTPointForKey:@"CPTPlotSymbol.anchorPoint"];
-        size                = [coder decodeCPTSizeForKey:@"CPTPlotSymbol.size"];
-        symbolType          = (CPTPlotSymbolType)[coder decodeIntForKey : @"CPTPlotSymbol.symbolType"];
-        lineStyle           = [[coder decodeObjectForKey:@"CPTPlotSymbol.lineStyle"] retain];
-        fill                = [[coder decodeObjectForKey:@"CPTPlotSymbol.fill"] retain];
-        shadow              = [[coder decodeObjectForKey:@"CPTPlotSymbol.shadow"] copy];
+        anchorPoint = [coder decodeCPTPointForKey:@"CPTPlotSymbol.anchorPoint"];
+        size        = [coder decodeCPTSizeForKey:@"CPTPlotSymbol.size"];
+        symbolType  = (CPTPlotSymbolType)[coder decodeIntegerForKey:@"CPTPlotSymbol.symbolType"];
+        lineStyle   = [coder decodeObjectOfClass:[CPTLineStyle class]
+                                          forKey:@"CPTPlotSymbol.lineStyle"];
+        fill = [coder decodeObjectOfClass:[CPTFill class]
+                                   forKey:@"CPTPlotSymbol.fill"];
+        shadow = [[coder decodeObjectOfClass:[CPTShadow class]
+                                      forKey:@"CPTPlotSymbol.shadow"] copy];
         customSymbolPath    = [coder newCGPathDecodeForKey:@"CPTPlotSymbol.customSymbolPath"];
         usesEvenOddClipRule = [coder decodeBoolForKey:@"CPTPlotSymbol.usesEvenOddClipRule"];
 
@@ -177,6 +169,18 @@
         cachedScale      = CPTFloat(0.0);
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -202,16 +206,15 @@
     }
 }
 
--(void)setShadow:(CPTShadow *)newShadow
+-(void)setShadow:(nullable CPTShadow *)newShadow
 {
     if ( newShadow != shadow ) {
-        [shadow release];
         shadow                = [newShadow copy];
         self.cachedSymbolPath = NULL;
     }
 }
 
--(void)setCustomSymbolPath:(CGPathRef)newPath
+-(void)setCustomSymbolPath:(nullable CGPathRef)newPath
 {
     if ( customSymbolPath != newPath ) {
         CGPathRelease(customSymbolPath);
@@ -220,20 +223,18 @@
     }
 }
 
--(void)setLineStyle:(CPTLineStyle *)newLineStyle
+-(void)setLineStyle:(nullable CPTLineStyle *)newLineStyle
 {
     if ( newLineStyle != lineStyle ) {
-        [lineStyle release];
-        lineStyle        = [newLineStyle retain];
+        lineStyle        = newLineStyle;
         self.cachedLayer = NULL;
     }
 }
 
--(void)setFill:(CPTFill *)newFill
+-(void)setFill:(nullable CPTFill *)newFill
 {
     if ( newFill != fill ) {
-        [fill release];
-        fill             = [newFill retain];
+        fill             = newFill;
         self.cachedLayer = NULL;
     }
 }
@@ -246,7 +247,7 @@
     }
 }
 
--(CGPathRef)cachedSymbolPath
+-(nullable CGPathRef)cachedSymbolPath
 {
     if ( !cachedSymbolPath ) {
         cachedSymbolPath = [self newSymbolPath];
@@ -254,7 +255,7 @@
     return cachedSymbolPath;
 }
 
--(void)setCachedSymbolPath:(CGPathRef)newPath
+-(void)setCachedSymbolPath:(nullable CGPathRef)newPath
 {
     if ( cachedSymbolPath != newPath ) {
         CGPathRelease(cachedSymbolPath);
@@ -263,7 +264,7 @@
     }
 }
 
--(void)setCachedLayer:(CGLayerRef)newLayer
+-(void)setCachedLayer:(nullable CGLayerRef)newLayer
 {
     if ( cachedLayer != newLayer ) {
         CGLayerRelease(cachedLayer);
@@ -279,159 +280,159 @@
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeNone.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeNone.
  **/
-+(CPTPlotSymbol *)plotSymbol
++(nonnull instancetype)plotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeNone;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeCross.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeCross.
  **/
-+(CPTPlotSymbol *)crossPlotSymbol
++(nonnull instancetype)crossPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeCross;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeEllipse.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeEllipse.
  **/
-+(CPTPlotSymbol *)ellipsePlotSymbol
++(nonnull instancetype)ellipsePlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeEllipse;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeRectangle.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeRectangle.
  **/
-+(CPTPlotSymbol *)rectanglePlotSymbol
++(nonnull instancetype)rectanglePlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeRectangle;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypePlus.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypePlus.
  **/
-+(CPTPlotSymbol *)plusPlotSymbol
++(nonnull instancetype)plusPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypePlus;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeStar.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeStar.
  **/
-+(CPTPlotSymbol *)starPlotSymbol
++(nonnull instancetype)starPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeStar;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeDiamond.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeDiamond.
  **/
-+(CPTPlotSymbol *)diamondPlotSymbol
++(nonnull instancetype)diamondPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeDiamond;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeTriangle.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeTriangle.
  **/
-+(CPTPlotSymbol *)trianglePlotSymbol
++(nonnull instancetype)trianglePlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeTriangle;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypePentagon.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypePentagon.
  **/
-+(CPTPlotSymbol *)pentagonPlotSymbol
++(nonnull instancetype)pentagonPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypePentagon;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeHexagon.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeHexagon.
  **/
-+(CPTPlotSymbol *)hexagonPlotSymbol
++(nonnull instancetype)hexagonPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeHexagon;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeDash.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeDash.
  **/
-+(CPTPlotSymbol *)dashPlotSymbol
++(nonnull instancetype)dashPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeDash;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeSnow.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeSnow.
  **/
-+(CPTPlotSymbol *)snowPlotSymbol
++(nonnull instancetype)snowPlotSymbol
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType = CPTPlotSymbolTypeSnow;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 /** @brief Creates and returns a new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeCustom.
  *  @param aPath The bounding path for the custom symbol.
  *  @return A new CPTPlotSymbol instance initialized with a symbol type of #CPTPlotSymbolTypeCustom.
  **/
-+(CPTPlotSymbol *)customPlotSymbolWithPath:(CGPathRef)aPath
++(nonnull instancetype)customPlotSymbolWithPath:(nullable CGPathRef)aPath
 {
     CPTPlotSymbol *symbol = [[self alloc] init];
 
     symbol.symbolType       = CPTPlotSymbolTypeCustom;
     symbol.customSymbolPath = aPath;
 
-    return [symbol autorelease];
+    return symbol;
 }
 
 #pragma mark -
@@ -439,7 +440,7 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     CPTPlotSymbol *copy = [[[self class] allocWithZone:zone] init];
 
@@ -447,9 +448,9 @@
     copy.size                = self.size;
     copy.symbolType          = self.symbolType;
     copy.usesEvenOddClipRule = self.usesEvenOddClipRule;
-    copy.lineStyle           = [[self.lineStyle copy] autorelease];
-    copy.fill                = [[self.fill copy] autorelease];
-    copy.shadow              = [[self.shadow copy] autorelease];
+    copy.lineStyle           = [self.lineStyle copy];
+    copy.fill                = [self.fill copy];
+    copy.shadow              = [self.shadow copy];
 
     if ( self.customSymbolPath ) {
         CGPathRef pathCopy = CGPathCreateCopy(self.customSymbolPath);
@@ -471,41 +472,22 @@
  *  @param scale The drawing scale factor. Must be greater than zero (@num{0}).
  *  @param alignToPixels If @YES, the symbol position is aligned with device pixels to reduce anti-aliasing artifacts.
  **/
--(void)renderInContext:(CGContextRef)context atPoint:(CGPoint)center scale:(CGFloat)scale alignToPixels:(BOOL)alignToPixels
+-(void)renderInContext:(nonnull CGContextRef)context atPoint:(CGPoint)center scale:(CGFloat)scale alignToPixels:(BOOL)alignToPixels
 {
-    const CGFloat symbolMargin = CPTFloat(2.0);
-
     CGPoint symbolAnchor = self.anchorPoint;
-    CGSize symbolSize    = self.size;
-    CGSize shadowOffset  = CGSizeZero;
-    CGFloat shadowRadius = CPTFloat(0.0);
-    CPTShadow *myShadow  = self.shadow;
-
-    if ( myShadow ) {
-        shadowOffset = myShadow.shadowOffset;
-        shadowRadius = myShadow.shadowBlurRadius;
-    }
 
     CGLayerRef theCachedLayer = self.cachedLayer;
     CGFloat theCachedScale    = self.cachedScale;
 
     if ( !theCachedLayer || (theCachedScale != scale) ) {
-        CGSize layerSize  = symbolSize;
-        CGFloat lineWidth = self.lineStyle.lineWidth;
-
-        layerSize.width += (ABS(shadowOffset.width) + shadowRadius) * CPTFloat(2.0) + lineWidth;
-        layerSize.width *= scale;
-        layerSize.width += symbolMargin;
-
-        layerSize.height += (ABS(shadowOffset.height) + shadowRadius) * CPTFloat(2.0) + lineWidth;
-        layerSize.height *= scale;
-        layerSize.height += symbolMargin;
+        CGSize layerSize = [self layerSizeForScale:scale];
 
         self.anchorPoint = CPTPointMake(0.5, 0.5);
 
         CGLayerRef newLayer = CGLayerCreateWithContext(context, layerSize, NULL);
 
-        [self renderAsVectorInContext:CGLayerGetContext(newLayer)
+        CGContextRef layerContext = CGLayerGetContext(newLayer);
+        [self renderAsVectorInContext:layerContext
                               atPoint:CPTPointMake( layerSize.width * CPTFloat(0.5), layerSize.height * CPTFloat(0.5) )
                                 scale:scale];
 
@@ -518,16 +500,18 @@
 
     if ( theCachedLayer ) {
         CGSize layerSize = CGLayerGetSize(theCachedLayer);
-        if ( scale != 1.0 ) {
+        if ( scale != CPTFloat(1.0) ) {
             layerSize.width  /= scale;
             layerSize.height /= scale;
         }
+
+        CGSize symbolSize = self.size;
 
         CGPoint origin = CPTPointMake( center.x - layerSize.width * CPTFloat(0.5) - symbolSize.width * ( symbolAnchor.x - CPTFloat(0.5) ),
                                        center.y - layerSize.height * CPTFloat(0.5) - symbolSize.height * ( symbolAnchor.y - CPTFloat(0.5) ) );
 
         if ( alignToPixels ) {
-            if ( scale == 1.0 ) {
+            if ( scale == CPTFloat(1.0) ) {
                 origin.x = round(origin.x);
                 origin.y = round(origin.y);
             }
@@ -541,12 +525,43 @@
     }
 }
 
+/// @cond
+
+-(CGSize)layerSizeForScale:(CGFloat)scale
+{
+    const CGFloat symbolMargin = CPTFloat(2.0);
+
+    CGSize shadowOffset  = CGSizeZero;
+    CGFloat shadowRadius = CPTFloat(0.0);
+    CPTShadow *myShadow  = self.shadow;
+
+    if ( myShadow ) {
+        shadowOffset = myShadow.shadowOffset;
+        shadowRadius = myShadow.shadowBlurRadius;
+    }
+
+    CGSize layerSize  = self.size;
+    CGFloat lineWidth = self.lineStyle.lineWidth;
+
+    layerSize.width += (ABS(shadowOffset.width) + shadowRadius) * CPTFloat(2.0) + lineWidth;
+    layerSize.width *= scale;
+    layerSize.width += symbolMargin;
+
+    layerSize.height += (ABS(shadowOffset.height) + shadowRadius) * CPTFloat(2.0) + lineWidth;
+    layerSize.height *= scale;
+    layerSize.height += symbolMargin;
+
+    return layerSize;
+}
+
+/// @endcond
+
 /** @brief Draws the plot symbol into the given graphics context centered at the provided point.
  *  @param context The graphics context to draw into.
  *  @param center The center point of the symbol.
  *  @param scale The drawing scale factor. Must be greater than zero (@num{0}).
  **/
--(void)renderAsVectorInContext:(CGContextRef)context atPoint:(CGPoint)center scale:(CGFloat)scale
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context atPoint:(CGPoint)center scale:(CGFloat)scale
 {
     CGPathRef theSymbolPath = self.cachedSymbolPath;
 
@@ -581,18 +596,35 @@
         if ( theLineStyle || theFill ) {
             CGPoint symbolAnchor = self.anchorPoint;
             CGSize symbolSize    = self.size;
+            CPTShadow *myShadow  = self.shadow;
 
             CGContextSaveGState(context);
             CGContextTranslateCTM(context, center.x + ( symbolAnchor.x - CPTFloat(0.5) ) * symbolSize.width, center.y + ( symbolAnchor.y - CPTFloat(0.5) ) * symbolSize.height);
             CGContextScaleCTM(context, scale, scale);
-            [self.shadow setShadowInContext:context];
+            [myShadow setShadowInContext:context];
+
+            // redraw only symbol rectangle
+            CGSize halfSize = CPTSizeMake( symbolSize.width * CPTFloat(0.5), symbolSize.height * CPTFloat(0.5) );
+            CGRect bounds   = CPTRectMake(-halfSize.width, -halfSize.height, symbolSize.width, symbolSize.height);
+
+            CGRect symbolRect = bounds;
+
+            if ( myShadow ) {
+                CGFloat shadowRadius = myShadow.shadowBlurRadius;
+                CGSize shadowOffset  = myShadow.shadowOffset;
+                symbolRect = CGRectInset( symbolRect, -( ABS(shadowOffset.width) + ABS(shadowRadius) ), -( ABS(shadowOffset.height) + ABS(shadowRadius) ) );
+            }
+            if ( theLineStyle ) {
+                CGFloat lineWidth = ABS(theLineStyle.lineWidth);
+                symbolRect = CGRectInset(symbolRect, -lineWidth, -lineWidth);
+            }
+
+            CGContextClipToRect(context, symbolRect);
+
             CGContextBeginTransparencyLayer(context, NULL);
 
             if ( theFill ) {
                 // use fillRect instead of fillPath so that images and gradients are properly centered in the symbol
-                CGSize halfSize = CPTSizeMake( symbolSize.width * CPTFloat(0.5), symbolSize.height * CPTFloat(0.5) );
-                CGRect bounds   = CPTRectMake(-halfSize.width, -halfSize.height, symbolSize.width, symbolSize.height);
-
                 CGContextSaveGState(context);
                 if ( !CGPathIsEmpty(theSymbolPath) ) {
                     CGContextBeginPath(context);
@@ -630,7 +662,7 @@
  *  @brief Creates and returns a drawing path for the current symbol type.
  *  @return A path describing the outline of the current symbol type.
  **/
--(CGPathRef)newSymbolPath
+-(nonnull CGPathRef)newSymbolPath
 {
     CGFloat dx, dy;
     CGSize symbolSize = self.size;
@@ -754,6 +786,32 @@
     }
 
     return symbolPath;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark Debugging
+
+/// @cond
+
+-(nullable id)debugQuickLookObject
+{
+    const CGFloat screenScale = 1.0;
+
+    CGSize layerSize = [self layerSizeForScale:screenScale];
+
+    CGRect rect = CGRectMake(0.0, 0.0, layerSize.width, layerSize.height);
+
+    return CPTQuickLookImage(rect, ^(CGContextRef context, CGFloat scale, CGRect bounds) {
+        CGPoint symbolAnchor = self.anchorPoint;
+
+        self.anchorPoint = CPTPointMake(0.5, 0.5);
+
+        [self renderAsVectorInContext:context atPoint:CGPointMake( CGRectGetMidX(bounds), CGRectGetMidY(bounds) ) scale:scale];
+
+        self.anchorPoint = symbolAnchor;
+    });
 }
 
 /// @endcond

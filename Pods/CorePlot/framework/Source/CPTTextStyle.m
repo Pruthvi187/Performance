@@ -1,16 +1,15 @@
 #import "CPTTextStyle.h"
 
 #import "CPTColor.h"
-#import "CPTDefinitions.h"
 #import "CPTMutableTextStyle.h"
 #import "NSCoderExtensions.h"
 
 /// @cond
 @interface CPTTextStyle()
 
-@property (readwrite, copy, nonatomic) NSString *fontName;
+@property (readwrite, copy, nonatomic, nullable) NSString *fontName;
 @property (readwrite, assign, nonatomic) CGFloat fontSize;
-@property (readwrite, copy, nonatomic) CPTColor *color;
+@property (readwrite, copy, nonatomic, nullable) CPTColor *color;
 @property (readwrite, assign, nonatomic) CPTTextAlignment textAlignment;
 @property (readwrite, assign, nonatomic) NSLineBreakMode lineBreakMode;
 
@@ -32,12 +31,12 @@
  **/
 @synthesize fontSize;
 
-/** @property NSString *fontName
+/** @property nullable NSString *fontName
  *  @brief The font name. Default is Helvetica.
  **/
 @synthesize fontName;
 
-/** @property CPTColor *color
+/** @property nullable CPTColor *color
  *  @brief The current text color. Default is solid black.
  **/
 @synthesize color;
@@ -58,9 +57,29 @@
 /** @brief Creates and returns a new CPTTextStyle instance.
  *  @return A new CPTTextStyle instance.
  **/
-+(id)textStyle
++(nonnull instancetype)textStyle
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
+}
+
+/** @brief Creates and returns a new text style instance initialized from an existing text style.
+ *
+ *  The text style will be initalized with values from the given @par{textStyle}.
+ *
+ *  @param textStyle An existing CPTTextStyle.
+ *  @return A new text style instance.
+ **/
++(nonnull instancetype)textStyleWithStyle:(nullable CPTTextStyle *)textStyle
+{
+    CPTTextStyle *newTextStyle = [[self alloc] init];
+
+    newTextStyle.color         = textStyle.color;
+    newTextStyle.fontName      = textStyle.fontName;
+    newTextStyle.fontSize      = textStyle.fontSize;
+    newTextStyle.textAlignment = textStyle.textAlignment;
+    newTextStyle.lineBreakMode = textStyle.lineBreakMode;
+
+    return newTextStyle;
 }
 
 #pragma mark -
@@ -80,12 +99,12 @@
  *
  *  @return The initialized object.
  **/
--(id)init
+-(nonnull instancetype)init
 {
     if ( (self = [super init]) ) {
         fontName      = @"Helvetica";
         fontSize      = CPTFloat(12.0);
-        color         = [[CPTColor blackColor] retain];
+        color         = [CPTColor blackColor];
         textAlignment = CPTTextAlignmentLeft;
         lineBreakMode = NSLineBreakByWordWrapping;
     }
@@ -94,41 +113,44 @@
 
 /// @}
 
-/// @cond
-
--(void)dealloc
-{
-    [fontName release];
-    [color release];
-    [super dealloc];
-}
-
-/// @endcond
-
 #pragma mark -
 #pragma mark NSCoding Methods
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [coder encodeObject:self.fontName forKey:@"CPTTextStyle.fontName"];
     [coder encodeCGFloat:self.fontSize forKey:@"CPTTextStyle.fontSize"];
     [coder encodeObject:self.color forKey:@"CPTTextStyle.color"];
-    [coder encodeInt:self.textAlignment forKey:@"CPTTextStyle.textAlignment"];
+    [coder encodeInteger:self.textAlignment forKey:@"CPTTextStyle.textAlignment"];
     [coder encodeInteger:(NSInteger)self.lineBreakMode forKey:@"CPTTextStyle.lineBreakMode"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        self->fontName      = [[coder decodeObjectForKey:@"CPTTextStyle.fontName"] copy];
-        self->fontSize      = [coder decodeCGFloatForKey:@"CPTTextStyle.fontSize"];
-        self->color         = [[coder decodeObjectForKey:@"CPTTextStyle.color"] copy];
-        self->textAlignment = (CPTTextAlignment)[coder decodeIntForKey : @"CPTTextStyle.textAlignment"];
-        self->lineBreakMode = (NSLineBreakMode)[coder decodeIntegerForKey : @"CPTTextStyle.lineBreakMode"];
+        fontName = [[coder decodeObjectOfClass:[NSString class]
+                                        forKey:@"CPTTextStyle.fontName"] copy];
+        fontSize = [coder decodeCGFloatForKey:@"CPTTextStyle.fontSize"];
+        color    = [[coder decodeObjectOfClass:[CPTColor class]
+                                        forKey:@"CPTTextStyle.color"] copy];
+        textAlignment = (CPTTextAlignment)[coder decodeIntegerForKey:@"CPTTextStyle.textAlignment"];
+        lineBreakMode = (NSLineBreakMode)[coder decodeIntegerForKey:@"CPTTextStyle.lineBreakMode"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -138,15 +160,16 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     CPTTextStyle *newCopy = [[CPTTextStyle allocWithZone:zone] init];
 
-    newCopy->fontName      = [self->fontName copy];
-    newCopy->color         = [self->color copy];
-    newCopy->fontSize      = self->fontSize;
-    newCopy->textAlignment = self->textAlignment;
-    newCopy->lineBreakMode = self->lineBreakMode;
+    newCopy.fontName      = self.fontName;
+    newCopy.color         = self.color;
+    newCopy.fontSize      = self.fontSize;
+    newCopy.textAlignment = self.textAlignment;
+    newCopy.lineBreakMode = self.lineBreakMode;
+
     return newCopy;
 }
 
@@ -157,16 +180,31 @@
 
 /// @cond
 
--(id)mutableCopyWithZone:(NSZone *)zone
+-(nonnull id)mutableCopyWithZone:(nullable NSZone *)zone
 {
     CPTTextStyle *newCopy = [[CPTMutableTextStyle allocWithZone:zone] init];
 
-    newCopy->fontName      = [self->fontName copy];
-    newCopy->color         = [self->color copy];
-    newCopy->fontSize      = self->fontSize;
-    newCopy->textAlignment = self->textAlignment;
-    newCopy->lineBreakMode = self->lineBreakMode;
+    newCopy.fontName      = self.fontName;
+    newCopy.color         = self.color;
+    newCopy.fontSize      = self.fontSize;
+    newCopy.textAlignment = self.textAlignment;
+    newCopy.lineBreakMode = self.lineBreakMode;
+
     return newCopy;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark Debugging
+
+/// @cond
+
+-(nullable id)debugQuickLookObject
+{
+    NSString *lorem = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+    return [[NSAttributedString alloc] initWithString:lorem attributes:self.attributes];
 }
 
 /// @endcond

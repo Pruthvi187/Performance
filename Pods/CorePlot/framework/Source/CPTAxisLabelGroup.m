@@ -10,7 +10,12 @@
 
 /// @cond
 
--(void)renderAsVectorInContext:(CGContextRef)context
+-(void)display
+{
+    // nothing to draw
+}
+
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context
 {
     // nothing to draw
 }

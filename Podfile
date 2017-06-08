@@ -1,3 +1,6 @@
-platform :ios, '7.0'
-pod 'CorePlot', '~>1.4'
+
+target "Waratahs" do
+platform :ios, '9.0'
+pod 'CorePlot','~> 2.2'
 pod 'iOS-blur'
+end

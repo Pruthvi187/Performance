@@ -5,7 +5,7 @@
 /// @cond
 @interface _CPTFillImage()
 
-@property (nonatomic, readwrite, copy) CPTImage *fillImage;
+@property (nonatomic, readwrite, copy, nonnull) CPTImage *fillImage;
 
 @end
 
@@ -18,7 +18,7 @@
 
 @implementation _CPTFillImage
 
-/** @property fillImage
+/** @property nonnull CPTImage *fillImage
  *  @brief The fill image.
  **/
 @synthesize fillImage;
@@ -30,23 +30,13 @@
  *  @param anImage The image.
  *  @return The initialized _CPTFillImage object.
  **/
--(id)initWithImage:(CPTImage *)anImage
+-(nonnull instancetype)initWithImage:(nonnull CPTImage *)anImage
 {
     if ( (self = [super init]) ) {
-        fillImage = [anImage retain];
+        fillImage = anImage;
     }
     return self;
 }
-
-/// @cond
-
--(void)dealloc
-{
-    [fillImage release];
-    [super dealloc];
-}
-
-/// @endcond
 
 #pragma mark -
 #pragma mark Drawing
@@ -55,7 +45,7 @@
  *  @param rect The rectangle to draw into.
  *  @param context The graphics context to draw into.
  **/
--(void)fillRect:(CGRect)rect inContext:(CGContextRef)context
+-(void)fillRect:(CGRect)rect inContext:(nonnull CGContextRef)context
 {
     [self.fillImage drawInRect:rect inContext:context];
 }
@@ -63,7 +53,7 @@
 /** @brief Draws the image into the given graphics context clipped to the current drawing path.
  *  @param context The graphics context to draw into.
  **/
--(void)fillPathInContext:(CGContextRef)context
+-(void)fillPathInContext:(nonnull CGContextRef)context
 {
     CGContextSaveGState(context);
 
@@ -87,11 +77,11 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     _CPTFillImage *copy = [[[self class] allocWithZone:zone] init];
 
-    copy->fillImage = [self->fillImage copyWithZone:zone];
+    copy.fillImage = self.fillImage;
 
     return copy;
 }
@@ -103,22 +93,46 @@
 
 /// @cond
 
--(Class)classForCoder
+-(nonnull Class)classForCoder
 {
     return [CPTFill class];
 }
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [coder encodeObject:self.fillImage forKey:@"_CPTFillImage.fillImage"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        fillImage = [[coder decodeObjectForKey:@"_CPTFillImage.fillImage"] retain];
+        CPTImage *image = [coder decodeObjectOfClass:[CPTImage class]
+                                              forKey:@"_CPTFillImage.fillImage"];
+
+        if ( image ) {
+            fillImage = image;
+        }
+        else {
+            self = nil;
+        }
     }
     return self;
+}
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond

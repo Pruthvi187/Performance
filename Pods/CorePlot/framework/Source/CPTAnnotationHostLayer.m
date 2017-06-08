@@ -1,12 +1,11 @@
 #import "CPTAnnotationHostLayer.h"
 
-#import "CPTAnnotation.h"
 #import "CPTExceptions.h"
 
 /// @cond
 @interface CPTAnnotationHostLayer()
 
-@property (nonatomic, readwrite, retain) NSMutableArray *mutableAnnotations;
+@property (nonatomic, readwrite, strong, nonnull) CPTMutableAnnotationArray *mutableAnnotations;
 
 @end
 
@@ -21,7 +20,7 @@
  **/
 @implementation CPTAnnotationHostLayer
 
-/** @property NSArray *annotations
+/** @property nonnull CPTAnnotationArray *annotations
  *  @brief An array of annotations attached to this layer.
  **/
 @dynamic annotations;
@@ -42,7 +41,7 @@
  *  @param newFrame The frame rectangle.
  *  @return The initialized CPTAnnotationHostLayer object.
  **/
--(id)initWithFrame:(CGRect)newFrame
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
     if ( (self = [super initWithFrame:newFrame]) ) {
         mutableAnnotations = [[NSMutableArray alloc] init];
@@ -54,20 +53,14 @@
 
 /// @cond
 
--(id)initWithLayer:(id)layer
+-(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
     if ( (self = [super initWithLayer:layer]) ) {
         CPTAnnotationHostLayer *theLayer = (CPTAnnotationHostLayer *)layer;
 
-        mutableAnnotations = [theLayer->mutableAnnotations retain];
+        mutableAnnotations = theLayer->mutableAnnotations;
     }
     return self;
-}
-
--(void)dealloc
-{
-    [mutableAnnotations release];
-    [super dealloc];
 }
 
 /// @endcond
@@ -77,17 +70,24 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
     [coder encodeObject:self.mutableAnnotations forKey:@"CPTAnnotationHostLayer.mutableAnnotations"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        mutableAnnotations = [[coder decodeObjectForKey:@"CPTAnnotationHostLayer.mutableAnnotations"] mutableCopy];
+        CPTAnnotationArray *annotations = [coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [CPTAnnotation class]]]
+                                                                forKey:@"CPTAnnotationHostLayer.mutableAnnotations"];
+        if ( annotations ) {
+            mutableAnnotations = [annotations mutableCopy];
+        }
+        else {
+            mutableAnnotations = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }
@@ -95,39 +95,62 @@
 /// @endcond
 
 #pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
+
+#pragma mark -
 #pragma mark Annotations
 
--(NSArray *)annotations
+/// @cond
+
+-(nonnull CPTAnnotationArray *)annotations
 {
-    return [[self.mutableAnnotations copy] autorelease];
+    return [self.mutableAnnotations copy];
 }
+
+/// @endcond
 
 /**
  *  @brief Adds an annotation to the receiver.
  **/
--(void)addAnnotation:(CPTAnnotation *)annotation
+-(void)addAnnotation:(nullable CPTAnnotation *)annotation
 {
     if ( annotation ) {
-        NSMutableArray *annotationArray = self.mutableAnnotations;
-        if ( ![annotationArray containsObject:annotation] ) {
-            [annotationArray addObject:annotation];
+        CPTAnnotation *theAnnotation = annotation;
+
+        CPTMutableAnnotationArray *annotationArray = self.mutableAnnotations;
+        if ( ![annotationArray containsObject:theAnnotation] ) {
+            [annotationArray addObject:theAnnotation];
         }
-        annotation.annotationHostLayer = self;
-        [annotation positionContentLayer];
+        theAnnotation.annotationHostLayer = self;
+        [theAnnotation positionContentLayer];
     }
 }
 
 /**
  *  @brief Removes an annotation from the receiver.
  **/
--(void)removeAnnotation:(CPTAnnotation *)annotation
+-(void)removeAnnotation:(nullable CPTAnnotation *)annotation
 {
-    if ( [self.mutableAnnotations containsObject:annotation] ) {
-        annotation.annotationHostLayer = nil;
-        [self.mutableAnnotations removeObject:annotation];
-    }
-    else {
-        [NSException raise:CPTException format:@"Tried to remove CPTAnnotation from %@. Host layer was %@.", self, annotation.annotationHostLayer];
+    if ( annotation ) {
+        CPTAnnotation *theAnnotation = annotation;
+
+        if ( [self.mutableAnnotations containsObject:theAnnotation] ) {
+            theAnnotation.annotationHostLayer = nil;
+            [self.mutableAnnotations removeObject:theAnnotation];
+        }
+        else {
+            CPTAnnotationHostLayer *hostLayer = theAnnotation.annotationHostLayer;
+            [NSException raise:CPTException format:@"Tried to remove CPTAnnotation from %@. Host layer was %@.", self, hostLayer];
+        }
     }
 }
 
@@ -136,7 +159,7 @@
  **/
 -(void)removeAllAnnotations
 {
-    NSMutableArray *allAnnotations = self.mutableAnnotations;
+    CPTMutableAnnotationArray *allAnnotations = self.mutableAnnotations;
 
     for ( CPTAnnotation *annotation in allAnnotations ) {
         annotation.annotationHostLayer = nil;
@@ -149,12 +172,12 @@
 
 /// @cond
 
--(NSSet *)sublayersExcludedFromAutomaticLayout
+-(nullable CPTSublayerSet *)sublayersExcludedFromAutomaticLayout
 {
-    NSMutableArray *annotations = self.mutableAnnotations;
+    CPTMutableAnnotationArray *annotations = self.mutableAnnotations;
 
     if ( annotations.count > 0 ) {
-        NSMutableSet *excludedSublayers = [[[super sublayersExcludedFromAutomaticLayout] mutableCopy] autorelease];
+        CPTMutableSublayerSet *excludedSublayers = [super.sublayersExcludedFromAutomaticLayout mutableCopy];
 
         if ( !excludedSublayers ) {
             excludedSublayers = [NSMutableSet set];
@@ -170,7 +193,7 @@
         return excludedSublayers;
     }
     else {
-        return [super sublayersExcludedFromAutomaticLayout];
+        return super.sublayersExcludedFromAutomaticLayout;
     }
 }
 
@@ -181,5 +204,135 @@
 }
 
 /// @endcond
+
+#pragma mark -
+#pragma mark Event Handling
+
+/// @name User Interaction
+/// @{
+
+/**
+ *  @brief Informs the receiver that the user has
+ *  @if MacOnly pressed the mouse button. @endif
+ *  @if iOSOnly touched the screen. @endif
+ *
+ *
+ *  The event is passed in turn to each annotation layer that contains the interaction point.
+ *  If any layer handles the event, subsequent layers are not notified and
+ *  this method immediately returns @YES.
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceDownEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    for ( CPTAnnotation *annotation in self.annotations ) {
+        CPTLayer *content = annotation.contentLayer;
+        if ( content ) {
+            if ( CGRectContainsPoint(content.frame, interactionPoint) ) {
+                BOOL handled = [content pointingDeviceDownEvent:event atPoint:interactionPoint];
+                if ( handled ) {
+                    return YES;
+                }
+            }
+        }
+    }
+
+    return [super pointingDeviceDownEvent:event atPoint:interactionPoint];
+}
+
+/**
+ *  @brief Informs the receiver that the user has
+ *  @if MacOnly released the mouse button. @endif
+ *  @if iOSOnly lifted their finger off the screen. @endif
+ *
+ *
+ *  The event is passed in turn to each annotation layer that contains the interaction point.
+ *  If any layer handles the event, subsequent layers are not notified and
+ *  this method immediately returns @YES.
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceUpEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    for ( CPTAnnotation *annotation in self.annotations ) {
+        CPTLayer *content = annotation.contentLayer;
+        if ( content ) {
+            if ( CGRectContainsPoint(content.frame, interactionPoint) ) {
+                BOOL handled = [content pointingDeviceUpEvent:event atPoint:interactionPoint];
+                if ( handled ) {
+                    return YES;
+                }
+            }
+        }
+    }
+
+    return [super pointingDeviceUpEvent:event atPoint:interactionPoint];
+}
+
+/**
+ *  @brief Informs the receiver that the user has moved
+ *  @if MacOnly the mouse with the button pressed. @endif
+ *  @if iOSOnly their finger while touching the screen. @endif
+ *
+ *
+ *  The event is passed in turn to each annotation layer that contains the interaction point.
+ *  If any layer handles the event, subsequent layers are not notified and
+ *  this method immediately returns @YES.
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceDraggedEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    for ( CPTAnnotation *annotation in self.annotations ) {
+        CPTLayer *content = annotation.contentLayer;
+        if ( content ) {
+            if ( CGRectContainsPoint(content.frame, interactionPoint) ) {
+                BOOL handled = [content pointingDeviceDraggedEvent:event atPoint:interactionPoint];
+                if ( handled ) {
+                    return YES;
+                }
+            }
+        }
+    }
+
+    return [super pointingDeviceDraggedEvent:event atPoint:interactionPoint];
+}
+
+/**
+ *  @brief Informs the receiver that tracking of
+ *  @if MacOnly mouse moves @endif
+ *  @if iOSOnly touches @endif
+ *  has been cancelled for any reason.
+ *
+ *
+ *  The event is passed in turn to each annotation layer.
+ *  If any layer handles the event, subsequent layers are not notified and
+ *  this method immediately returns @YES.
+ *
+ *  @param event The OS event.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceCancelledEvent:(nonnull CPTNativeEvent *)event
+{
+    for ( CPTAnnotation *annotation in self.annotations ) {
+        CPTLayer *content = annotation.contentLayer;
+        if ( content ) {
+            BOOL handled = [content pointingDeviceCancelledEvent:event];
+            if ( handled ) {
+                return YES;
+            }
+        }
+    }
+
+    return [super pointingDeviceCancelledEvent:event];
+}
+
+/// @}
 
 @end

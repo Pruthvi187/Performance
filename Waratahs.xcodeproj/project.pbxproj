@@ -19,7 +19,6 @@
 		02E25B1D168B74B0009CA089 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02E25B1C168B74B0009CA089 /* Default-568h@2x.png */; };
 		02E25B20168B74B0009CA089 /* PlayerProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E25B1F168B74B0009CA089 /* PlayerProfileViewController.m */; };
 		02E25B23168B74B0009CA089 /* PlayerProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E25B21168B74B0009CA089 /* PlayerProfileViewController.xib */; };
-		4986E711275F49DEBC435215 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C3D7354E4481C9CAFC53E /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		7F70B45119B9A26500FDA1E6 /* Jacques_Potgieter_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F70B43319B9A26500FDA1E6 /* Jacques_Potgieter_profile.png */; };
 		7F70B45219B9A26500FDA1E6 /* Rob_Horne_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F70B43419B9A26500FDA1E6 /* Rob_Horne_profile.png */; };
 		7F70B45319B9A26500FDA1E6 /* Stephen_Holies_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F70B43519B9A26500FDA1E6 /* Stephen_Holies_profile.png */; };
@@ -51,6 +50,7 @@
 		7F70B46E19B9A26500FDA1E6 /* Michael_Hooper.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F70B45019B9A26500FDA1E6 /* Michael_Hooper.png */; };
 		7F8F80CC19C66CCF005AC35D /* Wycliff_Palu.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8F80CB19C66CCF005AC35D /* Wycliff_Palu.png */; };
 		7F8F80CE19C66CF8005AC35D /* Wycliff_Palu_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8F80CD19C66CF8005AC35D /* Wycliff_Palu_profile.png */; };
+		8321F93523DD267BC6A8CCE0 /* libPods-Waratahs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 729FE651D7CA8BF95F9E0B03 /* libPods-Waratahs.a */; };
 		AC17201918B1AD3400A0274F /* PlayerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17201718B1AD3400A0274F /* PlayerDetailViewController.m */; };
 		AC17201A18B1AD3400A0274F /* PlayerDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC17201818B1AD3400A0274F /* PlayerDetailViewController.xib */; };
 		AC17204018B2DE0D00A0274F /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = AC17203D18B2DE0D00A0274F /* Model.m */; };
@@ -152,7 +152,7 @@
 		ACA9E7531BAA7F8000BDD092 /* DimmingPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACA9E7521BAA7F8000BDD092 /* DimmingPresentationController.m */; };
 		ACB116FA1A15C2F700002A96 /* StatsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB116F81A15C2F700002A96 /* StatsVC.m */; };
 		ACB116FB1A15C2F700002A96 /* StatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB116F91A15C2F700002A96 /* StatsVC.xib */; };
-		ACBD58BE1BB0E63E00AFD118 /* SoldierData.json in Resources */ = {isa = PBXBuildFile; fileRef = ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */; settings = {ASSET_TAGS = (); }; };
+		ACBD58BE1BB0E63E00AFD118 /* SoldierData.json in Resources */ = {isa = PBXBuildFile; fileRef = ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,7 +174,8 @@
 		02E25B1E168B74B0009CA089 /* PlayerProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerProfileViewController.h; sourceTree = "<group>"; };
 		02E25B1F168B74B0009CA089 /* PlayerProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerProfileViewController.m; sourceTree = "<group>"; };
 		02E25B22168B74B0009CA089 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PlayerProfileViewController.xib; sourceTree = "<group>"; };
-		6417E354C36240EFBF0B4129 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		729FE651D7CA8BF95F9E0B03 /* libPods-Waratahs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Waratahs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7327BB92B215F70254C8946E /* Pods-Waratahs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Waratahs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Waratahs/Pods-Waratahs.release.xcconfig"; sourceTree = "<group>"; };
 		7F70B43319B9A26500FDA1E6 /* Jacques_Potgieter_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jacques_Potgieter_profile.png; sourceTree = "<group>"; };
 		7F70B43419B9A26500FDA1E6 /* Rob_Horne_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rob_Horne_profile.png; sourceTree = "<group>"; };
 		7F70B43519B9A26500FDA1E6 /* Stephen_Holies_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stephen_Holies_profile.png; sourceTree = "<group>"; };
@@ -206,7 +207,6 @@
 		7F70B45019B9A26500FDA1E6 /* Michael_Hooper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Michael_Hooper.png; sourceTree = "<group>"; };
 		7F8F80CB19C66CCF005AC35D /* Wycliff_Palu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Wycliff_Palu.png; path = "players 2/Wycliff_Palu.png"; sourceTree = SOURCE_ROOT; };
 		7F8F80CD19C66CF8005AC35D /* Wycliff_Palu_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wycliff_Palu_profile.png; sourceTree = "<group>"; };
-		802C3D7354E4481C9CAFC53E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC17201618B1AD3400A0274F /* PlayerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDetailViewController.h; sourceTree = "<group>"; };
 		AC17201718B1AD3400A0274F /* PlayerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDetailViewController.m; sourceTree = "<group>"; };
 		AC17201818B1AD3400A0274F /* PlayerDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerDetailViewController.xib; sourceTree = "<group>"; };
@@ -337,6 +337,7 @@
 		ACB116F91A15C2F700002A96 /* StatsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsVC.xib; sourceTree = "<group>"; };
 		ACBD58BD1BB0E63E00AFD118 /* SoldierData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SoldierData.json; sourceTree = "<group>"; };
 		ACBD58BF1BB10E0F00AFD118 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		F9F61A1B20EA95A66F7940CB /* Pods-Waratahs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Waratahs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Waratahs/Pods-Waratahs.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,7 +348,7 @@
 				026492D616D3628600992E42 /* CoreGraphics.framework in Frameworks */,
 				02E25B07168B74B0009CA089 /* UIKit.framework in Frameworks */,
 				02E25B09168B74B0009CA089 /* Foundation.framework in Frameworks */,
-				4986E711275F49DEBC435215 /* libPods.a in Frameworks */,
+				8321F93523DD267BC6A8CCE0 /* libPods-Waratahs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +362,7 @@
 				02E25B0C168B74B0009CA089 /* Waratahs */,
 				02E25B05168B74B0009CA089 /* Frameworks */,
 				02E25B03168B74B0009CA089 /* Products */,
-				6417E354C36240EFBF0B4129 /* Pods.xcconfig */,
+				956E5053F5800FC5A3864341 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -379,7 +380,7 @@
 				026492D516D3628600992E42 /* CoreGraphics.framework */,
 				02E25B06168B74B0009CA089 /* UIKit.framework */,
 				02E25B08168B74B0009CA089 /* Foundation.framework */,
-				802C3D7354E4481C9CAFC53E /* libPods.a */,
+				729FE651D7CA8BF95F9E0B03 /* libPods-Waratahs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -448,6 +449,15 @@
 				AC1720DE18B7136800A0274F /* WellnessView.xib */,
 			);
 			name = "Custom Views";
+			sourceTree = "<group>";
+		};
+		956E5053F5800FC5A3864341 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F9F61A1B20EA95A66F7940CB /* Pods-Waratahs.debug.xcconfig */,
+				7327BB92B215F70254C8946E /* Pods-Waratahs.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		AC17201B18B2D84B00A0274F /* players */ = {
@@ -663,11 +673,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02E25B26168B74B0009CA089 /* Build configuration list for PBXNativeTarget "Waratahs" */;
 			buildPhases = (
-				1C24C6C79D0846EEBA9B7D5E /* Check Pods Manifest.lock */,
+				AB761C3E98181F66FB3C229E /* 📦 Check Pods Manifest.lock */,
 				02E25AFE168B74B0009CA089 /* Sources */,
 				02E25AFF168B74B0009CA089 /* Frameworks */,
 				02E25B00168B74B0009CA089 /* Resources */,
-				78DC48B079A74578B8D6A9E6 /* Copy Pods Resources */,
+				0926B2BBA42BA46F040673C7 /* 📦 Embed Pods Frameworks */,
+				4982E1A34E5F20F636000E9A /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -690,6 +701,7 @@
 				TargetAttributes = {
 					02E25B01168B74B0009CA089 = {
 						DevelopmentTeam = MPH356C628;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -832,34 +844,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1C24C6C79D0846EEBA9B7D5E /* Check Pods Manifest.lock */ = {
+		0926B2BBA42BA46F040673C7 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Waratahs/Pods-Waratahs-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4982E1A34E5F20F636000E9A /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Waratahs/Pods-Waratahs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB761C3E98181F66FB3C229E /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		78DC48B079A74578B8D6A9E6 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -982,19 +1009,21 @@
 		};
 		02E25B27168B74B0009CA089 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
+			baseConfigurationReference = F9F61A1B20EA95A66F7940CB /* Pods-Waratahs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.SpecialForces;
 				PRODUCT_NAME = "Special Forces";
-				PROVISIONING_PROFILE = "a0a557dc-7487-4a84-b4ea-53efe504afd0";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1002,19 +1031,21 @@
 		};
 		02E25B28168B74B0009CA089 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6417E354C36240EFBF0B4129 /* Pods.xcconfig */;
+			baseConfigurationReference = 7327BB92B215F70254C8946E /* Pods-Waratahs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pruthvi Onkar (2HK63PNA59)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuiltDemo/Waratahs-Prefix.pch";
 				INFOPLIST_FILE = "QuiltDemo/Waratahs-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.cio.SpecialForces;
 				PRODUCT_NAME = "Special Forces";
-				PROVISIONING_PROFILE = "a0a557dc-7487-4a84-b4ea-53efe504afd0";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

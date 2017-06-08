@@ -8,12 +8,12 @@
  **/
 @implementation CPTTimeFormatter
 
-/** @property NSDateFormatter *dateFormatter
+/** @property nullable NSDateFormatter *dateFormatter
  *  @brief The date formatter used to generate strings from time intervals.
  **/
 @synthesize dateFormatter;
 
-/** @property NSDate *referenceDate
+/** @property nullable NSDate *referenceDate
  *  @brief Date from which time intervals are taken.
  *  If @nil, the standard reference date (1 January 2001, GMT) is used.
  **/
@@ -29,7 +29,7 @@
  *  The default formatter uses @ref NSDateFormatterMediumStyle for dates and times.
  *  @return The new instance.
  **/
--(id)init
+-(nonnull instancetype)init
 {
     NSDateFormatter *newDateFormatter = [[NSDateFormatter alloc] init];
 
@@ -37,7 +37,6 @@
     newDateFormatter.timeStyle = NSDateFormatterMediumStyle;
 
     self = [self initWithDateFormatter:newDateFormatter];
-    [newDateFormatter release];
 
     return self;
 }
@@ -48,32 +47,21 @@
  *  @param aDateFormatter The date formatter.
  *  @return The new instance.
  **/
--(id)initWithDateFormatter:(NSDateFormatter *)aDateFormatter
+-(nonnull instancetype)initWithDateFormatter:(nullable NSDateFormatter *)aDateFormatter
 {
     if ( (self = [super init]) ) {
-        dateFormatter = [aDateFormatter retain];
+        dateFormatter = aDateFormatter;
         referenceDate = nil;
     }
     return self;
 }
-
-/// @cond
-
--(void)dealloc
-{
-    [referenceDate release];
-    [dateFormatter release];
-    [super dealloc];
-}
-
-/// @endcond
 
 #pragma mark -
 #pragma mark NSCoding Methods
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
@@ -81,29 +69,33 @@
     [coder encodeObject:self.referenceDate forKey:@"CPTTimeFormatter.referenceDate"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
-        dateFormatter = [[coder decodeObjectForKey:@"CPTTimeFormatter.dateFormatter"] retain];
+    if ( (self = [super init]) ) {
+        dateFormatter = [coder decodeObjectForKey:@"CPTTimeFormatter.dateFormatter"];
         referenceDate = [[coder decodeObjectForKey:@"CPTTimeFormatter.referenceDate"] copy];
     }
     return self;
 }
-
-/// @endcond
 
 #pragma mark -
 #pragma mark NSCopying Methods
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     CPTTimeFormatter *newFormatter = [[CPTTimeFormatter allocWithZone:zone] init];
 
     if ( newFormatter ) {
-        newFormatter->dateFormatter = [self->dateFormatter copyWithZone:zone];
-        newFormatter->referenceDate = [self->referenceDate copyWithZone:zone];
+        newFormatter.dateFormatter = self.dateFormatter;
+        newFormatter.referenceDate = self.referenceDate;
     }
     return newFormatter;
 }
@@ -124,21 +116,21 @@
  *  @param coordinateValue The time value.
  *  @return The date string.
  **/
--(NSString *)stringForObjectValue:(id)coordinateValue
+-(nullable NSString *)stringForObjectValue:(nullable id)coordinateValue
 {
     NSString *string = nil;
 
     if ( [coordinateValue respondsToSelector:@selector(doubleValue)] ) {
         NSDate *date;
+        NSDate *refDate = self.referenceDate;
 
-        if ( self.referenceDate ) {
-            date = [[NSDate alloc] initWithTimeInterval:[coordinateValue doubleValue] sinceDate:self.referenceDate];
+        if ( refDate ) {
+            date = [[NSDate alloc] initWithTimeInterval:[coordinateValue doubleValue] sinceDate:refDate];
         }
         else {
             date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:[coordinateValue doubleValue]];
         }
         string = [self.dateFormatter stringFromDate:date];
-        [date release];
     }
 
     return string;

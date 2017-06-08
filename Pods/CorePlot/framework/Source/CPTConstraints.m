@@ -1,5 +1,6 @@
 #import "CPTConstraints.h"
 
+#import "CPTDefinitions.h"
 #import "NSCoderExtensions.h"
 #import "_CPTConstraintsFixed.h"
 #import "_CPTConstraintsRelative.h"
@@ -17,18 +18,18 @@
  *  @param newOffset The offset.
  *  @return A new CPTConstraints instance initialized with the given offset.
  **/
-+(CPTConstraints *)constraintWithLowerOffset:(CGFloat)newOffset
++(nonnull instancetype)constraintWithLowerOffset:(CGFloat)newOffset
 {
-    return [[(_CPTConstraintsFixed *)[_CPTConstraintsFixed alloc] initWithLowerOffset : newOffset] autorelease];
+    return [[_CPTConstraintsFixed alloc] initWithLowerOffset:newOffset];
 }
 
 /** @brief Creates and returns a new CPTConstraints instance initialized with a fixed offset from the upper bound.
  *  @param newOffset The offset.
  *  @return A new CPTConstraints instance initialized with the given offset.
  **/
-+(CPTConstraints *)constraintWithUpperOffset:(CGFloat)newOffset
++(nonnull instancetype)constraintWithUpperOffset:(CGFloat)newOffset
 {
-    return [[(_CPTConstraintsFixed *)[_CPTConstraintsFixed alloc] initWithUpperOffset : newOffset] autorelease];
+    return [[_CPTConstraintsFixed alloc] initWithUpperOffset:newOffset];
 }
 
 /** @brief Creates and returns a new CPTConstraints instance initialized with a proportional offset relative to the bounds.
@@ -39,9 +40,9 @@
  *  @param newOffset The offset.
  *  @return A new CPTConstraints instance initialized with the given offset.
  **/
-+(CPTConstraints *)constraintWithRelativeOffset:(CGFloat)newOffset
++(nonnull instancetype)constraintWithRelativeOffset:(CGFloat)newOffset
 {
-    return [[(_CPTConstraintsRelative *)[_CPTConstraintsRelative alloc] initWithRelativeOffset : newOffset] autorelease];
+    return [[_CPTConstraintsRelative alloc] initWithRelativeOffset:newOffset];
 }
 
 #pragma mark -
@@ -51,11 +52,9 @@
  *  @param newOffset The offset.
  *  @return The initialized CPTConstraints object.
  **/
--(id)initWithLowerOffset:(CGFloat)newOffset
+-(nonnull instancetype)initWithLowerOffset:(CGFloat)newOffset
 {
-    [self release];
-
-    self = [(_CPTConstraintsFixed *)[_CPTConstraintsFixed alloc] initWithLowerOffset : newOffset];
+    self = [[_CPTConstraintsFixed alloc] initWithLowerOffset:newOffset];
 
     return self;
 }
@@ -64,11 +63,9 @@
  *  @param newOffset The offset.
  *  @return The initialized CPTConstraints object.
  **/
--(id)initWithUpperOffset:(CGFloat)newOffset
+-(nonnull instancetype)initWithUpperOffset:(CGFloat)newOffset
 {
-    [self release];
-
-    self = [(_CPTConstraintsFixed *)[_CPTConstraintsFixed alloc] initWithUpperOffset : newOffset];
+    self = [[_CPTConstraintsFixed alloc] initWithUpperOffset:newOffset];
 
     return self;
 }
@@ -81,11 +78,9 @@
  *  @param newOffset The offset.
  *  @return The initialized CPTConstraints object.
  **/
--(id)initWithRelativeOffset:(CGFloat)newOffset
+-(nonnull instancetype)initWithRelativeOffset:(CGFloat)newOffset
 {
-    [self release];
-
-    self = [(_CPTConstraintsRelative *)[_CPTConstraintsRelative alloc] initWithRelativeOffset : newOffset];
+    self = [[_CPTConstraintsRelative alloc] initWithRelativeOffset:newOffset];
 
     return self;
 }
@@ -95,7 +90,7 @@
 
 /// @cond
 
--(id)copyWithZone:(NSZone *)zone
+-(nonnull id)copyWithZone:(nullable NSZone *)zone
 {
     // do nothing--implemented in subclasses
     return nil;
@@ -108,12 +103,12 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     // do nothing--implemented in subclasses
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( [coder containsValueForKey:@"_CPTConstraintsFixed.offset"] ) {
         CGFloat offset      = [coder decodeCGFloatForKey:@"_CPTConstraintsFixed.offset"];
@@ -130,7 +125,19 @@
         return [self initWithRelativeOffset:offset];
     }
 
-    return self;
+    return nil;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -148,7 +155,7 @@
  *  @param otherConstraint The constraint to check.
  *  @return @YES if the constraints are equal.
  **/
--(BOOL)isEqualToConstraint:(CPTConstraints *)otherConstraint
+-(BOOL)isEqualToConstraint:(nullable CPTConstraints *)otherConstraint
 {
     // subclasses override to do comparison here
     return [super isEqual:otherConstraint];
@@ -165,7 +172,7 @@
 -(CGFloat)positionForLowerBound:(CGFloat)lowerBound upperBound:(CGFloat)upperBound
 {
     // subclasses override to do position calculation here
-    return NAN;
+    return CPTNAN;
 }
 
 @end

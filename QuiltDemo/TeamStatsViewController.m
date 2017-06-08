@@ -183,15 +183,15 @@ static NSString *const BACK_ROW_PLOT = @"Back Row";
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
     [plotSpace scaleToFitPlots:[NSArray arrayWithObject:dataSourceLinePlot]];
     CPTMutablePlotRange *xRange = [plotSpace.xRange mutableCopy];
-    [xRange expandRangeByFactor:CPTDecimalFromDouble(1.0)];
+    [xRange expandRangeByFactor:[NSNumber numberWithDouble:1.0]];
     plotSpace.xRange = xRange;
     CPTMutablePlotRange *yRange = [plotSpace.yRange mutableCopy];
-    [yRange expandRangeByFactor:CPTDecimalFromDouble(10.0)];
+    [yRange expandRangeByFactor:[NSNumber numberWithDouble:10.0]];
     plotSpace.yRange = yRange;
     
-    CPTPlotRange *globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(10.0)];
+    CPTPlotRange *globalXRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithDouble:0.0] length:[NSNumber numberWithDouble:10.0]];
     plotSpace.globalXRange = globalXRange;
-    CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(0.0) length:CPTDecimalFromDouble(100.0)];
+    CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:[NSNumber numberWithDouble:0.0] length:[NSNumber numberWithDouble:100.0]];
     plotSpace.globalYRange = globalYRange;
 }
 

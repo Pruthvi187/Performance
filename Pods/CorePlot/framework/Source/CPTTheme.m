@@ -8,7 +8,7 @@
  **/
 
 // Registered themes
-static NSMutableSet *themes = nil;
+static NSMutableSet<Class> *themes = nil;
 
 /** @brief Creates a CPTGraph instance formatted with a predefined style.
  *
@@ -20,7 +20,7 @@ static NSMutableSet *themes = nil;
  **/
 @implementation CPTTheme
 
-/** @property Class graphClass
+/** @property nullable Class graphClass
  *  @brief The class used to create new graphs. Must be a subclass of CPTGraph.
  **/
 @synthesize graphClass;
@@ -38,7 +38,7 @@ static NSMutableSet *themes = nil;
  *
  *  @return The initialized object.
  **/
--(id)init
+-(nonnull instancetype)init
 {
     if ( (self = [super init]) ) {
         graphClass = Nil;
@@ -48,36 +48,46 @@ static NSMutableSet *themes = nil;
 
 /// @}
 
-/// @cond
-
--(void)dealloc
-{
-    [graphClass release];
-    [super dealloc];
-}
-
-/// @endcond
-
 #pragma mark -
 #pragma mark NSCoding Methods
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [coder encodeObject:[[self class] name] forKey:@"CPTTheme.name"];
-    [coder encodeObject:NSStringFromClass(self.graphClass) forKey:@"CPTTheme.graphClass"];
+
+    Class theGraphClass = self.graphClass;
+    if ( theGraphClass ) {
+        [coder encodeObject:NSStringFromClass(theGraphClass) forKey:@"CPTTheme.graphClass"];
+    }
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
-    [self release];
-    self = [[CPTTheme themeNamed:[coder decodeObjectForKey:@"CPTTheme.name"]] retain];
+    self = [CPTTheme themeNamed:[coder decodeObjectOfClass:[NSString class]
+                                                    forKey:@"CPTTheme.name"]];
 
     if ( self ) {
-        self.graphClass = NSClassFromString([coder decodeObjectForKey:@"CPTTheme.graphClass"]);
+        NSString *className = [coder decodeObjectOfClass:[NSString class]
+                                                  forKey:@"CPTTheme.graphClass"];
+        if ( className ) {
+            self.graphClass = NSClassFromString(className);
+        }
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -88,11 +98,11 @@ static NSMutableSet *themes = nil;
 /** @brief List of the available theme classes, sorted by name.
  *  @return An NSArray containing all available theme classes, sorted by name.
  **/
-+(NSArray *)themeClasses
++(nullable NSArray<Class> *)themeClasses
 {
     NSSortDescriptor *nameSort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
 
-    return [themes sortedArrayUsingDescriptors:[NSArray arrayWithObject:nameSort]];
+    return [themes sortedArrayUsingDescriptors:@[nameSort]];
 }
 
 /** @brief Gets a named theme.
@@ -100,7 +110,7 @@ static NSMutableSet *themes = nil;
  *  @return A CPTTheme instance with name matching @par{themeName} or @nil if no themes with a matching name were found.
  *  @see See @ref themeNames "Theme Names" for a list of named themes provided by Core Plot.
  **/
-+(CPTTheme *)themeNamed:(NSString *)themeName
++(nullable instancetype)themeNamed:(nullable CPTThemeName)themeName
 {
     CPTTheme *newTheme = nil;
 
@@ -111,14 +121,16 @@ static NSMutableSet *themes = nil;
         }
     }
 
-    return [newTheme autorelease];
+    return newTheme;
 }
 
 /** @brief Register a theme class.
  *  @param themeClass Theme class to register.
  **/
-+(void)registerTheme:(Class)themeClass
++(void)registerTheme:(nonnull Class)themeClass
 {
+    NSParameterAssert(themeClass);
+
     @synchronized(self)
     {
         if ( !themes ) {
@@ -137,7 +149,7 @@ static NSMutableSet *themes = nil;
 /** @brief The name used for this theme class.
  *  @return The name.
  **/
-+(NSString *)name
++(nonnull CPTThemeName)name
 {
     return NSStringFromClass(self);
 }
@@ -147,7 +159,7 @@ static NSMutableSet *themes = nil;
 
 /// @cond
 
--(void)setGraphClass:(Class)newGraphClass
+-(void)setGraphClass:(nullable Class)newGraphClass
 {
     if ( graphClass != newGraphClass ) {
         if ( ![newGraphClass isSubclassOfClass:[CPTGraph class]] ) {
@@ -157,8 +169,7 @@ static NSMutableSet *themes = nil;
             [NSException raise:CPTException format:@"Invalid graph class for theme; must be a subclass of CPTGraph"];
         }
         else {
-            [graphClass release];
-            graphClass = [newGraphClass retain];
+            graphClass = newGraphClass;
         }
     }
 }
@@ -171,11 +182,19 @@ static NSMutableSet *themes = nil;
 /** @brief Applies the theme to the provided graph.
  *  @param graph The graph to style.
  **/
--(void)applyThemeToGraph:(CPTGraph *)graph
+-(void)applyThemeToGraph:(nonnull CPTGraph *)graph
 {
     [self applyThemeToBackground:graph];
-    [self applyThemeToPlotArea:graph.plotAreaFrame];
-    [self applyThemeToAxisSet:graph.axisSet];
+
+    CPTPlotAreaFrame *plotAreaFrame = graph.plotAreaFrame;
+    if ( plotAreaFrame ) {
+        [self applyThemeToPlotArea:plotAreaFrame];
+    }
+
+    CPTAxisSet *axisSet = graph.axisSet;
+    if ( axisSet ) {
+        [self applyThemeToAxisSet:axisSet];
+    }
 }
 
 @end
@@ -187,7 +206,7 @@ static NSMutableSet *themes = nil;
 /** @brief Creates a new graph styled with the theme.
  *  @return The new graph.
  **/
--(id)newGraph
+-(nullable id)newGraph
 {
     return nil;
 }
@@ -195,21 +214,21 @@ static NSMutableSet *themes = nil;
 /** @brief Applies the background theme to the provided graph.
  *  @param graph The graph to style.
  **/
--(void)applyThemeToBackground:(CPTGraph *)graph
+-(void)applyThemeToBackground:(nonnull CPTGraph *)graph
 {
 }
 
 /** @brief Applies the theme to the provided plot area.
  *  @param plotAreaFrame The plot area to style.
  **/
--(void)applyThemeToPlotArea:(CPTPlotAreaFrame *)plotAreaFrame
+-(void)applyThemeToPlotArea:(nonnull CPTPlotAreaFrame *)plotAreaFrame
 {
 }
 
 /** @brief Applies the theme to the provided axis set.
  *  @param axisSet The axis set to style.
  **/
--(void)applyThemeToAxisSet:(CPTAxisSet *)axisSet
+-(void)applyThemeToAxisSet:(nonnull CPTAxisSet *)axisSet
 {
 }
 

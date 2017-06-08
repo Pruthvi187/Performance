@@ -2,6 +2,10 @@
 
 /// @file
 
+#pragma clang assume_nonnull begin
+
+@class CPTLineStyle;
+
 #if __cplusplus
 extern "C" {
 #endif
@@ -26,7 +30,7 @@ float CPTDecimalFloatValue(NSDecimal decimalNumber);
 double CPTDecimalDoubleValue(NSDecimal decimalNumber);
 CGFloat CPTDecimalCGFloatValue(NSDecimal decimalNumber);
 
-NSString *CPTDecimalStringValue(NSDecimal decimalNumber);
+NSString *__nonnull CPTDecimalStringValue(NSDecimal decimalNumber);
 
 /// @}
 
@@ -50,7 +54,7 @@ NSDecimal CPTDecimalFromFloat(float aFloat);
 NSDecimal CPTDecimalFromDouble(double aDouble);
 NSDecimal CPTDecimalFromCGFloat(CGFloat aCGFloat);
 
-NSDecimal CPTDecimalFromString(NSString *stringRepresentation);
+NSDecimal CPTDecimalFromString(NSString *__nonnull stringRepresentation);
 
 /// @}
 
@@ -96,7 +100,7 @@ CPTCoordinate CPTOrthogonalCoordinate(CPTCoordinate coord);
 
 /// @name Gradient Colors
 /// @{
-CPTRGBAColor CPTRGBAColorFromCGColor(CGColorRef color);
+CPTRGBAColor CPTRGBAColorFromCGColor(__nonnull CGColorRef color);
 
 /// @}
 
@@ -106,27 +110,30 @@ CPTRGBAColor CPTRGBAColorFromCGColor(CGColorRef color);
 /**
  *  @brief A function called to align a point in a CGContext.
  **/
-typedef CGPoint (*CPTAlignPointFunction)(CGContextRef, CGPoint);
+typedef CGPoint (*CPTAlignPointFunction)(__nonnull CGContextRef, CGPoint);
 
 /**
  *  @brief A function called to align a rectangle in a CGContext.
  **/
-typedef CGRect (*CPTAlignRectFunction)(CGContextRef, CGRect);
+typedef CGRect (*CPTAlignRectFunction)(__nonnull CGContextRef, CGRect);
 
-CGPoint CPTAlignPointToUserSpace(CGContextRef context, CGPoint point);
-CGSize CPTAlignSizeToUserSpace(CGContextRef context, CGSize size);
-CGRect CPTAlignRectToUserSpace(CGContextRef context, CGRect rect);
+CGPoint CPTAlignPointToUserSpace(__nonnull CGContextRef context, CGPoint point);
+CGSize CPTAlignSizeToUserSpace(__nonnull CGContextRef context, CGSize size);
+CGRect CPTAlignRectToUserSpace(__nonnull CGContextRef context, CGRect rect);
 
-CGPoint CPTAlignIntegralPointToUserSpace(CGContextRef context, CGPoint point);
-CGRect CPTAlignIntegralRectToUserSpace(CGContextRef context, CGRect rect);
+CGPoint CPTAlignIntegralPointToUserSpace(__nonnull CGContextRef context, CGPoint point);
+CGRect CPTAlignIntegralRectToUserSpace(__nonnull CGContextRef context, CGRect rect);
+
+CGRect CPTAlignBorderedRectToUserSpace(__nonnull CGContextRef context, CGRect rect, CPTLineStyle *__nonnull borderLineStyle);
 
 /// @}
 
 /// @name String Formatting for Core Graphics Structs
 /// @{
-NSString *CPTStringFromPoint(CGPoint point);
-NSString *CPTStringFromSize(CGSize size);
-NSString *CPTStringFromRect(CGRect rect);
+NSString *__nonnull CPTStringFromPoint(CGPoint point);
+NSString *__nonnull CPTStringFromSize(CGSize size);
+NSString *__nonnull CPTStringFromRect(CGRect rect);
+NSString *__nonnull CPTStringFromVector(CGVector vector);
 
 /// @}
 
@@ -136,6 +143,22 @@ CGFloat squareOfDistanceBetweenPoints(CGPoint point1, CGPoint point2);
 
 /// @}
 
+/// @name Edge Inset Utilities
+/// @{
+CPTEdgeInsets CPTEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right);
+BOOL CPTEdgeInsetsEqualToEdgeInsets(CPTEdgeInsets insets1, CPTEdgeInsets insets2);
+
+/// @}
+
+/// @name Log Modulus Definition
+/// @{
+double CPTLogModulus(double value);
+double CPTInverseLogModulus(double value);
+
+/// @}
+
 #if __cplusplus
 }
 #endif
+
+#pragma clang assume_nonnull end

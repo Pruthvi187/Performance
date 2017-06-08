@@ -10,7 +10,7 @@
 
 @interface CPTBorderedLayer()
 
-@property (nonatomic, readonly, retain) CPTLayer *borderLayer;
+@property (nonatomic, readonly, nullable) CPTLayer *borderLayer;
 
 -(void)updateOpacity;
 
@@ -27,14 +27,14 @@
  **/
 @implementation CPTBorderedLayer
 
-/** @property CPTLineStyle *borderLineStyle
+/** @property nullable CPTLineStyle *borderLineStyle
  *  @brief The line style for the layer border.
  *
  *  If @nil, the border is not drawn.
  **/
 @synthesize borderLineStyle;
 
-/** @property CPTFill *fill
+/** @property nullable CPTFill *fill
  *  @brief The fill for the layer background.
  *
  *  If @nil, the layer background is not filled.
@@ -66,7 +66,7 @@
  *  @param newFrame The frame rectangle.
  *  @return The initialized CPTBorderedLayer object.
  **/
--(id)initWithFrame:(CGRect)newFrame
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
     if ( (self = [super initWithFrame:newFrame]) ) {
         borderLineStyle = nil;
@@ -82,24 +82,16 @@
 
 /// @cond
 
--(id)initWithLayer:(id)layer
+-(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
     if ( (self = [super initWithLayer:layer]) ) {
         CPTBorderedLayer *theLayer = (CPTBorderedLayer *)layer;
 
-        borderLineStyle = [theLayer->borderLineStyle retain];
-        fill            = [theLayer->fill retain];
+        borderLineStyle = theLayer->borderLineStyle;
+        fill            = theLayer->fill;
         inLayout        = theLayer->inLayout;
     }
     return self;
-}
-
--(void)dealloc
-{
-    [borderLineStyle release];
-    [fill release];
-
-    [super dealloc];
 }
 
 /// @endcond
@@ -109,7 +101,7 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
@@ -120,11 +112,13 @@
     // inLayout
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        borderLineStyle = [[coder decodeObjectForKey:@"CPTBorderedLayer.borderLineStyle"] copy];
-        fill            = [[coder decodeObjectForKey:@"CPTBorderedLayer.fill"] copy];
+        borderLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                               forKey:@"CPTBorderedLayer.borderLineStyle"] copy];
+        fill = [[coder decodeObjectOfClass:[CPTFill class]
+                                    forKey:@"CPTBorderedLayer.fill"] copy];
 
         inLayout = NO;
     }
@@ -134,11 +128,23 @@
 /// @endcond
 
 #pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
+
+#pragma mark -
 #pragma mark Drawing
 
 /// @cond
 
--(void)renderAsVectorInContext:(CGContextRef)context
+-(void)renderAsVectorInContext:(nonnull CGContextRef)context
 {
     if ( self.hidden || self.masksToBorder ) {
         return;
@@ -153,17 +159,19 @@
 /** @brief Draws the fill and border of a CPTBorderedLayer into the given graphics context.
  *  @param context The graphics context to draw into.
  **/
--(void)renderBorderedLayerAsVectorInContext:(CGContextRef)context
+-(void)renderBorderedLayerAsVectorInContext:(nonnull CGContextRef)context
 {
-    CPTFill *theFill = self.fill;
+    if ( !self.backgroundColor || !self.useFastRendering ) {
+        CPTFill *theFill = self.fill;
 
-    if ( theFill ) {
-        BOOL useMask = self.masksToBounds;
-        self.masksToBounds = YES;
-        CGContextBeginPath(context);
-        CGContextAddPath(context, self.maskingPath);
-        [theFill fillPathInContext:context];
-        self.masksToBounds = useMask;
+        if ( theFill ) {
+            BOOL useMask = self.masksToBounds;
+            self.masksToBounds = YES;
+            CGContextBeginPath(context);
+            CGContextAddPath(context, self.maskingPath);
+            [theFill fillPathInContext:context];
+            self.masksToBounds = useMask;
+        }
     }
 
     CPTLineStyle *theLineStyle = self.borderLineStyle;
@@ -177,7 +185,7 @@
 
         if ( radius > CPTFloat(0.0) ) {
             CGContextBeginPath(context);
-            AddRoundedRectPath(context, layerBounds, radius);
+            CPTAddRoundedRectPath(context, layerBounds, radius);
             [theLineStyle strokePathInContext:context];
         }
         else {
@@ -198,7 +206,7 @@
  *  @param right The right margin.
  *  @param bottom The bottom margin.
  **/
--(void)sublayerMarginLeft:(CGFloat *)left top:(CGFloat *)top right:(CGFloat *)right bottom:(CGFloat *)bottom
+-(void)sublayerMarginLeft:(nonnull CGFloat *)left top:(nonnull CGFloat *)top right:(nonnull CGFloat *)right bottom:(nonnull CGFloat *)bottom
 {
     [super sublayerMarginLeft:left top:top right:right bottom:bottom];
 
@@ -230,7 +238,7 @@
 
 /// @cond
 
--(CGPathRef)maskingPath
+-(nullable CGPathRef)maskingPath
 {
     if ( self.masksToBounds ) {
         CGPathRef path = self.outerBorderPath;
@@ -238,9 +246,10 @@
             return path;
         }
 
-        CGFloat radius = self.cornerRadius + self.borderLineStyle.lineWidth;
+        CGFloat radius = self.cornerRadius + self.borderLineStyle.lineWidth * CPTFloat(0.5);
 
-        path                 = CreateRoundedRectPath(self.bounds, radius);
+        path = CPTCreateRoundedRectPath(self.bounds, radius);
+
         self.outerBorderPath = path;
         CGPathRelease(path);
 
@@ -251,7 +260,7 @@
     }
 }
 
--(CGPathRef)sublayerMaskingPath
+-(nullable CGPathRef)sublayerMaskingPath
 {
     if ( self.masksToBorder ) {
         CGPathRef path = self.innerBorderPath;
@@ -262,7 +271,8 @@
         CGFloat lineWidth = self.borderLineStyle.lineWidth;
         CGRect selfBounds = CGRectInset(self.bounds, lineWidth, lineWidth);
 
-        path                 = CreateRoundedRectPath( selfBounds, self.cornerRadius - lineWidth * CPTFloat(0.5) );
+        path = CPTCreateRoundedRectPath( selfBounds, self.cornerRadius - lineWidth * CPTFloat(0.5) );
+
         self.innerBorderPath = path;
         CGPathRelease(path);
 
@@ -296,7 +306,13 @@
 
 -(void)updateOpacity
 {
-    BOOL opaqueLayer = ( ( self.cornerRadius <= CPTFloat(0.0) ) && self.fill.opaque );
+    BOOL opaqueLayer = ( self.cornerRadius <= CPTFloat(0.0) );
+
+    CPTFill *theFill = self.fill;
+
+    if ( theFill ) {
+        opaqueLayer = opaqueLayer && theFill.opaque && !theFill.cgColor;
+    }
 
     CPTLineStyle *lineStyle = self.borderLineStyle;
 
@@ -304,7 +320,6 @@
         opaqueLayer = opaqueLayer && lineStyle.opaque;
     }
 
-    self.opaque             = NO;
     self.borderLayer.opaque = opaqueLayer;
 }
 
@@ -315,7 +330,7 @@
 
 /// @cond
 
--(void)setBorderLineStyle:(CPTLineStyle *)newLineStyle
+-(void)setBorderLineStyle:(nullable CPTLineStyle *)newLineStyle
 {
     if ( newLineStyle != borderLineStyle ) {
         if ( newLineStyle.lineWidth != borderLineStyle.lineWidth ) {
@@ -324,7 +339,6 @@
             [self setNeedsLayout];
         }
 
-        [borderLineStyle release];
         borderLineStyle = [newLineStyle copy];
 
         [self updateOpacity];
@@ -333,15 +347,21 @@
     }
 }
 
--(void)setFill:(CPTFill *)newFill
+-(void)setFill:(nullable CPTFill *)newFill
 {
     if ( newFill != fill ) {
-        [fill release];
         fill = [newFill copy];
 
-        [self updateOpacity];
+        CPTLayer *border = self.borderLayer;
+        if ( self.cornerRadius != CPTFloat(0.0) ) {
+            border.backgroundColor = NULL;
+        }
+        else {
+            border.backgroundColor = fill.cgColor;
+        }
+        [border setNeedsDisplay];
 
-        [self.borderLayer setNeedsDisplay];
+        [self updateOpacity];
     }
 }
 
@@ -350,6 +370,8 @@
     if ( newRadius != self.cornerRadius ) {
         super.cornerRadius = newRadius;
 
+        self.borderLayer.backgroundColor = NULL;
+
         [self updateOpacity];
     }
 }
@@ -357,13 +379,12 @@
 -(void)setMasksToBorder:(BOOL)newMasksToBorder
 {
     if ( newMasksToBorder != self.masksToBorder ) {
-        [super setMasksToBorder:newMasksToBorder];
+        super.masksToBorder = newMasksToBorder;
 
         if ( newMasksToBorder ) {
             CPTMaskLayer *maskLayer = [[CPTMaskLayer alloc] initWithFrame:self.bounds];
             [maskLayer setNeedsDisplay];
             self.mask = maskLayer;
-            [maskLayer release];
         }
         else {
             self.mask = nil;
@@ -374,7 +395,7 @@
     }
 }
 
--(CPTLayer *)borderLayer
+-(nullable CPTLayer *)borderLayer
 {
     CPTLayer *theBorderLayer   = nil;
     CPTBorderLayer *superLayer = (CPTBorderLayer *)self.superlayer;
@@ -391,14 +412,16 @@
 
                 newBorderLayer.transform = self.transform;
                 newBorderLayer.shadow    = self.shadow;
+                newBorderLayer.opaque    = self.opaque;
 
-                self.transform = CATransform3DIdentity;
+                newBorderLayer.backgroundColor = self.backgroundColor;
+
+                self.transform       = CATransform3DIdentity;
+                self.backgroundColor = NULL;
 
                 [superLayer setNeedsLayout];
 
                 theBorderLayer = newBorderLayer;
-
-                [newBorderLayer autorelease];
             }
             else {
                 theBorderLayer = superLayer;
@@ -410,6 +433,9 @@
         if ( [superLayer isKindOfClass:[CPTBorderLayer class]] ) {
             if ( superLayer.maskedLayer == self ) {
                 self.transform = superLayer.transform;
+                self.opaque    = superLayer.opaque;
+
+                self.backgroundColor = superLayer.backgroundColor;
 
                 [superLayer.superlayer replaceSublayer:superLayer with:self];
 
@@ -426,61 +452,71 @@
 -(void)setBounds:(CGRect)newBounds
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setBounds:newBounds];
+        self.borderLayer.bounds = newBounds;
     }
     else {
-        [super setBounds:newBounds];
+        super.bounds = newBounds;
     }
 }
 
 -(void)setPosition:(CGPoint)newPosition
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setPosition:newPosition];
+        self.borderLayer.position = newPosition;
     }
     else {
-        [super setPosition:newPosition];
+        super.position = newPosition;
     }
 }
 
 -(void)setAnchorPoint:(CGPoint)newAnchorPoint
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setAnchorPoint:newAnchorPoint];
+        self.borderLayer.anchorPoint = newAnchorPoint;
     }
     else {
-        [super setAnchorPoint:newAnchorPoint];
+        super.anchorPoint = newAnchorPoint;
     }
 }
 
 -(void)setHidden:(BOOL)newHidden
 {
     if ( self.masksToBorder ) {
-        [self.borderLayer setHidden:newHidden];
+        self.borderLayer.hidden = newHidden;
     }
     else {
-        [super setHidden:newHidden];
+        super.hidden = newHidden;
     }
 }
 
 -(void)setTransform:(CATransform3D)newTransform
 {
     if ( self.masksToBorder ) {
-        [self.borderLayer setTransform:newTransform];
+        self.borderLayer.transform = newTransform;
     }
     else {
-        [super setTransform:newTransform];
+        super.transform = newTransform;
     }
 }
 
--(void)setShadow:(CPTShadow *)newShadow
+-(void)setShadow:(nullable CPTShadow *)newShadow
 {
     if ( newShadow != self.shadow ) {
-        [super setShadow:newShadow];
+        super.shadow = newShadow;
 
         if ( self.masksToBorder ) {
             self.borderLayer.shadow = newShadow;
         }
+    }
+}
+
+-(void)setBackgroundColor:(nullable CGColorRef)newColor
+{
+    if ( self.masksToBorder ) {
+        self.borderLayer.backgroundColor = newColor;
+    }
+    else {
+        super.backgroundColor = newColor;
     }
 }
 

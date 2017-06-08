@@ -1,5 +1,6 @@
 #import "CPTPlotSpaceAnnotation.h"
 
+#import "CPTExceptions.h"
 #import "CPTPlotArea.h"
 #import "CPTPlotAreaFrame.h"
 #import "CPTPlotSpace.h"
@@ -7,6 +8,9 @@
 /// @cond
 
 @interface CPTPlotSpaceAnnotation()
+
+@property (nonatomic, readwrite, nonnull) NSDecimal *decimalAnchor;
+@property (nonatomic, readwrite) NSUInteger anchorCount;
 
 -(void)setContentNeedsLayout;
 
@@ -24,15 +28,18 @@
  **/
 @implementation CPTPlotSpaceAnnotation
 
-/** @property NSArray *anchorPlotPoint
+/** @property nullable CPTNumberArray *anchorPlotPoint
  *  @brief An array of NSDecimalNumber objects giving the anchor plot coordinates.
  **/
 @synthesize anchorPlotPoint;
 
-/** @property CPTPlotSpace *plotSpace
+/** @property nonnull CPTPlotSpace *plotSpace
  *  @brief The plot space which the anchor is defined in.
  **/
 @synthesize plotSpace;
+
+@synthesize decimalAnchor;
+@synthesize anchorCount;
 
 #pragma mark -
 #pragma mark Init/Dealloc
@@ -49,13 +56,13 @@
  *  @param newPlotPoint An array of NSDecimalNumber objects giving the anchor plot coordinates.
  *  @return The initialized CPTPlotSpaceAnnotation object.
  **/
--(id)initWithPlotSpace:(CPTPlotSpace *)newPlotSpace anchorPlotPoint:(NSArray *)newPlotPoint
+-(nonnull instancetype)initWithPlotSpace:(nonnull CPTPlotSpace *)newPlotSpace anchorPlotPoint:(nullable CPTNumberArray *)newPlotPoint
 {
     NSParameterAssert(newPlotSpace);
 
     if ( (self = [super init]) ) {
-        plotSpace       = [newPlotSpace retain];
-        anchorPlotPoint = [newPlotPoint copy];
+        plotSpace            = newPlotSpace;
+        self.anchorPlotPoint = newPlotPoint;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(setContentNeedsLayout)
@@ -69,18 +76,17 @@
 
 /// @cond
 
-// plotSpace is required; this will fail the assertion in -initWithPlotSpace:anchorPlotPoint:
--(id)init
+// plotSpace is required
+-(nonnull instancetype)init
 {
-    return [self initWithPlotSpace:nil anchorPlotPoint:nil];
+    [NSException raise:CPTException format:@"%@ must be initialized with a plot space.", NSStringFromClass([self class])];
+    return [self initWithPlotSpace:[[CPTPlotSpace alloc] init] anchorPlotPoint:nil];
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [plotSpace release];
-    [anchorPlotPoint release];
-    [super dealloc];
+    free(decimalAnchor);
 }
 
 /// @endcond
@@ -90,7 +96,7 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
@@ -98,13 +104,35 @@
     [coder encodeConditionalObject:self.plotSpace forKey:@"CPTPlotSpaceAnnotation.plotSpace"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        anchorPlotPoint = [[coder decodeObjectForKey:@"CPTPlotSpaceAnnotation.anchorPlotPoint"] copy];
-        plotSpace       = [[coder decodeObjectForKey:@"CPTPlotSpaceAnnotation.plotSpace"] retain];
+        anchorPlotPoint = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSNumber class]]]
+                                                 forKey:@"CPTPlotSpaceAnnotation.anchorPlotPoint"] copy];
+
+        CPTPlotSpace *thePlotSpace = [coder decodeObjectOfClass:[CPTPlotSpace class]
+                                                         forKey:@"CPTPlotSpaceAnnotation.plotSpace"];
+        if ( thePlotSpace ) {
+            plotSpace = thePlotSpace;
+        }
     }
     return self;
+}
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -126,21 +154,15 @@
     if ( content ) {
         CPTLayer *hostLayer = self.annotationHostLayer;
         if ( hostLayer ) {
-            NSArray *plotAnchor = self.anchorPlotPoint;
+            CPTNumberArray *plotAnchor = self.anchorPlotPoint;
             if ( plotAnchor ) {
-                NSUInteger anchorCount = plotAnchor.count;
-
                 // Get plot area point
-                NSDecimal *decimalPoint = malloc(sizeof(NSDecimal) * anchorCount);
-                for ( NSUInteger i = 0; i < anchorCount; i++ ) {
-                    decimalPoint[i] = [[plotAnchor objectAtIndex:i] decimalValue];
-                }
                 CPTPlotSpace *thePlotSpace      = self.plotSpace;
-                CGPoint plotAreaViewAnchorPoint = [thePlotSpace plotAreaViewPointForPlotPoint:decimalPoint numberOfCoordinates:anchorCount];
-                free(decimalPoint);
+                CGPoint plotAreaViewAnchorPoint = [thePlotSpace plotAreaViewPointForPlotPoint:self.decimalAnchor numberOfCoordinates:self.anchorCount];
 
                 CGPoint newPosition;
-                CPTPlotArea *plotArea = thePlotSpace.graph.plotAreaFrame.plotArea;
+                CPTGraph *theGraph    = thePlotSpace.graph;
+                CPTPlotArea *plotArea = theGraph.plotAreaFrame.plotArea;
                 if ( plotArea ) {
                     newPosition = [plotArea convertPoint:plotAreaViewAnchorPoint toLayer:hostLayer];
                 }
@@ -167,12 +189,28 @@
 
 /// @cond
 
--(void)setAnchorPlotPoint:(NSArray *)newPlotPoint
+-(void)setAnchorPlotPoint:(nullable CPTNumberArray *)newPlotPoint
 {
     if ( anchorPlotPoint != newPlotPoint ) {
-        [anchorPlotPoint release];
         anchorPlotPoint = [newPlotPoint copy];
+
+        self.anchorCount = anchorPlotPoint.count;
+
+        NSDecimal *decimalPoint = malloc(sizeof(NSDecimal) * self.anchorCount);
+        for ( NSUInteger i = 0; i < self.anchorCount; i++ ) {
+            decimalPoint[i] = anchorPlotPoint[i].decimalValue;
+        }
+        self.decimalAnchor = decimalPoint;
+
         [self setContentNeedsLayout];
+    }
+}
+
+-(void)setDecimalAnchor:(nonnull NSDecimal *)newAnchor
+{
+    if ( decimalAnchor != newAnchor ) {
+        free(decimalAnchor);
+        decimalAnchor = newAnchor;
     }
 }
 

@@ -2,12 +2,13 @@
 
 #import "CPTAnnotationHostLayer.h"
 #import "CPTConstraints.h"
+#import "CPTExceptions.h"
 
 /// @cond
 @interface CPTLayerAnnotation()
 
-@property (nonatomic, readwrite, retain) CPTConstraints *xConstraints;
-@property (nonatomic, readwrite, retain) CPTConstraints *yConstraints;
+@property (nonatomic, readwrite, strong, nullable) CPTConstraints *xConstraints;
+@property (nonatomic, readwrite, strong, nullable) CPTConstraints *yConstraints;
 
 -(void)setConstraints;
 
@@ -25,7 +26,7 @@
  **/
 @implementation CPTLayerAnnotation
 
-/** @property __cpt_weak CPTLayer *anchorLayer
+/** @property nullable CPTLayer *anchorLayer
  *  @brief The reference layer.
  **/
 @synthesize anchorLayer;
@@ -52,7 +53,7 @@
  *  @param newAnchorLayer The reference layer. Must be non-@nil.
  *  @return The initialized CPTLayerAnnotation object.
  **/
--(id)initWithAnchorLayer:(CPTLayer *)newAnchorLayer
+-(nonnull instancetype)initWithAnchorLayer:(nonnull CPTLayer *)newAnchorLayer
 {
     NSParameterAssert(newAnchorLayer);
 
@@ -66,7 +67,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(positionContentLayer)
                                                      name:CPTLayerBoundsDidChangeNotification
-                                                   object:anchorLayer];
+                                                   object:newAnchorLayer];
     }
     return self;
 }
@@ -75,19 +76,17 @@
 
 /// @cond
 
-// anchorLayer is required; this will fail the assertion in -initWithAnchorLayer:
--(id)init
+// anchorLayer is required
+-(nonnull instancetype)init
 {
-    return [self initWithAnchorLayer:nil];
+    [NSException raise:CPTException format:@"%@ must be initialized with an anchor layer.", NSStringFromClass([self class])];
+    return [self initWithAnchorLayer:[CPTLayer layer]];
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     anchorLayer = nil;
-    [xConstraints release];
-    [yConstraints release];
-    [super dealloc];
 }
 
 /// @endcond
@@ -97,28 +96,35 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
     [coder encodeConditionalObject:self.anchorLayer forKey:@"CPTLayerAnnotation.anchorLayer"];
     [coder encodeObject:self.xConstraints forKey:@"CPTLayerAnnotation.xConstraints"];
     [coder encodeObject:self.yConstraints forKey:@"CPTLayerAnnotation.yConstraints"];
-    [coder encodeInt:self.rectAnchor forKey:@"CPTLayerAnnotation.rectAnchor"];
-}
-
--(id)initWithCoder:(NSCoder *)coder
-{
-    if ( (self = [super initWithCoder:coder]) ) {
-        anchorLayer  = [coder decodeObjectForKey:@"CPTLayerAnnotation.anchorLayer"];
-        xConstraints = [[coder decodeObjectForKey:@"CPTLayerAnnotation.xConstraints"] retain];
-        yConstraints = [[coder decodeObjectForKey:@"CPTLayerAnnotation.yConstraints"] retain];
-        rectAnchor   = (CPTRectAnchor)[coder decodeIntForKey : @"CPTLayerAnnotation.rectAnchor"];
-    }
-    return self;
+    [coder encodeInteger:self.rectAnchor forKey:@"CPTLayerAnnotation.rectAnchor"];
 }
 
 /// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
+{
+    if ( (self = [super initWithCoder:coder]) ) {
+        anchorLayer = [coder decodeObjectOfClass:[CPTLayer class]
+                                          forKey:@"CPTLayerAnnotation.anchorLayer"];
+        xConstraints = [coder decodeObjectOfClass:[CPTConstraints class]
+                                           forKey:@"CPTLayerAnnotation.xConstraints"];
+        yConstraints = [coder decodeObjectOfClass:[CPTConstraints class]
+                                           forKey:@"CPTLayerAnnotation.yConstraints"];
+        rectAnchor = (CPTRectAnchor)[coder decodeIntegerForKey:@"CPTLayerAnnotation.rectAnchor"];
+    }
+    return self;
+}
 
 #pragma mark -
 #pragma mark Layout
@@ -153,6 +159,18 @@
             [content pixelAlign];
         }
     }
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -215,10 +233,8 @@
     }
 
     self.xConstraints = xConstraint;
-    [xConstraint release];
 
     self.yConstraints = yConstraint;
-    [yConstraint release];
 }
 
 /// @endcond

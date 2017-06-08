@@ -6,14 +6,9 @@
  *  @param number The value for the new number.
  *  @return An NSNumber object containing value, treating it as a @ref CGFloat.
  **/
-+(NSNumber *)numberWithCGFloat:(CGFloat)number
++(nonnull instancetype)numberWithCGFloat:(CGFloat)number
 {
-#if CGFLOAT_IS_DOUBLE
-    return [NSNumber numberWithDouble:number];
-
-#else
-    return [NSNumber numberWithFloat:number];
-#endif
+    return @(number);
 }
 
 /** @brief Returns the value of the receiver as a @ref CGFloat.
@@ -22,7 +17,7 @@
 -(CGFloat)cgFloatValue
 {
 #if CGFLOAT_IS_DOUBLE
-    return [self doubleValue];
+    return self.doubleValue;
 
 #else
     return [self floatValue];
@@ -33,7 +28,7 @@
  *  @param number The value for the new number.
  *  @return An NSNumber object containing value, treating it as a @ref CGFloat.
  **/
--(id)initWithCGFloat:(CGFloat)number
+-(nonnull instancetype)initWithCGFloat:(CGFloat)number
 {
 #if CGFLOAT_IS_DOUBLE
     return [self initWithDouble:number];
@@ -46,12 +41,12 @@
 /** @brief Returns the value of the receiver as an NSDecimalNumber.
  *  @return The value of the receiver as an NSDecimalNumber.
  **/
--(NSDecimalNumber *)decimalNumber
+-(nonnull NSDecimalNumber *)decimalNumber
 {
     if ( [self isMemberOfClass:[NSDecimalNumber class]] ) {
         return (NSDecimalNumber *)self;
     }
-    return [NSDecimalNumber decimalNumberWithDecimal:[self decimalValue]];
+    return [NSDecimalNumber decimalNumberWithDecimal:self.decimalValue];
 }
 
 @end

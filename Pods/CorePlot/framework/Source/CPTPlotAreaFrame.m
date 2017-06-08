@@ -7,7 +7,7 @@
 /// @cond
 @interface CPTPlotAreaFrame()
 
-@property (nonatomic, readwrite, retain) CPTPlotArea *plotArea;
+@property (nonatomic, readwrite, strong, nullable) CPTPlotArea *plotArea;
 
 @end
 
@@ -23,17 +23,17 @@
  **/
 @implementation CPTPlotAreaFrame
 
-/** @property CPTPlotArea *plotArea
+/** @property nullable CPTPlotArea *plotArea
  *  @brief The plot area.
  **/
 @synthesize plotArea;
 
-/** @property CPTAxisSet *axisSet
+/** @property nullable CPTAxisSet *axisSet
  *  @brief The axis set.
  **/
 @dynamic axisSet;
 
-/** @property CPTPlotGroup *plotGroup
+/** @property nullable CPTPlotGroup *plotGroup
  *  @brief The plot group.
  **/
 @dynamic plotGroup;
@@ -54,14 +54,13 @@
  *  @param newFrame The frame rectangle.
  *  @return The initialized CPTPlotAreaFrame object.
  **/
--(id)initWithFrame:(CGRect)newFrame
+-(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
     if ( (self = [super initWithFrame:newFrame]) ) {
         plotArea = nil;
 
-        CPTPlotArea *newPlotArea = [(CPTPlotArea *)[CPTPlotArea alloc] initWithFrame : newFrame];
+        CPTPlotArea *newPlotArea = [[CPTPlotArea alloc] initWithFrame:newFrame];
         self.plotArea = newPlotArea;
-        [newPlotArea release];
 
         self.masksToBorder              = YES;
         self.needsDisplayOnBoundsChange = YES;
@@ -73,20 +72,14 @@
 
 /// @cond
 
--(id)initWithLayer:(id)layer
+-(nonnull instancetype)initWithLayer:(nonnull id)layer
 {
     if ( (self = [super initWithLayer:layer]) ) {
         CPTPlotAreaFrame *theLayer = (CPTPlotAreaFrame *)layer;
 
-        plotArea = [theLayer->plotArea retain];
+        plotArea = theLayer->plotArea;
     }
     return self;
-}
-
--(void)dealloc
-{
-    [plotArea release];
-    [super dealloc];
 }
 
 /// @endcond
@@ -96,17 +89,18 @@
 
 /// @cond
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(void)encodeWithCoder:(nonnull NSCoder *)coder
 {
     [super encodeWithCoder:coder];
 
     [coder encodeObject:self.plotArea forKey:@"CPTPlotAreaFrame.plotArea"];
 }
 
--(id)initWithCoder:(NSCoder *)coder
+-(nullable instancetype)initWithCoder:(nonnull NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        plotArea = [[coder decodeObjectForKey:@"CPTPlotAreaFrame.plotArea"] retain];
+        plotArea = [coder decodeObjectOfClass:[CPTPlotArea class]
+                                       forKey:@"CPTPlotAreaFrame.plotArea"];
     }
     return self;
 }
@@ -114,48 +108,147 @@
 /// @endcond
 
 #pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark Event Handling
+
+/// @name User Interaction
+/// @{
+
+/**
+ *  @brief Informs the receiver that the user has
+ *  @if MacOnly pressed the mouse button. @endif
+ *  @if iOSOnly touched the screen. @endif
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceDownEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    if ( [self.plotArea pointingDeviceDownEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceDownEvent:event atPoint:interactionPoint];
+    }
+}
+
+/**
+ *  @brief Informs the receiver that the user has
+ *  @if MacOnly released the mouse button. @endif
+ *  @if iOSOnly lifted their finger off the screen. @endif
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceUpEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    if ( [self.plotArea pointingDeviceUpEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceUpEvent:event atPoint:interactionPoint];
+    }
+}
+
+/**
+ *  @brief Informs the receiver that the user has moved
+ *  @if MacOnly the mouse with the button pressed. @endif
+ *  @if iOSOnly their finger while touching the screen. @endif
+ *
+ *  @param event The OS event.
+ *  @param interactionPoint The coordinates of the interaction.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceDraggedEvent:(nonnull CPTNativeEvent *)event atPoint:(CGPoint)interactionPoint
+{
+    if ( [self.plotArea pointingDeviceDraggedEvent:event atPoint:interactionPoint] ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceDraggedEvent:event atPoint:interactionPoint];
+    }
+}
+
+/**
+ *  @brief Informs the receiver that tracking of
+ *  @if MacOnly mouse moves @endif
+ *  @if iOSOnly touches @endif
+ *  has been cancelled for any reason.
+ *
+ *  @param event The OS event.
+ *  @return Whether the event was handled or not.
+ **/
+-(BOOL)pointingDeviceCancelledEvent:(nonnull CPTNativeEvent *)event
+{
+    if ( [self.plotArea pointingDeviceCancelledEvent:event] ) {
+        return YES;
+    }
+    else {
+        return [super pointingDeviceCancelledEvent:event];
+    }
+}
+
+/// @}
+
+#pragma mark -
 #pragma mark Accessors
 
 /// @cond
 
--(void)setPlotArea:(CPTPlotArea *)newPlotArea
+-(void)setPlotArea:(nullable CPTPlotArea *)newPlotArea
 {
     if ( newPlotArea != plotArea ) {
         [plotArea removeFromSuperlayer];
-        [plotArea release];
-        plotArea = [newPlotArea retain];
-        if ( plotArea ) {
-            [self insertSublayer:plotArea atIndex:0];
-            plotArea.graph = self.graph;
+        plotArea = newPlotArea;
+
+        if ( newPlotArea ) {
+            CPTPlotArea *theArea = newPlotArea;
+
+            [self insertSublayer:theArea atIndex:0];
+            theArea.graph = self.graph;
         }
+
         [self setNeedsLayout];
     }
 }
 
--(CPTAxisSet *)axisSet
+-(nullable CPTAxisSet *)axisSet
 {
     return self.plotArea.axisSet;
 }
 
--(void)setAxisSet:(CPTAxisSet *)newAxisSet
+-(void)setAxisSet:(nullable CPTAxisSet *)newAxisSet
 {
     self.plotArea.axisSet = newAxisSet;
 }
 
--(CPTPlotGroup *)plotGroup
+-(nullable CPTPlotGroup *)plotGroup
 {
     return self.plotArea.plotGroup;
 }
 
--(void)setPlotGroup:(CPTPlotGroup *)newPlotGroup
+-(void)setPlotGroup:(nullable CPTPlotGroup *)newPlotGroup
 {
     self.plotArea.plotGroup = newPlotGroup;
 }
 
--(void)setGraph:(CPTGraph *)newGraph
+-(void)setGraph:(nullable CPTGraph *)newGraph
 {
     if ( newGraph != self.graph ) {
-        [super setGraph:newGraph];
+        super.graph = newGraph;
 
         self.plotArea.graph = newGraph;
     }
